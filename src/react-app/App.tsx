@@ -1,3 +1,18 @@
+/**
+ * BrandedBy AI Platform - Main Application Router
+ * 
+ * AI-powered face generation platform for creating personalized videos with celebrities.
+ * Tech stack: React 18 + TypeScript + Vite + Tailwind CSS + Cloudflare Workers
+ * 
+ * Features:
+ * - Celebrity face morphing with AI
+ * - Custom selfie video generation  
+ * - Real-time face animation demos
+ * - Payment processing and user management
+ * - EmailJS logging system integration
+ * - Mobile-first responsive design
+ */
+
 import AdminPage from "@/react-app/pages/Admin";
 import AuthCallbackPage from "@/react-app/pages/AuthCallback";
 import CelebritiesPage from "@/react-app/pages/Celebrities";

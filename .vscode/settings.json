@@ -3,7 +3,41 @@
   "files.autoSave": "afterDelay",
   "files.autoSaveDelay": 1000,
   "editor.codeActionsOnSave": {
-  "source.fixAll.eslint": "always",
-  "source.organizeImports": "always"
+    "source.fixAll.eslint": "always",
+    "source.organizeImports": "always"
+  },
+  
+  // GitHub Copilot настройки для BrandedBy проекта
+  "github.copilot.enable": {
+    "*": true,
+    "plaintext": true,
+    "markdown": true,
+    "scminput": false
+  },
+  "github.copilot.editor.enableAutoCompletions": true,
+  "github.copilot.inlineSuggest.enable": true,
+  "github.copilot.chat.localeOverride": "en",
+  
+  // Оптимизация для React + TypeScript + Tailwind
+  "typescript.suggest.autoImports": true,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "tailwindCSS.includeLanguages": {
+    "typescript": "javascript",
+    "typescriptreact": "javascript"
+  },
+  "tailwindCSS.experimental.classRegex": [
+    ["clsx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"],
+    ["className\\s*=\\s*['\"]([^'\"]*)['\"]"]
+  ],
+  
+  // IntelliSense улучшения
+  "editor.suggest.insertMode": "replace",
+  "editor.acceptSuggestionOnCommitCharacter": false,
+  "editor.acceptSuggestionOnEnter": "on",
+  "editor.tabCompletion": "on",
+  "editor.quickSuggestions": {
+    "other": true,
+    "comments": true,
+    "strings": true
   }
 }
