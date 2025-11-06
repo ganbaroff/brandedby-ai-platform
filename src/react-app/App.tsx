@@ -16,6 +16,7 @@
 import EnhancedErrorBoundary from "@/react-app/components/EnhancedErrorBoundary";
 import AdminPage from "@/react-app/pages/Admin";
 import AdminPanel from "@/react-app/pages/AdminPanel";
+import AdminAuthTest from "@/react-app/pages/AdminAuthTest";
 import AuthCallbackPage from "@/react-app/pages/AuthCallback";
 import BlogPage from "@/react-app/pages/BlogPage";
 import CelebritiesPage from "@/react-app/pages/Celebrities";
@@ -44,6 +45,7 @@ export default function App() {
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/admin" element={<AdminPage />} />
           <Route path="/admin-panel" element={<AdminPanel />} />
+          <Route path="/admin-test" element={<AdminAuthTest />} />
           <Route path="/email-setup" element={<EmailSetupPage />} />
         </Routes>
         </Router>

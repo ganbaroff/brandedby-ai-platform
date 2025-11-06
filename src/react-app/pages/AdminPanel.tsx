@@ -58,7 +58,15 @@ const AdminPanel: React.FC = () => {
   // Check authentication on component mount
   useEffect(() => {
     const checkAuth = () => {
+      console.log('🔍 Checking authentication...');
       const isLoggedIn = AdminAuth.isAuthenticated();
+      console.log('🔐 Authentication status:', isLoggedIn);
+      
+      if (isLoggedIn) {
+        const sessionInfo = AdminAuth.getSessionInfo();
+        console.log('👤 Session info:', sessionInfo);
+      }
+      
       setIsAuthenticated(isLoggedIn);
       setIsCheckingAuth(false);
       
@@ -180,6 +188,7 @@ const AdminPanel: React.FC = () => {
 
   // Handle login success
   const handleLoginSuccess = () => {
+    console.log('🎉 Login success callback called');
     setIsAuthenticated(true);
     loadCelebrities();
     loadBlogPosts();

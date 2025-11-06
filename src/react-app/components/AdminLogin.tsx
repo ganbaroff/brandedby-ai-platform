@@ -3,7 +3,7 @@ import { Lock, User, Eye, EyeOff, Shield } from 'lucide-react';
 import { AdminAuth, validateCredentials } from '../../shared/admin-auth';
 
 interface AdminLoginProps {
-  onLogin: (success: boolean) => void;
+  onLogin: () => void;
 }
 
 const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin }) => {
@@ -20,15 +20,26 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin }) => {
     setError('');
     setIsLoading(true);
 
+    console.log('🔐 Login attempt:', { username: credentials.username, password: credentials.password });
+
     // Authentication with improved session management
     setTimeout(() => {
-      if (validateCredentials(credentials.username, credentials.password)) {
-        // Create secure admin session
-        AdminAuth.createSession(credentials.username);
-        onLogin(true);
+      const isValid = validateCredentials(credentials.username, credentials.password);
+      console.log('🔍 Credentials validation:', isValid);
+      
+      if (isValid) {
+        try {
+          // Create secure admin session
+          AdminAuth.createSession(credentials.username);
+          console.log('✅ Session created successfully');
+          onLogin();
+        } catch (error) {
+          console.error('❌ Session creation failed:', error);
+          setError('Failed to create session. Please try again.');
+        }
       } else {
+        console.log('❌ Invalid credentials provided');
         setError('Invalid username or password');
-        onLogin(false);
       }
       setIsLoading(false);
     }, 1000);

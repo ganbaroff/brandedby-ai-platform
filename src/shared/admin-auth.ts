@@ -14,27 +14,47 @@ export class AdminAuth {
   // Check if user is authenticated
   static isAuthenticated(): boolean {
     try {
+      console.log('🔍 AdminAuth.isAuthenticated() called');
+      
+      // Check if localStorage is available
+      if (typeof localStorage === 'undefined') {
+        console.log('❌ localStorage not available');
+        return false;
+      }
+      
       const session = localStorage.getItem(this.SESSION_KEY);
-      if (!session) return false;
+      console.log('📄 Retrieved session data:', session);
+      
+      if (!session) {
+        console.log('❌ No session found');
+        return false;
+      }
 
       const sessionData: AdminSession = JSON.parse(session);
+      console.log('📋 Parsed session:', sessionData);
       
       // Check if session is valid
-      if (!sessionData.loggedIn) return false;
+      if (!sessionData.loggedIn) {
+        console.log('❌ Session not logged in');
+        return false;
+      }
 
       // Check if session is expired (optional)
       if (sessionData.expiresAt) {
         const now = new Date().getTime();
         const expires = new Date(sessionData.expiresAt).getTime();
+        console.log('⏰ Session expiry check:', { now, expires, expired: now > expires });
         if (now > expires) {
+          console.log('⏰ Session expired, logging out');
           this.logout();
           return false;
         }
       }
 
+      console.log('✅ Session valid');
       return true;
     } catch (error) {
-      console.error('Error checking admin authentication:', error);
+      console.error('❌ Error checking admin authentication:', error);
       return false;
     }
   }
@@ -42,6 +62,11 @@ export class AdminAuth {
   // Get current session data
   static getSession(): AdminSession | null {
     try {
+      if (typeof localStorage === 'undefined') {
+        console.log('❌ localStorage not available for session retrieval');
+        return null;
+      }
+      
       const session = localStorage.getItem(this.SESSION_KEY);
       return session ? JSON.parse(session) : null;
     } catch (error) {
@@ -52,6 +77,11 @@ export class AdminAuth {
 
   // Create a new session
   static createSession(username: string): void {
+    if (typeof localStorage === 'undefined') {
+      console.error('❌ localStorage not available for session creation');
+      throw new Error('Session storage not available');
+    }
+    
     const session: AdminSession = {
       loggedIn: true,
       timestamp: new Date().toISOString(),
