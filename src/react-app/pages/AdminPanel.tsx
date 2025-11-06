@@ -32,7 +32,7 @@ const AdminPanel: React.FC = () => {
     name: '',
     image: '',
     description: '',
-    category: 'Актёр'
+    category: 'Actor'
   });
 
   // Blog management states
@@ -45,7 +45,7 @@ const AdminPanel: React.FC = () => {
     image: '',
     author: '',
     publishedAt: new Date().toISOString().split('T')[0],
-    category: 'Новости'
+    category: 'News'
   });
 
   // Load data on component mount
@@ -60,7 +60,7 @@ const AdminPanel: React.FC = () => {
       const data = await response.json();
       setCelebrities(data);
     } catch (error) {
-      console.error('Ошибка загрузки знаменитостей:', error);
+      console.error('Error loading celebrities:', error);
     }
   };
 
@@ -73,13 +73,13 @@ const AdminPanel: React.FC = () => {
       const defaultPosts: BlogPost[] = [
         {
           id: 1,
-          title: 'Революция в мире AI-фотографии',
-          content: 'Искусственный интеллект меняет способы создания и обработки фотографий...',
-          excerpt: 'Новые возможности AI в фотографии',
+          title: 'AI Photography Revolution',
+          content: 'Artificial intelligence is fundamentally changing the way we create and process photographs. New technologies allow for incredibly realistic image generation in seconds...',
+          excerpt: 'How AI technologies are transforming photography and video production',
           image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400&h=300&fit=crop&auto=format&q=80',
           author: 'BrandedBy Team',
           publishedAt: '2025-11-06',
-          category: 'Технологии'
+          category: 'Technology'
         }
       ];
       setBlogPosts(defaultPosts);
@@ -96,7 +96,7 @@ const AdminPanel: React.FC = () => {
       const newId = Math.max(...celebrities.map(c => c.id), 0) + 1;
       const celebrityToAdd = { ...newCelebrity, id: newId };
       setCelebrities(prev => [...prev, celebrityToAdd]);
-      setNewCelebrity({ name: '', image: '', description: '', category: 'Актёр' });
+      setNewCelebrity({ name: '', image: '', description: '', category: 'Actor' });
       setShowCelebrityForm(false);
     }
     
@@ -105,7 +105,7 @@ const AdminPanel: React.FC = () => {
   };
 
   const deleteCelebrity = (id: number) => {
-    if (confirm('Вы уверены, что хотите удалить эту знаменитость?')) {
+    if (confirm('Are you sure you want to delete this celebrity?')) {
       setCelebrities(prev => prev.filter(c => c.id !== id));
       saveCelebritiesToFile();
     }
@@ -138,14 +138,14 @@ const AdminPanel: React.FC = () => {
         image: '',
         author: '',
         publishedAt: new Date().toISOString().split('T')[0],
-        category: 'Новости'
+        category: 'News'
       });
       setShowPostForm(false);
     }
   };
 
   const deletePost = (id: number) => {
-    if (confirm('Вы уверены, что хотите удалить этот пост?')) {
+    if (confirm('Are you sure you want to delete this post?')) {
       const updatedPosts = blogPosts.filter(p => p.id !== id);
       setBlogPosts(updatedPosts);
       localStorage.setItem('blogPosts', JSON.stringify(updatedPosts));
@@ -162,7 +162,7 @@ const AdminPanel: React.FC = () => {
       <div className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
-            <h1 className="text-3xl font-bold text-gray-900">Админ панель BrandedBy</h1>
+            <h1 className="text-3xl font-bold text-gray-900">BrandedBy Admin Panel</h1>
             <div className="flex space-x-4">
               <button
                 onClick={() => setActiveTab('celebrities')}
@@ -173,7 +173,7 @@ const AdminPanel: React.FC = () => {
                 }`}
               >
                 <Users className="h-5 w-5 mr-2" />
-                Знаменитости
+                Celebrities
               </button>
               <button
                 onClick={() => setActiveTab('blog')}
@@ -184,7 +184,7 @@ const AdminPanel: React.FC = () => {
                 }`}
               >
                 <FileText className="h-5 w-5 mr-2" />
-                Блог
+                Blog
               </button>
               <button
                 onClick={() => setActiveTab('analytics')}
@@ -195,7 +195,7 @@ const AdminPanel: React.FC = () => {
                 }`}
               >
                 <User className="h-5 w-5 mr-2" />
-                Аналитика
+                Analytics
               </button>
             </div>
           </div>
@@ -207,13 +207,13 @@ const AdminPanel: React.FC = () => {
         {activeTab === 'celebrities' && (
           <div>
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-semibold text-gray-900">Управление знаменитостями</h2>
+              <h2 className="text-2xl font-semibold text-gray-900">Celebrity Management</h2>
               <button
                 onClick={() => setShowCelebrityForm(true)}
                 className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
               >
                 <Plus className="h-5 w-5 mr-2" />
-                Добавить знаменитость
+                Add Celebrity
               </button>
             </div>
 
@@ -223,7 +223,7 @@ const AdminPanel: React.FC = () => {
                 <div className="bg-white rounded-lg p-6 w-full max-w-md">
                   <div className="flex justify-between items-center mb-4">
                     <h3 className="text-lg font-semibold">
-                      {editingCelebrity ? 'Редактировать знаменитость' : 'Добавить знаменитость'}
+                      {editingCelebrity ? 'Edit Celebrity' : 'Add Celebrity'}
                     </h3>
                     <button
                       onClick={() => {
@@ -238,7 +238,7 @@ const AdminPanel: React.FC = () => {
 
                   <div className="space-y-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Имя</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
                       <input
                         type="text"
                         value={editingCelebrity ? editingCelebrity.name : newCelebrity.name}
@@ -250,12 +250,12 @@ const AdminPanel: React.FC = () => {
                           }
                         }}
                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                        placeholder="Введите имя знаменитости"
+                        placeholder="Enter celebrity name"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">URL изображения</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Image URL</label>
                       <input
                         type="url"
                         value={editingCelebrity ? editingCelebrity.image : newCelebrity.image}
@@ -281,12 +281,12 @@ const AdminPanel: React.FC = () => {
                         }}
                         className="mt-2 text-sm text-blue-600 hover:text-blue-700"
                       >
-                        Автоматически сгенерировать URL
+                        Auto-generate URL
                       </button>
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Описание</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
                       <textarea
                         value={editingCelebrity ? editingCelebrity.description : newCelebrity.description}
                         onChange={(e) => {
@@ -298,12 +298,12 @@ const AdminPanel: React.FC = () => {
                         }}
                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
                         rows={3}
-                        placeholder="Краткое описание знаменитости"
+                        placeholder="Brief celebrity description"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Категория</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
                       <select
                         value={editingCelebrity ? editingCelebrity.category : newCelebrity.category}
                         onChange={(e) => {
@@ -315,11 +315,11 @@ const AdminPanel: React.FC = () => {
                         }}
                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
                       >
-                        <option value="Актёр">Актёр</option>
-                        <option value="Музыкант">Музыкант</option>
-                        <option value="Спортсмен">Спортсмен</option>
-                        <option value="Модель">Модель</option>
-                        <option value="Блогер">Блогер</option>
+                        <option value="Actor">Actor</option>
+                        <option value="Musician">Musician</option>
+                        <option value="Athlete">Athlete</option>
+                        <option value="Model">Model</option>
+                        <option value="Influencer">Influencer</option>
                       </select>
                     </div>
                   </div>
@@ -330,7 +330,7 @@ const AdminPanel: React.FC = () => {
                       className="flex-1 flex items-center justify-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
                     >
                       <Save className="h-4 w-4 mr-2" />
-                      Сохранить
+                      Save
                     </button>
                     <button
                       onClick={() => {
@@ -339,7 +339,7 @@ const AdminPanel: React.FC = () => {
                       }}
                       className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors"
                     >
-                      Отмена
+                      Cancel
                     </button>
                   </div>
                 </div>
@@ -365,14 +365,14 @@ const AdminPanel: React.FC = () => {
                         className="flex items-center px-3 py-1 text-sm bg-yellow-100 text-yellow-700 rounded hover:bg-yellow-200 transition-colors"
                       >
                         <Edit className="h-4 w-4 mr-1" />
-                        Изменить
+                        Edit
                       </button>
                       <button
                         onClick={() => deleteCelebrity(celebrity.id)}
                         className="flex items-center px-3 py-1 text-sm bg-red-100 text-red-700 rounded hover:bg-red-200 transition-colors"
                       >
                         <Trash2 className="h-4 w-4 mr-1" />
-                        Удалить
+                        Delete
                       </button>
                     </div>
                   </div>
@@ -386,13 +386,13 @@ const AdminPanel: React.FC = () => {
         {activeTab === 'blog' && (
           <div>
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-semibold text-gray-900">Управление блогом</h2>
+              <h2 className="text-2xl font-semibold text-gray-900">Blog Management</h2>
               <button
                 onClick={() => setShowPostForm(true)}
                 className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
               >
                 <Plus className="h-5 w-5 mr-2" />
-                Создать пост
+                Create Post
               </button>
             </div>
 
@@ -402,7 +402,7 @@ const AdminPanel: React.FC = () => {
                 <div className="bg-white rounded-lg p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
                   <div className="flex justify-between items-center mb-4">
                     <h3 className="text-lg font-semibold">
-                      {editingPost ? 'Редактировать пост' : 'Создать новый пост'}
+                      {editingPost ? 'Edit Post' : 'Create New Post'}
                     </h3>
                     <button
                       onClick={() => {
@@ -417,7 +417,7 @@ const AdminPanel: React.FC = () => {
 
                   <div className="space-y-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Заголовок</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
                       <input
                         type="text"
                         value={editingPost ? editingPost.title : newPost.title}
@@ -429,12 +429,12 @@ const AdminPanel: React.FC = () => {
                           }
                         }}
                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                        placeholder="Введите заголовок поста"
+                        placeholder="Enter post title"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Краткое описание</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Excerpt</label>
                       <input
                         type="text"
                         value={editingPost ? editingPost.excerpt : newPost.excerpt}
@@ -446,12 +446,12 @@ const AdminPanel: React.FC = () => {
                           }
                         }}
                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                        placeholder="Краткое описание для превью"
+                        placeholder="Brief description for preview"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Содержание</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Content</label>
                       <textarea
                         value={editingPost ? editingPost.content : newPost.content}
                         onChange={(e) => {
@@ -463,13 +463,13 @@ const AdminPanel: React.FC = () => {
                         }}
                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
                         rows={8}
-                        placeholder="Основной текст поста (поддерживается Markdown)"
+                        placeholder="Main post content (supports Markdown)"
                       />
                     </div>
 
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Автор</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Author</label>
                         <input
                           type="text"
                           value={editingPost ? editingPost.author : newPost.author}
@@ -481,12 +481,12 @@ const AdminPanel: React.FC = () => {
                             }
                           }}
                           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                          placeholder="Имя автора"
+                          placeholder="Author name"
                         />
                       </div>
 
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Дата публикации</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Publish Date</label>
                         <input
                           type="date"
                           value={editingPost ? editingPost.publishedAt : newPost.publishedAt}
@@ -504,7 +504,7 @@ const AdminPanel: React.FC = () => {
 
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Категория</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
                         <select
                           value={editingPost ? editingPost.category : newPost.category}
                           onChange={(e) => {
@@ -516,16 +516,16 @@ const AdminPanel: React.FC = () => {
                           }}
                           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
                         >
-                          <option value="Новости">Новости</option>
-                          <option value="Технологии">Технологии</option>
-                          <option value="Обучение">Обучение</option>
-                          <option value="Обновления">Обновления</option>
-                          <option value="AI">Искусственный интеллект</option>
+                          <option value="News">News</option>
+                          <option value="Technology">Technology</option>
+                          <option value="Tutorial">Tutorial</option>
+                          <option value="Updates">Updates</option>
+                          <option value="AI">Artificial Intelligence</option>
                         </select>
                       </div>
 
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Изображение</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Featured Image</label>
                         <input
                           type="url"
                           value={editingPost ? editingPost.image : newPost.image}
@@ -537,7 +537,7 @@ const AdminPanel: React.FC = () => {
                             }
                           }}
                           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                          placeholder="URL изображения"
+                          placeholder="Image URL"
                         />
                       </div>
                     </div>
@@ -549,7 +549,7 @@ const AdminPanel: React.FC = () => {
                       className="flex-1 flex items-center justify-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
                     >
                       <Save className="h-4 w-4 mr-2" />
-                      Сохранить
+                      Save
                     </button>
                     <button
                       onClick={() => {
@@ -558,7 +558,7 @@ const AdminPanel: React.FC = () => {
                       }}
                       className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors"
                     >
-                      Отмена
+                      Cancel
                     </button>
                   </div>
                 </div>
@@ -579,8 +579,8 @@ const AdminPanel: React.FC = () => {
                       </div>
                       <p className="text-gray-600 mb-2">{post.excerpt}</p>
                       <div className="flex items-center text-sm text-gray-500 space-x-4">
-                        <span>Автор: {post.author}</span>
-                        <span>Дата: {new Date(post.publishedAt).toLocaleDateString('ru-RU')}</span>
+                        <span>Author: {post.author}</span>
+                        <span>Date: {new Date(post.publishedAt).toLocaleDateString('en-US')}</span>
                       </div>
                     </div>
                     <div className="flex items-center space-x-2 ml-4">
@@ -597,14 +597,14 @@ const AdminPanel: React.FC = () => {
                           className="flex items-center px-3 py-1 text-sm bg-yellow-100 text-yellow-700 rounded hover:bg-yellow-200 transition-colors"
                         >
                           <Edit className="h-4 w-4 mr-1" />
-                          Изменить
+                          Edit
                         </button>
                         <button
                           onClick={() => deletePost(post.id)}
                           className="flex items-center px-3 py-1 text-sm bg-red-100 text-red-700 rounded hover:bg-red-200 transition-colors"
                         >
                           <Trash2 className="h-4 w-4 mr-1" />
-                          Удалить
+                          Delete
                         </button>
                       </div>
                     </div>
@@ -618,13 +618,13 @@ const AdminPanel: React.FC = () => {
         {/* Analytics Tab */}
         {activeTab === 'analytics' && (
           <div>
-            <h2 className="text-2xl font-semibold text-gray-900 mb-6">Аналитика и статистика</h2>
+            <h2 className="text-2xl font-semibold text-gray-900 mb-6">Analytics & Statistics</h2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
               <div className="bg-white rounded-lg shadow-md p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-gray-600">Всего знаменитостей</p>
+                    <p className="text-sm font-medium text-gray-600">Total Celebrities</p>
                     <p className="text-3xl font-bold text-blue-600">{celebrities.length}</p>
                   </div>
                   <Users className="h-8 w-8 text-blue-500" />
@@ -634,7 +634,7 @@ const AdminPanel: React.FC = () => {
               <div className="bg-white rounded-lg shadow-md p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-gray-600">Постов в блоге</p>
+                    <p className="text-sm font-medium text-gray-600">Blog Posts</p>
                     <p className="text-3xl font-bold text-green-600">{blogPosts.length}</p>
                   </div>
                   <FileText className="h-8 w-8 text-green-500" />
@@ -644,7 +644,7 @@ const AdminPanel: React.FC = () => {
               <div className="bg-white rounded-lg shadow-md p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-gray-600">Активных категорий</p>
+                    <p className="text-sm font-medium text-gray-600">Active Categories</p>
                     <p className="text-3xl font-bold text-purple-600">
                       {new Set(celebrities.map(c => c.category)).size}
                     </p>
@@ -656,9 +656,9 @@ const AdminPanel: React.FC = () => {
               <div className="bg-white rounded-lg shadow-md p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-gray-600">Последнее обновление</p>
+                    <p className="text-sm font-medium text-gray-600">Last Update</p>
                     <p className="text-sm font-bold text-orange-600">
-                      {new Date().toLocaleDateString('ru-RU')}
+                      {new Date().toLocaleDateString('en-US')}
                     </p>
                   </div>
                   <Upload className="h-8 w-8 text-orange-500" />
@@ -668,7 +668,7 @@ const AdminPanel: React.FC = () => {
 
             {/* Category distribution */}
             <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Распределение знаменитостей по категориям</h3>
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">Celebrity Distribution by Category</h3>
               <div className="space-y-3">
                 {Object.entries(
                   celebrities.reduce((acc, celebrity) => {
@@ -694,7 +694,7 @@ const AdminPanel: React.FC = () => {
 
             {/* Recent activity */}
             <div className="bg-white rounded-lg shadow-md p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Последние посты</h3>
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">Recent Posts</h3>
               <div className="space-y-3">
                 {blogPosts
                   .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
@@ -703,10 +703,10 @@ const AdminPanel: React.FC = () => {
                     <div key={post.id} className="flex items-center justify-between py-2 border-b border-gray-100">
                       <div>
                         <p className="font-medium text-gray-900">{post.title}</p>
-                        <p className="text-sm text-gray-600">Автор: {post.author}</p>
+                        <p className="text-sm text-gray-600">Author: {post.author}</p>
                       </div>
                       <span className="text-sm text-gray-500">
-                        {new Date(post.publishedAt).toLocaleDateString('ru-RU')}
+                        {new Date(post.publishedAt).toLocaleDateString('en-US')}
                       </span>
                     </div>
                   ))}

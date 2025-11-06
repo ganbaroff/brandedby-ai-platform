@@ -47,7 +47,7 @@ export default function Header() {
               onClick={() => navigate('/blog')}
               className="text-gray-600 hover:text-purple-600 transition-colors duration-200 font-medium"
             >
-              Блог
+              Blog
             </button>
             <button 
               onClick={() => navigate('/selfie-upload')}
