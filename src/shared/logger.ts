@@ -1,4 +1,4 @@
-import { initializeEmailJS } from './email-config';
+// Упрощенный логгер без уведомлений
 
 interface LogEntry {
   timestamp: string;
@@ -16,16 +16,7 @@ class Logger {
 
   constructor() {
     this.sessionId = this.generateSessionId();
-    this.info('Logger initialized', { sessionId: this.sessionId });
-    
-    // Инициализируем EmailJS
-    initializeEmailJS().then(success => {
-      if (success) {
-        this.info('EmailJS initialized successfully');
-      } else {
-        this.warning('Failed to initialize EmailJS');
-      }
-    });
+    // Убираем уведомления инициализации для пользователей
   }
 
   private generateSessionId(): string {
@@ -65,12 +56,9 @@ class Logger {
       this.logs = this.logs.slice(-this.maxLogs);
     }
 
-    // Выводим в консоль для разработки
-    console.log(`[${entry.level}] ${entry.message}`, entry.context || '');
-
-    // Отправляем критические ошибки немедленно
+    // Только ошибки выводим в консоль (без уведомлений на сайте)
     if (entry.level === 'ERROR') {
-      this.sendLogsToEmail([entry]);
+      console.error(`[ERROR] ${entry.message}`, entry.context || '');
     }
   }
 
@@ -94,45 +82,10 @@ class Logger {
     this.addLog(entry);
   }
 
-  // Отправка логов на email через EmailJS
+  // Отправка логов на email через EmailJS (отключено для пользователей)
   private async sendLogsToEmail(logs: LogEntry[]) {
-    try {
-      // Проверяем доступность EmailJS
-      if (!window.emailjs) {
-        console.warn('⚠️ EmailJS not initialized, logs saved locally');
-        this.saveLogsToLocalStorage(logs);
-        return;
-      }
-
-      // Получаем конфигурацию из localStorage или используем дефолтную
-      const config = this.getEmailConfig();
-      if (!this.isConfigValid(config)) {
-        console.warn('⚠️ EmailJS config invalid, logs saved locally');
-        this.saveLogsToLocalStorage(logs);
-        return;
-      }
-
-      const emailContent = this.formatLogsForEmail(logs);
-      const logLevel = logs.find(log => log.level === 'ERROR') ? 'ERROR' : logs[0]?.level || 'INFO';
-      
-      // Отправляем через EmailJS
-      await window.emailjs.send(config.serviceId, config.templateId, {
-        to_email: config.targetEmail,
-        subject: `🔥 BrandedBY Logs - ${logLevel} - ${new Date().toLocaleString('ru-RU')}`,
-        message: emailContent,
-        app_name: 'BrandedBY',
-        timestamp: new Date().toISOString(),
-        session_id: this.sessionId,
-        log_count: logs.length,
-        user_id: this.getCurrentUserId()
-      });
-
-      console.log('✅ Logs sent to email successfully');
-      
-    } catch (error) {
-      console.error('❌ Error sending logs to email:', error);
-      this.saveLogsToLocalStorage(logs);
-    }
+    // Убираем отправку логов и уведомления - только сохраняем локально
+    this.saveLogsToLocalStorage(logs);
   }
 
   private getEmailConfig() {
@@ -167,34 +120,13 @@ class Logger {
       const failedLogs = JSON.parse(localStorage.getItem('failed_logs') || '[]');
       failedLogs.push(...logs);
       localStorage.setItem('failed_logs', JSON.stringify(failedLogs.slice(-200))); // Ограничиваем 200 логами
-      console.log('📦 Logs saved to localStorage for later sending');
+      // Убираем уведомление для пользователей
     } catch (storageError) {
       console.error('Failed to save logs to localStorage:', storageError);
     }
   }
 
-  private formatLogsForEmail(logs: LogEntry[]): string {
-    let content = `BrandedBY Application Logs\n`;
-    content += `Session ID: ${this.sessionId}\n`;
-    content += `Generated: ${new Date().toLocaleString()}\n`;
-    content += `Total Entries: ${logs.length}\n\n`;
-    content += `${'='.repeat(50)}\n\n`;
 
-    logs.forEach((log, index) => {
-      content += `[${index + 1}] ${log.timestamp}\n`;
-      content += `Level: ${log.level}\n`;
-      content += `User: ${log.userId}\n`;
-      content += `Message: ${log.message}\n`;
-      
-      if (log.context) {
-        content += `Context: ${JSON.stringify(log.context, null, 2)}\n`;
-      }
-      
-      content += `${'-'.repeat(30)}\n\n`;
-    });
-
-    return content;
-  }
 
   // Отправка всех накопленных логов
   sendAllLogs() {

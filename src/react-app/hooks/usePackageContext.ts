@@ -3,8 +3,8 @@
  * Package Context Hook (Separated for Fast Refresh)
  */
 
-import { useContext } from "react";
 import { PackageContext, PackageContextType } from "@/react-app/contexts/PackageContext";
+import { useContext } from "react";
 
 export function usePackageContext(): PackageContextType {
   const context = useContext(PackageContext);

@@ -3,10 +3,10 @@
  * Enhanced Interactive Package Button Component
  */
 
+import { ArrowRight, Check, CheckCircle, Loader2, Zap } from "lucide-react";
 import { memo } from "react";
-import { Check, ArrowRight, Zap, Loader2, CheckCircle } from "lucide-react";
 // 🤖 BOT: Using simplified local state for fast implementation
-import { useState, useCallback } from "react";
+import { useCallback, useState } from "react";
 
 interface PackageButtonProps {
   packageData: {
@@ -34,10 +34,9 @@ const EnhancedPackageButton = memo(function EnhancedPackageButton({ packageData 
       setIsSelected(true);
       setIsProcessing(false);
       
-      // Log the selection
-      console.log(`🤖 BOT: Package "${packageData.name}" selected for $${packageData.price}`);
+      // Убрано логирование для чистоты интерфейса
     }, 1200 + Math.random() * 800);
-  }, [isProcessing, isSelected, packageData.name, packageData.price]);
+  }, [isProcessing, isSelected]);
 
   // Bot: Dynamic button content based on state
   const getButtonContent = () => {

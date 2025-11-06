@@ -3,8 +3,8 @@
  * Enhanced Package Selection Hook with Interactive States
  */
 
-import { useState, useCallback } from "react";
 import logger from "@/shared/logger";
+import { useCallback, useState } from "react";
 
 interface PackageState {
   selectedPackage: string | null;

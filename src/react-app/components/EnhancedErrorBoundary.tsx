@@ -3,9 +3,9 @@
  * Provides better error handling and user experience
  */
 
-import { Component, ErrorInfo, ReactNode } from "react";
 import logger from "@/shared/logger";
 import { AlertTriangle, RefreshCw } from "lucide-react";
+import { Component, ErrorInfo, ReactNode } from "react";
 
 interface Props {
   children: ReactNode;
