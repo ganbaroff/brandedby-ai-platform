@@ -1,0 +1,9 @@
+.testcomponent2 {
+  /* Add your styles here */
+  padding: 1rem;
+}
+
+.testcomponent2 h1 {
+  margin: 0 0 1rem 0;
+  color: #333;
+}

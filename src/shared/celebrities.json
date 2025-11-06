@@ -1,0 +1,110 @@
+[
+  {
+    "id": 1,
+    "name": "Aysel Məmmədova",
+    "role": "Singer",
+  "description": "A popular Azerbaijani singer, known for her unique voice and participation in international competitions.",
+    "image_url": "https://randomuser.me/api/portraits/women/1.jpg",
+    "niches": "[\"Business\", \"Entertainment\"]",
+    "rating": 9.5,
+    "popularity": 97,
+    "created_at": "2025-11-04T00:00:00Z",
+    "updated_at": "2025-11-04T00:00:00Z"
+  },
+  {
+    "id": 2,
+    "name": "Murad Əliyev",
+    "role": "Actor",
+  "description": "A well-known theater and film actor, winner of national awards, actively starring in modern movies.",
+    "image_url": "https://randomuser.me/api/portraits/men/2.jpg",
+    "niches": "[\"Business\", \"Technology\"]",
+    "rating": 9.2,
+    "popularity": 94,
+    "created_at": "2025-11-04T00:00:00Z",
+    "updated_at": "2025-11-04T00:00:00Z"
+  },
+  {
+    "id": 3,
+    "name": "Leyla Həsənova",
+    "role": "Model",
+  "description": "Model and influencer, face of leading fashion brands, inspires youth with her style.",
+    "image_url": "https://randomuser.me/api/portraits/women/3.jpg",
+    "niches": "[\"Beauty\", \"Fashion\"]",
+    "rating": 9.0,
+    "popularity": 92,
+    "created_at": "2025-11-04T00:00:00Z",
+    "updated_at": "2025-11-04T00:00:00Z"
+  },
+  {
+    "id": 4,
+    "name": "Rəşid Qasımов",
+    "role": "Musician",
+  "description": "Musician, composer, and producer, author of popular hits and soundtracks.",
+    "image_url": "https://randomuser.me/api/portraits/men/4.jpg",
+    "niches": "[\"Entertainment\", \"Business\"]",
+    "rating": 9.1,
+    "popularity": 93,
+    "created_at": "2025-11-04T00:00:00Z",
+    "updated_at": "2025-11-04T00:00:00Z"
+  },
+  {
+    "id": 5,
+    "name": "Səbinə Rzayeva",
+    "role": "Influencer",
+  "description": "Beauty blogger and influencer, inspiring thousands of followers with style and care tips.",
+    "image_url": "https://randomuser.me/api/portraits/women/5.jpg",
+    "niches": "[\"Beauty\", \"Lifestyle\"]",
+    "rating": 8.9,
+    "popularity": 90,
+    "created_at": "2025-11-04T00:00:00Z",
+    "updated_at": "2025-11-04T00:00:00Z"
+  },
+  {
+    "id": 6,
+    "name": "Tural Məmmədov",
+    "role": "Rapper",
+  "description": "A modern rapper whose tracks are popular among youth, participant in music battles.",
+    "image_url": "https://randomuser.me/api/portraits/men/6.jpg",
+    "niches": "[\"Entertainment\", \"Technology\"]",
+    "rating": 8.8,
+    "popularity": 89,
+    "created_at": "2025-11-04T00:00:00Z",
+    "updated_at": "2025-11-04T00:00:00Z"
+  },
+  {
+    "id": 7,
+    "name": "Nigar Camal",
+    "role": "TV Host",
+  "description": "TV host, known for her professionalism and charisma on national channels.",
+    "image_url": "https://randomuser.me/api/portraits/women/7.jpg",
+    "niches": "[\"Business\", \"Entertainment\"]",
+    "rating": 9.3,
+    "popularity": 95,
+    "created_at": "2025-11-04T00:00:00Z",
+    "updated_at": "2025-11-04T00:00:00Z"
+  },
+  {
+    "id": 8,
+    "name": "Cavid Əhmədов",
+    "role": "Comedian",
+  "description": "Comedian and actor, audience favorite, participant in popular comedy shows.",
+    "image_url": "https://randomuser.me/api/portraits/men/8.jpg",
+    "niches": "[\"Entertainment\", \"Business\"]",
+    "rating": 8.7,
+    "popularity": 88,
+    "created_at": "2025-11-04T00:00:00Z",
+    "updated_at": "2025-11-04T00:00:00Z"
+  },
+  {
+    "id": 9,
+    "name": "Gülnar Sultanova",
+    "role": "Actress",
+  "description": "Theater and film actress, winner of awards for best female roles.",
+    "image_url": "https://randomuser.me/api/portraits/women/9.jpg",
+    "niches": "[\"Entertainment\", \"Beauty\"]",
+    "rating": 9.0,
+    "popularity": 91,
+    "created_at": "2025-11-04T00:00:00Z",
+    "updated_at": "2025-11-04T00:00:00Z"
+  }
+]
