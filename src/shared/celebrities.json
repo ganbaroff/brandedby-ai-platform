@@ -1,5 +1,110 @@
 ﻿[
-  {"id":1,"name":"Taylor Swift","role":"Singer","description":"Global superstar","image_url":"https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=400&h=400&fit=crop&crop=face","niches":"[\"Entertainment\"]","rating":9.8,"popularity":99,"created_at":"2025-11-04T00:00:00Z","updated_at":"2025-11-04T00:00:00Z"},
-  {"id":2,"name":"Ryan Reynolds","role":"Actor","description":"Hollywood actor","image_url":"https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face","niches":"[\"Entertainment\"]","rating":9.5,"popularity":96,"created_at":"2025-11-04T00:00:00Z","updated_at":"2025-11-04T00:00:00Z"},
-  {"id":3,"name":"Zendaya","role":"Actress","description":"Emmy-winning actress","image_url":"https://images.unsplash.com/photo-1494790108755-2616b612b830?w=400&h=400&fit=crop&crop=face","niches":"[\"Entertainment\"]","rating":9.7,"popularity":98,"created_at":"2025-11-04T00:00:00Z","updated_at":"2025-11-04T00:00:00Z"}
+  {
+    "id": 1,
+    "name": "Taylor Swift",
+    "role": "Singer & Songwriter", 
+    "description": "Global superstar, Grammy-winning artist, and cultural icon known for her storytelling through music.",
+    "image_url": "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
+    "niches": "[\"Entertainment\", \"Business\"]",
+    "rating": 9.8,
+    "popularity": 99,
+    "created_at": "2025-11-04T00:00:00Z",
+    "updated_at": "2025-11-04T00:00:00Z"
+  },
+  {
+    "id": 2,
+    "name": "Ryan Reynolds",
+    "role": "Actor & Producer",
+    "description": "Hollywood A-lister known for his wit, charm, and blockbuster roles in action and comedy films.",
+    "image_url": "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
+    "niches": "[\"Entertainment\", \"Business\"]",
+    "rating": 9.5,
+    "popularity": 96,
+    "created_at": "2025-11-04T00:00:00Z",
+    "updated_at": "2025-11-04T00:00:00Z"
+  },
+  {
+    "id": 3,
+    "name": "Zendaya",
+    "role": "Actress & Model",
+    "description": "Emmy-winning actress, fashion icon, and activist inspiring millions worldwide.",
+    "image_url": "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
+    "niches": "[\"Beauty\", \"Fashion\", \"Entertainment\"]",
+    "rating": 9.7,
+    "popularity": 98,
+    "created_at": "2025-11-04T00:00:00Z",
+    "updated_at": "2025-11-04T00:00:00Z"
+  },
+  {
+    "id": 4,
+    "name": "Dwayne Johnson",
+    "role": "Actor & Entrepreneur",
+    "description": "The Rock - former wrestler turned Hollywood superstar and successful businessman.",
+    "image_url": "https://images.unsplash.com/photo-1566492031773-4f4e44671d66?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
+    "niches": "[\"Entertainment\", \"Business\", \"Fitness\"]",
+    "rating": 9.6,
+    "popularity": 97,
+    "created_at": "2025-11-04T00:00:00Z",
+    "updated_at": "2025-11-04T00:00:00Z"
+  },
+  {
+    "id": 5,
+    "name": "Emma Watson",
+    "role": "Actress & Activist",
+    "description": "Harry Potter star, UN Goodwill Ambassador, and advocate for women's rights and education.",
+    "image_url": "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
+    "niches": "[\"Entertainment\", \"Activism\"]",
+    "rating": 9.6,
+    "popularity": 94,
+    "created_at": "2025-11-04T00:00:00Z",
+    "updated_at": "2025-11-04T00:00:00Z"
+  },
+  {
+    "id": 6,
+    "name": "Chris Evans",
+    "role": "Actor",
+    "description": "Captain America himself - beloved actor known for superhero roles and charitable work.",
+    "image_url": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
+    "niches": "[\"Entertainment\", \"Superhero\"]",
+    "rating": 9.2,
+    "popularity": 89,
+    "created_at": "2025-11-04T00:00:00Z",
+    "updated_at": "2025-11-04T00:00:00Z"
+  },
+  {
+    "id": 7,
+    "name": "Scarlett Johansson",
+    "role": "Actress",
+    "description": "Two-time Oscar nominee and highest-grossing actress, known for diverse and powerful roles.",
+    "image_url": "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
+    "niches": "[\"Entertainment\", \"Action\"]",
+    "rating": 9.4,
+    "popularity": 91,
+    "created_at": "2025-11-04T00:00:00Z",
+    "updated_at": "2025-11-04T00:00:00Z"
+  },
+  {
+    "id": 8,
+    "name": "Michael B. Jordan",
+    "role": "Actor & Producer",
+    "description": "Acclaimed actor and producer, known for powerful performances in blockbuster films.",
+    "image_url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
+    "niches": "[\"Entertainment\", \"Business\"]",
+    "rating": 9.3,
+    "popularity": 92,
+    "created_at": "2025-11-04T00:00:00Z",
+    "updated_at": "2025-11-04T00:00:00Z"
+  },
+  {
+    "id": 9,
+    "name": "Margot Robbie",
+    "role": "Actress & Producer",
+    "description": "Oscar-nominated actress and successful producer, known for versatile and captivating performances.",
+    "image_url": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
+    "niches": "[\"Entertainment\", \"Business\"]",
+    "rating": 9.5,
+    "popularity": 93,
+    "created_at": "2025-11-04T00:00:00Z",
+    "updated_at": "2025-11-04T00:00:00Z"
+  }
 ]
