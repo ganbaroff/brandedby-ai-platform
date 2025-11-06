@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { User, Users, FileText, Plus, Edit, Trash2, Save, X, Upload, Image as ImageIcon, Download, RefreshCw, Database } from 'lucide-react';
+import { User, Users, FileText, Plus, Edit, Trash2, Save, X, Upload, Image as ImageIcon, Download, RefreshCw, Database, LogOut, Shield } from 'lucide-react';
 import { DataPersistence, CelebrityManager, BlogManager, DevTools } from '@/shared/admin-data-utils';
+import { AdminAuth } from '@/shared/admin-auth';
+import AdminLogin from '../components/AdminLogin';
 
 interface Celebrity {
   id: number;
@@ -22,6 +24,10 @@ interface BlogPost {
 }
 
 const AdminPanel: React.FC = () => {
+  // Authentication state
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
+  
   const [activeTab, setActiveTab] = useState<'celebrities' | 'blog' | 'analytics'>('celebrities');
   const [celebrities, setCelebrities] = useState<Celebrity[]>([]);
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
@@ -49,10 +55,20 @@ const AdminPanel: React.FC = () => {
     category: 'News'
   });
 
-  // Load data on component mount
+  // Check authentication on component mount
   useEffect(() => {
-    loadCelebrities();
-    loadBlogPosts();
+    const checkAuth = () => {
+      const isLoggedIn = AdminAuth.isAuthenticated();
+      setIsAuthenticated(isLoggedIn);
+      setIsCheckingAuth(false);
+      
+      if (isLoggedIn) {
+        loadCelebrities();
+        loadBlogPosts();
+      }
+    };
+
+    checkAuth();
   }, []);
 
   const loadCelebrities = async () => {
@@ -162,14 +178,52 @@ const AdminPanel: React.FC = () => {
     return `https://images.unsplash.com/photo-${Date.now()}?w=400&h=400&fit=crop&crop=face&auto=format&q=80&sig=${encodeURIComponent(query)}`;
   };
 
+  // Handle login success
+  const handleLoginSuccess = () => {
+    setIsAuthenticated(true);
+    loadCelebrities();
+    loadBlogPosts();
+  };
+
+  // Handle logout
+  const handleLogout = () => {
+    AdminAuth.logout();
+    setIsAuthenticated(false);
+  };
+
+  // Show loading screen while checking authentication
+  if (isCheckingAuth) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-100 flex items-center justify-center">
+        <div className="bg-white rounded-lg shadow-xl p-8 text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Checking authentication...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Show login screen if not authenticated
+  if (!isAuthenticated) {
+    return <AdminLogin onLogin={handleLoginSuccess} />;
+  }
+
+  // Main admin panel (authenticated users only)
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
       <div className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
-            <h1 className="text-3xl font-bold text-gray-900">BrandedBy Admin Panel</h1>
-            <div className="flex space-x-4">
+            <div className="flex items-center space-x-4">
+              <h1 className="text-3xl font-bold text-gray-900">BrandedBy Admin Panel</h1>
+              <div className="flex items-center space-x-2 text-sm text-gray-600">
+                <Shield className="h-4 w-4" />
+                <span>Admin: {AdminAuth.getSessionInfo().user}</span>
+              </div>
+            </div>
+            <div className="flex items-center space-x-4">
+              <div className="flex space-x-4">
               <button
                 onClick={() => setActiveTab('celebrities')}
                 className={`flex items-center px-4 py-2 rounded-lg transition-colors ${
@@ -192,16 +246,26 @@ const AdminPanel: React.FC = () => {
                 <FileText className="h-5 w-5 mr-2" />
                 Blog
               </button>
+                <button
+                  onClick={() => setActiveTab('analytics')}
+                  className={`flex items-center px-4 py-2 rounded-lg transition-colors ${
+                    activeTab === 'analytics'
+                      ? 'bg-blue-100 text-blue-700'
+                      : 'text-gray-600 hover:text-gray-900'
+                  }`}
+                >
+                  <User className="h-5 w-5 mr-2" />
+                  Analytics
+                </button>
+              </div>
+              
+              {/* Logout Button */}
               <button
-                onClick={() => setActiveTab('analytics')}
-                className={`flex items-center px-4 py-2 rounded-lg transition-colors ${
-                  activeTab === 'analytics'
-                    ? 'bg-blue-100 text-blue-700'
-                    : 'text-gray-600 hover:text-gray-900'
-                }`}
+                onClick={handleLogout}
+                className="flex items-center px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
               >
-                <User className="h-5 w-5 mr-2" />
-                Analytics
+                <LogOut className="h-4 w-4 mr-2" />
+                Logout
               </button>
             </div>
           </div>
