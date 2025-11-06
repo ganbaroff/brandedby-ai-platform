@@ -1,0 +1,21 @@
+{
+  "version": 2,
+  "framework": null,
+  "buildCommand": "npm ci --legacy-peer-deps && npm run build",
+  "outputDirectory": "dist/client",
+  "installCommand": "npm ci --legacy-peer-deps",
+  "devCommand": "npm run dev",
+  "env": {
+    "NODE_VERSION": "18.x"
+  },
+  "build": {
+    "env": {
+      "VITE_ENVIRONMENT": "production"
+    }
+  },
+  "functions": {
+    "app/**": {
+      "runtime": "edge"
+    }
+  }
+}
