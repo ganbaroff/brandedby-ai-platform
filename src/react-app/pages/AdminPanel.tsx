@@ -223,52 +223,18 @@ const AdminPanel: React.FC = () => {
       {/* Header */}
       <div className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-6">
-            <div className="flex items-center space-x-4">
+          <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center py-6 space-y-4 lg:space-y-0">
+            {/* Title and User Info */}
+            <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-4 space-y-2 sm:space-y-0">
               <h1 className="text-3xl font-bold text-gray-900">BrandedBy Admin Panel</h1>
-              <div className="flex items-center space-x-2 text-sm text-gray-600">
+              <div className="flex items-center space-x-2 text-sm text-gray-600 bg-gray-100 px-3 py-1 rounded-full">
                 <Shield className="h-4 w-4" />
                 <span>Admin: {AdminAuth.getSessionInfo().user}</span>
               </div>
             </div>
-            <div className="flex items-center space-x-4">
-              <div className="flex space-x-4">
-              <button
-                onClick={() => setActiveTab('celebrities')}
-                className={`flex items-center px-4 py-2 rounded-lg transition-colors ${
-                  activeTab === 'celebrities'
-                    ? 'bg-blue-100 text-blue-700'
-                    : 'text-gray-600 hover:text-gray-900'
-                }`}
-              >
-                <Users className="h-5 w-5 mr-2" />
-                Celebrities
-              </button>
-              <button
-                onClick={() => setActiveTab('blog')}
-                className={`flex items-center px-4 py-2 rounded-lg transition-colors ${
-                  activeTab === 'blog'
-                    ? 'bg-blue-100 text-blue-700'
-                    : 'text-gray-600 hover:text-gray-900'
-                }`}
-              >
-                <FileText className="h-5 w-5 mr-2" />
-                Blog
-              </button>
-                <button
-                  onClick={() => setActiveTab('analytics')}
-                  className={`flex items-center px-4 py-2 rounded-lg transition-colors ${
-                    activeTab === 'analytics'
-                      ? 'bg-blue-100 text-blue-700'
-                      : 'text-gray-600 hover:text-gray-900'
-                  }`}
-                >
-                  <User className="h-5 w-5 mr-2" />
-                  Analytics
-                </button>
-              </div>
-              
-              {/* Logout Button */}
+            
+            {/* Logout Button - Top Right */}
+            <div className="flex justify-end">
               <button
                 onClick={handleLogout}
                 className="flex items-center px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
@@ -278,6 +244,45 @@ const AdminPanel: React.FC = () => {
               </button>
             </div>
           </div>
+          
+          {/* Navigation Tabs - Separate Row */}
+          <div className="border-t border-gray-200">
+            <nav className="flex space-x-8 pt-4 pb-2">
+              <button
+                onClick={() => setActiveTab('celebrities')}
+                className={`flex items-center px-4 py-2 rounded-lg transition-colors ${
+                  activeTab === 'celebrities'
+                    ? 'bg-blue-100 text-blue-700 border border-blue-200'
+                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                }`}
+              >
+                <Users className="h-5 w-5 mr-2" />
+                Celebrities
+              </button>
+              <button
+                onClick={() => setActiveTab('blog')}
+                className={`flex items-center px-4 py-2 rounded-lg transition-colors ${
+                  activeTab === 'blog'
+                    ? 'bg-blue-100 text-blue-700 border border-blue-200'
+                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                }`}
+              >
+                <FileText className="h-5 w-5 mr-2" />
+                Blog Posts
+              </button>
+              <button
+                onClick={() => setActiveTab('analytics')}
+                className={`flex items-center px-4 py-2 rounded-lg transition-colors ${
+                  activeTab === 'analytics'
+                    ? 'bg-blue-100 text-blue-700 border border-blue-200'
+                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                }`}
+              >
+                <User className="h-5 w-5 mr-2" />
+                Analytics
+              </button>
+            </nav>
+          </div>
         </div>
       </div>
 
@@ -285,11 +290,11 @@ const AdminPanel: React.FC = () => {
         {/* Celebrities Tab */}
         {activeTab === 'celebrities' && (
           <div>
-            <div className="flex justify-between items-center mb-6">
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6 space-y-4 sm:space-y-0">
               <h2 className="text-2xl font-semibold text-gray-900">Celebrity Management</h2>
               <button
                 onClick={() => setShowCelebrityForm(true)}
-                className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                className="flex items-center justify-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors w-full sm:w-auto"
               >
                 <Plus className="h-5 w-5 mr-2" />
                 Add Celebrity
@@ -298,8 +303,8 @@ const AdminPanel: React.FC = () => {
 
             {/* Celebrity Form Modal */}
             {(showCelebrityForm || editingCelebrity) && (
-              <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                <div className="bg-white rounded-lg p-6 w-full max-w-md">
+              <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+                <div className="bg-white rounded-lg p-4 md:p-6 w-full max-w-md max-h-[90vh] overflow-y-auto">
                   <div className="flex justify-between items-center mb-4">
                     <h3 className="text-lg font-semibold">
                       {editingCelebrity ? 'Edit Celebrity' : 'Add Celebrity'}
@@ -426,29 +431,29 @@ const AdminPanel: React.FC = () => {
             )}
 
             {/* Celebrities Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
               {celebrities.map((celebrity) => (
-                <div key={celebrity.id} className="bg-white rounded-lg shadow-md overflow-hidden">
+                <div key={celebrity.id} className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow overflow-hidden">
                   <img
                     src={celebrity.image}
                     alt={celebrity.name}
-                    className="w-full h-48 object-cover"
+                    className="w-full h-40 sm:h-48 object-cover"
                   />
                   <div className="p-4">
-                    <h3 className="font-semibold text-lg text-gray-900 mb-1">{celebrity.name}</h3>
-                    <p className="text-sm text-blue-600 mb-2">{celebrity.category}</p>
-                    <p className="text-gray-600 text-sm mb-4 line-clamp-2">{celebrity.description}</p>
-                    <div className="flex space-x-2">
+                    <h3 className="font-semibold text-lg text-gray-900 mb-1 truncate">{celebrity.name}</h3>
+                    <p className="text-sm text-blue-600 mb-2 font-medium">{celebrity.category}</p>
+                    <p className="text-gray-600 text-sm mb-4 line-clamp-2 min-h-[2.5rem]">{celebrity.description}</p>
+                    <div className="flex flex-col sm:flex-row gap-2">
                       <button
                         onClick={() => setEditingCelebrity(celebrity)}
-                        className="flex items-center px-3 py-1 text-sm bg-yellow-100 text-yellow-700 rounded hover:bg-yellow-200 transition-colors"
+                        className="flex items-center justify-center px-3 py-2 text-sm bg-yellow-100 text-yellow-700 rounded hover:bg-yellow-200 transition-colors flex-1"
                       >
                         <Edit className="h-4 w-4 mr-1" />
                         Edit
                       </button>
                       <button
                         onClick={() => deleteCelebrity(celebrity.id)}
-                        className="flex items-center px-3 py-1 text-sm bg-red-100 text-red-700 rounded hover:bg-red-200 transition-colors"
+                        className="flex items-center justify-center px-3 py-2 text-sm bg-red-100 text-red-700 rounded hover:bg-red-200 transition-colors flex-1"
                       >
                         <Trash2 className="h-4 w-4 mr-1" />
                         Delete
@@ -464,11 +469,11 @@ const AdminPanel: React.FC = () => {
         {/* Blog Tab */}
         {activeTab === 'blog' && (
           <div>
-            <div className="flex justify-between items-center mb-6">
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6 space-y-4 sm:space-y-0">
               <h2 className="text-2xl font-semibold text-gray-900">Blog Management</h2>
               <button
                 onClick={() => setShowPostForm(true)}
-                className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                className="flex items-center justify-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors w-full sm:w-auto"
               >
                 <Plus className="h-5 w-5 mr-2" />
                 Create Post
@@ -477,8 +482,8 @@ const AdminPanel: React.FC = () => {
 
             {/* Blog Post Form Modal */}
             {(showPostForm || editingPost) && (
-              <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                <div className="bg-white rounded-lg p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+              <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+                <div className="bg-white rounded-lg p-4 md:p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
                   <div className="flex justify-between items-center mb-4">
                     <h3 className="text-lg font-semibold">
                       {editingPost ? 'Edit Post' : 'Create New Post'}
@@ -647,40 +652,41 @@ const AdminPanel: React.FC = () => {
             {/* Blog Posts List */}
             <div className="space-y-4">
               {blogPosts.map((post) => (
-                <div key={post.id} className="bg-white rounded-lg shadow-md p-6">
-                  <div className="flex items-start justify-between">
+                <div key={post.id} className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow p-4 md:p-6">
+                  <div className="flex flex-col sm:flex-row sm:items-start justify-between space-y-4 sm:space-y-0">
                     <div className="flex-1">
-                      <div className="flex items-center space-x-3 mb-2">
-                        <h3 className="text-xl font-semibold text-gray-900">{post.title}</h3>
-                        <span className="px-2 py-1 text-xs bg-blue-100 text-blue-700 rounded-full">
+                      <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-3 mb-2 space-y-2 sm:space-y-0">
+                        <h3 className="text-lg md:text-xl font-semibold text-gray-900 break-words">{post.title}</h3>
+                        <span className="px-2 py-1 text-xs bg-blue-100 text-blue-700 rounded-full inline-block w-fit">
                           {post.category}
                         </span>
                       </div>
-                      <p className="text-gray-600 mb-2">{post.excerpt}</p>
-                      <div className="flex items-center text-sm text-gray-500 space-x-4">
-                        <span>Author: {post.author}</span>
-                        <span>Date: {new Date(post.publishedAt).toLocaleDateString('en-US')}</span>
+                      <p className="text-gray-600 mb-3 text-sm md:text-base line-clamp-2">{post.excerpt}</p>
+                      <div className="flex flex-col sm:flex-row sm:items-center text-sm text-gray-500 space-y-1 sm:space-y-0 sm:space-x-4">
+                        <span className="font-medium">Author: {post.author}</span>
+                        <span>Published: {new Date(post.publishedAt).toLocaleDateString('en-US')}</span>
                       </div>
                     </div>
-                    <div className="flex items-center space-x-2 ml-4">
+                    
+                    <div className="flex flex-col sm:flex-row sm:items-start space-y-3 sm:space-y-0 sm:space-x-3 sm:ml-4">
                       {post.image && (
                         <img
                           src={post.image}
                           alt={post.title}
-                          className="w-16 h-16 object-cover rounded"
+                          className="w-full sm:w-20 md:w-24 h-24 sm:h-16 md:h-20 object-cover rounded-lg"
                         />
                       )}
-                      <div className="flex flex-col space-y-2">
+                      <div className="flex flex-row sm:flex-col gap-2">
                         <button
                           onClick={() => setEditingPost(post)}
-                          className="flex items-center px-3 py-1 text-sm bg-yellow-100 text-yellow-700 rounded hover:bg-yellow-200 transition-colors"
+                          className="flex items-center justify-center px-3 py-2 text-sm bg-yellow-100 text-yellow-700 rounded hover:bg-yellow-200 transition-colors flex-1 sm:flex-none"
                         >
                           <Edit className="h-4 w-4 mr-1" />
                           Edit
                         </button>
                         <button
                           onClick={() => deletePost(post.id)}
-                          className="flex items-center px-3 py-1 text-sm bg-red-100 text-red-700 rounded hover:bg-red-200 transition-colors"
+                          className="flex items-center justify-center px-3 py-2 text-sm bg-red-100 text-red-700 rounded hover:bg-red-200 transition-colors flex-1 sm:flex-none"
                         >
                           <Trash2 className="h-4 w-4 mr-1" />
                           Delete
@@ -697,12 +703,12 @@ const AdminPanel: React.FC = () => {
         {/* Analytics Tab */}
         {activeTab === 'analytics' && (
           <div>
-            <div className="flex justify-between items-center mb-6">
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6 space-y-4 sm:space-y-0">
               <h2 className="text-2xl font-semibold text-gray-900">Analytics & Statistics</h2>
-              <div className="flex space-x-2">
+              <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
                 <button
                   onClick={() => DevTools.logStorageContents()}
-                  className="flex items-center px-3 py-1 bg-blue-100 text-blue-700 rounded text-sm hover:bg-blue-200 transition-colors"
+                  className="flex items-center justify-center px-3 py-2 bg-blue-100 text-blue-700 rounded text-sm hover:bg-blue-200 transition-colors w-full sm:w-auto"
                 >
                   <Database className="h-4 w-4 mr-1" />
                   Debug Storage
@@ -717,7 +723,7 @@ const AdminPanel: React.FC = () => {
                     a.download = `brandedby-backup-${new Date().toISOString().split('T')[0]}.json`;
                     a.click();
                   }}
-                  className="flex items-center px-3 py-1 bg-green-100 text-green-700 rounded text-sm hover:bg-green-200 transition-colors"
+                  className="flex items-center justify-center px-3 py-2 bg-green-100 text-green-700 rounded text-sm hover:bg-green-200 transition-colors w-full sm:w-auto"
                 >
                   <Download className="h-4 w-4 mr-1" />
                   Export Data
