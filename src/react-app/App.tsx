@@ -13,6 +13,7 @@
  * - Mobile-first responsive design
  */
 
+import EnhancedErrorBoundary from "@/react-app/components/EnhancedErrorBoundary";
 import AdminPage from "@/react-app/pages/Admin";
 import AuthCallbackPage from "@/react-app/pages/AuthCallback";
 import CelebritiesPage from "@/react-app/pages/Celebrities";
@@ -27,8 +28,9 @@ import { Route, BrowserRouter as Router, Routes } from "react-router";
 
 export default function App() {
   return (
-    <AuthProvider>
-      <Router>
+    <EnhancedErrorBoundary>
+      <AuthProvider>
+        <Router>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/celebrities" element={<CelebritiesPage />} />
@@ -40,7 +42,8 @@ export default function App() {
           <Route path="/admin" element={<AdminPage />} />
           <Route path="/email-setup" element={<EmailSetupPage />} />
         </Routes>
-      </Router>
-    </AuthProvider>
+        </Router>
+      </AuthProvider>
+    </EnhancedErrorBoundary>
   );
 }

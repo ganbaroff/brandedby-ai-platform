@@ -16,10 +16,10 @@ import {
     X,
     Zap
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, memo } from "react";
 import { useNavigate } from "react-router";
 
-export default function Home() {
+const Home = memo(function Home() {
   // Show 9 celebrities on the main page
   const celebrities = celebritiesData.slice(0, 9);
   const navigate = useNavigate();
@@ -505,4 +505,6 @@ export default function Home() {
       <ConfigStatus />
     </div>
   );
-}
+});
+
+export default Home;
