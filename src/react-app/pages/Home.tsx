@@ -1,3 +1,4 @@
+import BlogSection from "@/react-app/components/BlogSection";
 import EnhancedPackageButton from "@/react-app/components/EnhancedPackageButton";
 import FaceMorphingDemo from "@/react-app/components/FaceMorphingDemo";
 import Footer from "@/react-app/components/Footer";
@@ -455,6 +456,9 @@ const Home = memo(function Home() {
           </div>
         </div>
       </section>
+
+      {/* Blog Section */}
+      <BlogSection />
 
       <Footer />
     </div>

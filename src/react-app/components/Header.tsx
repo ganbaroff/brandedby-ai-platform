@@ -1,6 +1,6 @@
-import { useNavigate } from "react-router";
 import { useAuth } from "@getmocha/users-service/react";
-import { Sparkles, User, LogOut } from "lucide-react";
+import { LogOut, Sparkles, User } from "lucide-react";
+import { useNavigate } from "react-router";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -44,6 +44,12 @@ export default function Header() {
               Celebrities
             </button>
             <button 
+              onClick={() => navigate('/blog')}
+              className="text-gray-600 hover:text-purple-600 transition-colors duration-200 font-medium"
+            >
+              Блог
+            </button>
+            <button 
               onClick={() => navigate('/selfie-upload')}
               className="text-gray-600 hover:text-purple-600 transition-colors duration-200 font-medium"
             >
@@ -66,6 +72,13 @@ export default function Header() {
               >
                 <User className="w-5 h-5" />
                 <span className="hidden sm:inline">Dashboard</span>
+              </button>
+              <button
+                onClick={() => navigate('/admin-panel')}
+                className="flex items-center space-x-2 text-gray-700 hover:text-orange-600 font-medium transition-colors"
+              >
+                <Sparkles className="w-5 h-5" />
+                <span className="hidden sm:inline">Admin</span>
               </button>
               <button
                 onClick={handleAuthAction}
