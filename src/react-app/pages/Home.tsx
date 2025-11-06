@@ -1,4 +1,3 @@
-import ConfigStatus from "@/react-app/components/ConfigStatus";
 import EnhancedPackageButton from "@/react-app/components/EnhancedPackageButton";
 import FaceMorphingDemo from "@/react-app/components/FaceMorphingDemo";
 import Footer from "@/react-app/components/Footer";
@@ -458,9 +457,6 @@ const Home = memo(function Home() {
       </section>
 
       <Footer />
-      
-      {/* Config Status Panel */}
-      <ConfigStatus />
     </div>
   );
 });

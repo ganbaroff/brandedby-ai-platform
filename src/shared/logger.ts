@@ -88,32 +88,7 @@ class Logger {
     this.saveLogsToLocalStorage(logs);
   }
 
-  private getEmailConfig() {
-    try {
-      const stored = localStorage.getItem('emailjs_config');
-      if (stored) {
-        return JSON.parse(stored);
-      }
-    } catch (error) {
-      console.error('Error reading EmailJS config:', error);
-    }
-    
-    return {
-      serviceId: 'service_test123',
-      templateId: 'template_test123', 
-      userId: 'user_test123',
-      targetEmail: 'your-email@gmail.com'
-    };
-  }
-
-  private isConfigValid(config: Record<string, string>) {
-    return config.serviceId && 
-           config.templateId && 
-           config.userId &&
-           config.targetEmail &&
-           config.serviceId !== 'service_test123' &&
-           config.targetEmail !== 'your-email@gmail.com';
-  }
+  // Email config методы удалены - не нужны без уведомлений
 
   private saveLogsToLocalStorage(logs: LogEntry[]) {
     try {
@@ -194,16 +169,7 @@ class Logger {
     }
   }
 
-  // Получение статуса конфигурации
-  getConfigStatus() {
-    const config = this.getEmailConfig();
-    return {
-      isValid: this.isConfigValid(config),
-      config: config,
-      emailJSLoaded: !!window.emailjs,
-      failedLogsCount: this.getFailedLogs().length
-    };
-  }
+  // Метод удален - больше не нужен для пользователей
 
   // Логирование действий пользователя
   logUserAction(action: string, details?: Record<string, unknown>) {
