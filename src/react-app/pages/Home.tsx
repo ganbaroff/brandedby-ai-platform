@@ -1,22 +1,22 @@
 import ConfigStatus from "@/react-app/components/ConfigStatus";
+import EnhancedPackageButton from "@/react-app/components/EnhancedPackageButton";
 import FaceMorphingDemo from "@/react-app/components/FaceMorphingDemo";
 import Footer from "@/react-app/components/Footer";
 import Header from "@/react-app/components/Header";
 import celebritiesData from "@/shared/celebrities.json";
 import logger from "@/shared/logger";
 import {
-    ArrowRight,
-    Camera,
-    Check,
-    Play,
-    Sparkles,
-    Upload,
-    Users,
-    Video,
-    X,
-    Zap
+  ArrowRight,
+  Camera,
+  Play,
+  Sparkles,
+  Upload,
+  Users,
+  Video,
+  X,
+  Zap
 } from "lucide-react";
-import { useEffect, useState, memo } from "react";
+import { memo, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 
 const Home = memo(function Home() {
@@ -344,52 +344,10 @@ const Home = memo(function Home() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          {/* 🤖 BOT: Enhanced Interactive Package Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto">
             {packages.map((pkg) => (
-              <div 
-                key={pkg.name}
-                className={`relative bg-white rounded-3xl p-8 border-2 ${
-                  pkg.popular ? 'border-purple-200 shadow-2xl shadow-purple-500/20' : 'border-gray-200'
-                } hover:border-purple-300 transition-all duration-300 transform hover:scale-105`}
-              >
-                {pkg.popular && (
-                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                    <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2 rounded-full text-sm font-semibold">
-                      Most Popular
-                    </div>
-                  </div>
-                )}
-
-                <div className="text-center space-y-6">
-                  <div>
-                    <h3 className="text-2xl font-bold text-gray-900">{pkg.name}</h3>
-                    <div className="mt-4">
-                      <span className="text-5xl font-bold text-gray-900">${pkg.price}</span>
-                      <span className="text-gray-600 ml-2">per video</span>
-                    </div>
-                    <p className="text-gray-600 mt-2">{pkg.duration} video</p>
-                  </div>
-
-                  <ul className="space-y-3 text-left">
-                    {pkg.features.map((feature) => (
-                      <li key={feature} className="flex items-center space-x-3">
-                        <Check className="w-5 h-5 text-green-500 flex-shrink-0" />
-                        <span className="text-gray-700">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  <button 
-                    className={`w-full py-3 px-6 rounded-xl font-semibold transition-all duration-300 ${
-                      pkg.popular 
-                        ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:shadow-lg hover:shadow-purple-500/25 transform hover:scale-105' 
-                        : 'bg-gray-100 text-gray-900 hover:bg-gray-200'
-                    }`}
-                  >
-                    Get Started
-                  </button>
-                </div>
-              </div>
+              <EnhancedPackageButton key={pkg.name} packageData={pkg} />
             ))}
           </div>
         </div>
