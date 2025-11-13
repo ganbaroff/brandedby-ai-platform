@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 
 interface PaymentData {
   celebrity_id?: number;
@@ -20,6 +20,27 @@ interface UseStripePaymentOptions {
   onError?: (error: string) => void;
 }
 
+interface PaymentIntentResponse {
+  success: boolean;
+  clientSecret?: string;
+  projectId?: number;
+  error?: {
+    code?: string;
+    message: string;
+    details?: unknown;
+  };
+}
+
+interface ConfirmPaymentResponse {
+  success: boolean;
+  message?: string;
+  error?: {
+    code?: string;
+    message: string;
+    details?: unknown;
+  };
+}
+
 export function useStripePayment({
   amount,
   currency = 'USD',
@@ -32,45 +53,77 @@ export function useStripePayment({
   const [projectId, setProjectId] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const createPaymentIntent = async () => {
+  const createPaymentIntent = useCallback(async () => {
     setIsProcessing(true);
     setError(null);
 
     try {
+      // Validate amount
+      if (amount <= 0) {
+        throw new Error('Payment amount must be greater than zero');
+      }
+
       const response = await fetch('/api/stripe/create-payment-intent', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
+        credentials: 'include', // Include cookies for auth
         body: JSON.stringify({
           amount,
-          currency,
+          currency: currency.toLowerCase(),
           projectData,
         }),
       });
 
-      const data = await response.json();
+      let data: PaymentIntentResponse;
+      try {
+        data = await response.json();
+      } catch (parseError) {
+        throw new Error('Failed to parse server response');
+      }
 
-      if (!data.success) {
-        throw new Error(data.error || 'Failed to create payment intent');
+      if (!response.ok || !data.success) {
+        const errorMessage = data.error?.message || data.error || 'Failed to create payment intent';
+        throw new Error(errorMessage);
+      }
+
+      if (!data.clientSecret || !data.projectId) {
+        throw new Error('Invalid response from server');
       }
 
       setClientSecret(data.clientSecret);
       setProjectId(data.projectId);
-      return data;
+      
+      return {
+        clientSecret: data.clientSecret,
+        projectId: data.projectId,
+      };
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to initialize payment';
+      const errorMessage = err instanceof Error 
+        ? err.message 
+        : 'Failed to initialize payment';
       setError(errorMessage);
       onError?.(errorMessage);
       throw err;
     } finally {
       setIsProcessing(false);
     }
-  };
+  }, [amount, currency, projectData, onError]);
 
-  const confirmPayment = async (paymentIntentId: string) => {
+  const confirmPayment = useCallback(async (paymentIntentId: string) => {
     if (!projectId) {
-      throw new Error('No project ID available');
+      const errorMsg = 'No project ID available. Please create a payment intent first.';
+      setError(errorMsg);
+      onError?.(errorMsg);
+      throw new Error(errorMsg);
+    }
+
+    if (!paymentIntentId || paymentIntentId.trim() === '') {
+      const errorMsg = 'Payment intent ID is required';
+      setError(errorMsg);
+      onError?.(errorMsg);
+      throw new Error(errorMsg);
     }
 
     setIsProcessing(true);
@@ -82,29 +135,46 @@ export function useStripePayment({
         headers: {
           'Content-Type': 'application/json',
         },
+        credentials: 'include',
         body: JSON.stringify({
-          paymentIntentId,
+          paymentIntentId: paymentIntentId.trim(),
           projectId,
         }),
       });
 
-      const data = await response.json();
+      let data: ConfirmPaymentResponse;
+      try {
+        data = await response.json();
+      } catch (parseError) {
+        throw new Error('Failed to parse server response');
+      }
 
-      if (!data.success) {
-        throw new Error(data.error || 'Failed to confirm payment');
+      if (!response.ok || !data.success) {
+        const errorMessage = data.error?.message || data.error || 'Failed to confirm payment';
+        throw new Error(errorMessage);
       }
 
       onSuccess?.(projectId);
+      
       return data;
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to confirm payment';
+      const errorMessage = err instanceof Error 
+        ? err.message 
+        : 'Failed to confirm payment';
       setError(errorMessage);
       onError?.(errorMessage);
       throw err;
     } finally {
       setIsProcessing(false);
     }
-  };
+  }, [projectId, onSuccess, onError]);
+
+  const reset = useCallback(() => {
+    setIsProcessing(false);
+    setClientSecret(null);
+    setProjectId(null);
+    setError(null);
+  }, []);
 
   return {
     isProcessing,
@@ -113,5 +183,6 @@ export function useStripePayment({
     error,
     createPaymentIntent,
     confirmPayment,
+    reset,
   };
 }

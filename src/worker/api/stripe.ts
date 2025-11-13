@@ -3,6 +3,7 @@ import { authMiddleware } from '@getmocha/users-service/backend';
 import { zValidator } from '@hono/zod-validator';
 import { z } from 'zod';
 import Stripe from 'stripe';
+import { formatErrorResponse, UnauthorizedError, NotFoundError, PaymentError, DatabaseError } from '@/shared/errors';
 
 const createPaymentIntentSchema = z.object({
   amount: z.number().positive(),
@@ -27,13 +28,24 @@ stripe.post('/create-payment-intent', authMiddleware, zValidator('json', createP
   try {
     const user = c.get('user');
     if (!user) {
-      return c.json({ error: 'Not authenticated' }, 401);
+      throw new UnauthorizedError();
     }
 
     const { amount, currency, projectData } = c.req.valid('json');
     
     // Initialize Stripe with secret key
-    const stripeClient = new Stripe(c.env.STRIPE_SECRET_KEY);
+    if (!c.env.STRIPE_SECRET_KEY) {
+      throw new PaymentError('Stripe is not configured');
+    }
+    
+    const stripeClient = new Stripe(c.env.STRIPE_SECRET_KEY, {
+      apiVersion: '2024-11-20.acacia',
+    });
+
+    // Validate amount is positive
+    if (amount <= 0) {
+      throw new PaymentError('Payment amount must be greater than zero');
+    }
 
     // Create payment intent
     const paymentIntent = await stripeClient.paymentIntents.create({
@@ -56,7 +68,7 @@ stripe.post('/create-payment-intent', authMiddleware, zValidator('json', createP
     ).bind(user.google_sub).first();
 
     if (!localUser) {
-      return c.json({ error: 'User not found' }, 404);
+      throw new NotFoundError('User', user.google_sub);
     }
 
     // Create project with pending status
@@ -97,23 +109,23 @@ stripe.post('/create-payment-intent', authMiddleware, zValidator('json', createP
       projectId,
     });
   } catch (error) {
-    console.error('Payment intent creation error:', error);
-    return c.json({
-      success: false,
-      error: error instanceof Error ? error.message : 'Failed to create payment intent'
-    }, 500);
+    const errorResponse = formatErrorResponse(error);
+    const statusCode = error instanceof Error && 'statusCode' in error 
+      ? (error as { statusCode: number }).statusCode 
+      : 500;
+    return c.json(errorResponse, statusCode);
   }
 });
 
 // Confirm payment
 stripe.post('/confirm-payment', authMiddleware, zValidator('json', z.object({
-  paymentIntentId: z.string(),
-  projectId: z.number(),
+  paymentIntentId: z.string().min(1),
+  projectId: z.number().positive(),
 })), async (c) => {
   try {
     const user = c.get('user');
     if (!user) {
-      return c.json({ error: 'Not authenticated' }, 401);
+      throw new UnauthorizedError();
     }
 
     const { paymentIntentId, projectId } = c.req.valid('json');
@@ -138,11 +150,11 @@ stripe.post('/confirm-payment', authMiddleware, zValidator('json', z.object({
       message: 'Payment confirmed successfully'
     });
   } catch (error) {
-    console.error('Payment confirmation error:', error);
-    return c.json({
-      success: false,
-      error: 'Failed to confirm payment'
-    }, 500);
+    const errorResponse = formatErrorResponse(error);
+    const statusCode = error instanceof Error && 'statusCode' in error 
+      ? (error as { statusCode: number }).statusCode 
+      : 500;
+    return c.json(errorResponse, statusCode);
   }
 });
 

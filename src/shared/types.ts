@@ -68,15 +68,41 @@ export type VideoFormat = 'greeting' | 'advertisement' | 'announcement' | 'educa
 
 // API Response Types
 
-// Specify the data type for data if possible. For example, z.unknown() or a specific zod object
 export const ApiResponseSchema = z.object({
   success: z.boolean(),
   data: z.unknown().optional(),
   error: z.string().optional(),
 });
 
-export type ApiResponse<T = unknown> = {
-  success: boolean;
-  data?: T;
-  error?: string;
+export type ApiResponse<T = unknown> = 
+  | { success: true; data: T }
+  | { success: false; error: string };
+
+// Extended API Response with error details
+export type ApiErrorResponse = {
+  success: false;
+  error: {
+    code: string;
+    message: string;
+    details?: unknown;
+    timestamp: string;
+  };
 };
+
+export type ApiSuccessResponse<T> = {
+  success: true;
+  data: T;
+};
+
+// Helper type guards
+export function isApiSuccess<T>(
+  response: ApiResponse<T>
+): response is ApiSuccessResponse<T> {
+  return response.success === true;
+}
+
+export function isApiError<T>(
+  response: ApiResponse<T>
+): response is ApiErrorResponse {
+  return response.success === false;
+}

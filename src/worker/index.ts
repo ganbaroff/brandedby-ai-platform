@@ -1,4 +1,5 @@
 import { Celebrity, CelebritySchema } from "@/shared/types";
+import { formatErrorResponse, DatabaseError } from "@/shared/errors";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { auth } from "./api/auth";
@@ -35,7 +36,10 @@ app.get("/api/celebrities", async (c) => {
       try {
         return CelebritySchema.parse(row);
       } catch (error) {
-        console.error("Failed to parse celebrity:", error, row);
+        // Log validation errors but don't fail the entire request
+        if (error instanceof Error) {
+          console.error("Failed to parse celebrity:", error.message, row);
+        }
         return null;
       }
     }).filter((celebrity: Celebrity | null): celebrity is Celebrity => celebrity !== null);
@@ -56,9 +60,17 @@ app.get("/api/celebrities", async (c) => {
 // Get single celebrity by ID
 app.get("/api/celebrities/:id", async (c) => {
   try {
-    const id = c.req.param("id");
-    const db = c.env.DB;
+    const idParam = c.req.param("id");
+    const id = Number.parseInt(idParam, 10);
     
+    if (Number.isNaN(id) || id <= 0) {
+      return c.json({
+        success: false,
+        error: "Invalid celebrity ID"
+      }, 400);
+    }
+    
+    const db = c.env.DB;
     const result = await db.prepare(`
       SELECT * FROM celebrities WHERE id = ?
     `).bind(id).first();
@@ -70,18 +82,21 @@ app.get("/api/celebrities/:id", async (c) => {
       }, 404);
     }
 
-    const celebrity = CelebritySchema.parse(result);
-
-    return c.json({
-      success: true,
-      data: celebrity
-    });
+    try {
+      const celebrity = CelebritySchema.parse(result);
+      return c.json({
+        success: true,
+        data: celebrity
+      });
+    } catch (parseError) {
+      throw new DatabaseError("Failed to parse celebrity data", parseError);
+    }
   } catch (error) {
-    console.error("Error fetching celebrity:", error);
-    return c.json({
-      success: false,
-      error: "Failed to fetch celebrity"
-    }, 500);
+    const errorResponse = formatErrorResponse(error);
+    const statusCode = error instanceof Error && 'statusCode' in error 
+      ? (error as { statusCode: number }).statusCode 
+      : 500;
+    return c.json(errorResponse, statusCode);
   }
 });
 
@@ -99,11 +114,8 @@ app.get("/api/templates", async (c) => {
       data: result.results
     });
   } catch (error) {
-    console.error("Error fetching templates:", error);
-    return c.json({
-      success: false,
-      error: "Failed to fetch templates"
-    }, 500);
+    const errorResponse = formatErrorResponse(error);
+    return c.json(errorResponse, 500);
   }
 });
 
