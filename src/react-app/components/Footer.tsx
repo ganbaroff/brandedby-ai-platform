@@ -61,8 +61,8 @@ export default function Footer() {
               <li><a href="mailto:support@brandedby.com" className="text-gray-400 hover:text-white transition-colors">Help Center</a></li>
               <li><a href="mailto:faq@brandedby.com" className="text-gray-400 hover:text-white transition-colors">FAQ</a></li>
               <li><a href="mailto:contact@brandedby.com" className="text-gray-400 hover:text-white transition-colors">Contact Us</a></li>
-              <li><a href="/privacy" className="text-gray-400 hover:text-white transition-colors">Privacy Policy</a></li>
-              <li><a href="/terms" className="text-gray-400 hover:text-white transition-colors">Terms of Service</a></li>
+              <li><button onClick={() => alert('Privacy Policy page coming soon')} className="text-gray-400 hover:text-white transition-colors text-left">Privacy Policy</button></li>
+              <li><button onClick={() => alert('Terms of Service page coming soon')} className="text-gray-400 hover:text-white transition-colors text-left">Terms of Service</button></li>
             </ul>
           </div>
 

@@ -1,4 +1,5 @@
-import { ArrowRight, Calendar, ExternalLink, User } from 'lucide-react';
+import { ArrowRight, Calendar, ExternalLink, User } from "lucide-react";
+import { useNavigate } from "react-router";
 import React, { useEffect, useState } from 'react';
 
 interface BlogPost {
@@ -13,6 +14,7 @@ interface BlogPost {
 }
 
 const BlogSection: React.FC = () => {
+  const navigate = useNavigate();
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -186,13 +188,13 @@ const BlogSection: React.FC = () => {
 
         {/* View All Posts Button */}
         <div className="text-center">
-          <a 
-            href="/blog"
+          <button 
+            onClick={() => navigate('/blog')}
             className="inline-flex items-center bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-3 rounded-lg font-semibold hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105"
           >
             All Blog Posts
             <ExternalLink className="ml-2 h-5 w-5" />
-          </a>
+          </button>
         </div>
       </div>
     </section>
