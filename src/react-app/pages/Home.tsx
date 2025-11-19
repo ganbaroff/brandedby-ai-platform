@@ -29,8 +29,8 @@ const Home = memo(function Home() {
   const navigate = useNavigate();
   const [videoModal, setVideoModal] = useState<{ url: string; title: string; celebrity: string } | null>(null);
 
-  // Memoized celebrities data - only recalculate if source data changes
-  const celebrities = useMemo(() => celebritiesData.slice(0, 9), []);
+  // Memoized celebrities data - show all available celebrities
+  const celebrities = useMemo(() => celebritiesData, []);
 
   // Memoized close modal callback
   const closeModal = useCallback(() => setVideoModal(null), []);
