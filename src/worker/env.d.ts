@@ -6,6 +6,9 @@ declare global {
     MOCHA_USERS_SERVICE_API_KEY: string;
     MOCHA_USERS_SERVICE_API_URL: string;
     STRIPE_SECRET_KEY: string;
+    Variables?: {
+      clientIp?: string;
+    };
   }
 }
 

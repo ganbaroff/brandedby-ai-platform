@@ -7,7 +7,14 @@ import { payments } from "./api/payments";
 import { projects } from "./api/projects";
 import { stripe } from "./api/stripe";
 
-const app = new Hono<{ Bindings: Env }>();
+type AppContext = {
+  Bindings: Env;
+  Variables: {
+    clientIp: string;
+  };
+};
+
+const app = new Hono<AppContext>();
 
 // ==================== RATE LIMITING ====================
 // In-memory store for rate limiting (reset every hour)
