@@ -4,6 +4,7 @@ import Footer from "@/react-app/components/Footer";
 import Header from "@/react-app/components/Header";
 import LoadingSpinner from "@/react-app/components/LoadingSpinner";
 import PaymentProcessor from "@/react-app/components/PaymentProcessor";
+import { trackingEvents } from "@/shared/tracking-integration";
 import { useAuth } from "@getmocha/users-service/react";
 import {
     ArrowLeft,
@@ -39,24 +40,24 @@ const PACKAGE_DETAILS = {
     price: 19,
     duration: '60-second video',
     features: [
-      'Custom location upload',
-      'HD quality',
-      'No watermark',
-      'Premium templates',
-      'Priority generation'
+      '2,000 generation tokens',
+      'Premium celebrity library',
+      'HD quality rendering',
+      'Custom backgrounds',
+      'Priority processing queue'
     ]
   },
   Premium: {
     price: 49,
     duration: '90-second video',
     features: [
-      'Unlimited locations',
-      '4K quality',
-      'No watermark',
-      'All premium templates',
-      'Multiple characters',
-      'Instant generation',
-      'API access'
+      '10,000 generation tokens',
+      'Full celebrity collection',
+      '4K ultra-high quality',
+      'Unlimited custom scenarios',
+      'Multi-character videos',
+      'Instant token refresh',
+      'Developer API access'
     ]
   }
 };
@@ -81,6 +82,12 @@ export default function Payment() {
       try {
         const data = JSON.parse(storedData);
         setProjectData(data);
+        
+        // Track checkout initiation
+        const packageInfo = PACKAGE_DETAILS[data.package as keyof typeof PACKAGE_DETAILS];
+        if (packageInfo) {
+          trackingEvents.initiateCheckout(packageInfo.price, 'USD');
+        }
       } catch (error) {
         console.error('Error parsing project data:', error);
         navigate('/celebrities');

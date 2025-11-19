@@ -3,10 +3,10 @@
  * Enhanced Interactive Package Button Component
  */
 
-import { ArrowRight, Check, CheckCircle, Loader2, Zap } from "lucide-react";
-import { memo } from "react";
-// 🤖 BOT: Using simplified local state for fast implementation
-import { useCallback, useState } from "react";
+import { trackingEvents } from "@/shared/tracking-integration";
+import { ArrowRight, Loader2, Zap } from "lucide-react";
+import { memo, useCallback, useState } from "react";
+import { useNavigate } from "react-router";
 
 interface PackageButtonProps {
   packageData: {
@@ -20,40 +20,38 @@ interface PackageButtonProps {
 }
 
 const EnhancedPackageButton = memo(function EnhancedPackageButton({ packageData }: PackageButtonProps) {
-  // 🤖 BOT: Simplified local state for immediate functionality
-  const [isSelected, setIsSelected] = useState(false);
+  const navigate = useNavigate();
   const [isProcessing, setIsProcessing] = useState(false);
 
   const handleClick = useCallback(() => {
-    if (isProcessing || isSelected) return;
+    if (isProcessing) return;
     
     setIsProcessing(true);
     
-    // 🤖 BOT: Realistic processing simulation
+    // Track package selection
+    trackingEvents.packageSelected(packageData.name, packageData.price);
+    
+    // Navigate to payment with package data
     setTimeout(() => {
-      setIsSelected(true);
+      navigate('/payment', { 
+        state: { 
+          packageType: packageData.name,
+          amount: packageData.price,
+          duration: packageData.duration,
+          features: packageData.features
+        } 
+      });
       setIsProcessing(false);
-      
-      // Убрано логирование для чистоты интерфейса
-    }, 1200 + Math.random() * 800);
-  }, [isProcessing, isSelected]);
+    }, 300);
+  }, [isProcessing, navigate, packageData]);
 
-  // Bot: Dynamic button content based on state
+  // Button content and styles
   const getButtonContent = () => {
     if (isProcessing) {
       return (
         <>
           <Loader2 className="w-5 h-5 animate-spin" />
-          <span>Processing...</span>
-        </>
-      );
-    }
-    
-    if (isSelected) {
-      return (
-        <>
-          <CheckCircle className="w-5 h-5" />
-          <span>Selected</span>
+          <span>Loading...</span>
         </>
       );
     }
@@ -61,22 +59,17 @@ const EnhancedPackageButton = memo(function EnhancedPackageButton({ packageData 
     return (
       <>
         <Zap className="w-5 h-5" />
-        <span>Get Started</span>
+        <span>Choose Package</span>
         <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
       </>
     );
   };
 
-  // Bot: Dynamic button styles based on state and package type
   const getButtonStyles = () => {
-    const baseStyles = "w-full py-3 sm:py-4 px-6 rounded-xl sm:rounded-2xl font-semibold transition-all duration-500 transform flex items-center justify-center space-x-2 group";
-    
-    if (isSelected) {
-      return `${baseStyles} bg-green-500 text-white shadow-lg shadow-green-500/25 scale-105 cursor-default`;
-    }
+    const baseStyles = "w-full py-3 sm:py-4 px-6 rounded-xl sm:rounded-2xl font-semibold transition-all duration-300 transform flex items-center justify-center space-x-2 group";
     
     if (isProcessing) {
-      return `${baseStyles} bg-blue-500 text-white animate-pulse cursor-wait`;
+      return `${baseStyles} bg-blue-500 text-white cursor-wait`;
     }
     
     if (packageData.popular) {
@@ -87,100 +80,28 @@ const EnhancedPackageButton = memo(function EnhancedPackageButton({ packageData 
   };
 
   return (
-    <div 
-      className={`relative bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 border-2 transition-all duration-500 transform ${
-        isSelected 
-          ? 'border-green-400 shadow-2xl shadow-green-500/20 scale-105' 
-          : isProcessing
-            ? 'border-blue-400 shadow-2xl shadow-blue-500/20 animate-pulse'
-            : packageData.popular 
-              ? 'border-purple-200 shadow-2xl shadow-purple-500/20 hover:shadow-purple-500/30' 
-              : 'border-gray-200 hover:border-purple-300'
-      } ${isProcessing ? '' : 'hover:scale-105'}`}
-    >
-      {/* Bot: Enhanced Popular Badge */}
-      {packageData.popular && (
-        <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-          <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 sm:px-6 sm:py-2 rounded-full text-xs sm:text-sm font-semibold shadow-lg animate-bounce">
-            ⭐ Most Popular
+    <div className="space-y-4">
+      {/* Interactive Button */}
+      <button 
+        onClick={handleClick}
+        disabled={isProcessing}
+        className={getButtonStyles()}
+        aria-label={`Choose ${packageData.name} package for $${packageData.price}`}
+      >
+        {getButtonContent()}
+      </button>
+
+      {/* Processing Indicator */}
+      {isProcessing && (
+        <div className="text-center">
+          <div className="inline-flex items-center space-x-2 text-blue-600 text-sm">
+            <div className="w-2 h-2 bg-blue-600 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+            <div className="w-2 h-2 bg-blue-600 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+            <div className="w-2 h-2 bg-blue-600 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+            <span>Redirecting to checkout...</span>
           </div>
         </div>
       )}
-
-      {/* Bot: Selection Indicator */}
-      {isSelected && (
-        <div className="absolute -top-3 -right-3">
-          <div className="bg-green-500 text-white rounded-full p-2 shadow-lg animate-pulse">
-            <Check className="w-4 h-4" />
-          </div>
-        </div>
-      )}
-
-      <div className="text-center space-y-4 sm:space-y-6">
-        <div>
-          <h3 className="text-xl sm:text-2xl font-bold text-gray-900">{packageData.name}</h3>
-          <div className="mt-3 sm:mt-4">
-            <span className="text-4xl sm:text-5xl font-bold text-gray-900">${packageData.price}</span>
-            <span className="text-gray-600 ml-2 text-sm sm:text-base">per video</span>
-          </div>
-          <p className="text-gray-600 mt-2 text-sm sm:text-base">{packageData.duration} video</p>
-        </div>
-
-        {/* Bot: Enhanced Features List */}
-        <ul className="space-y-2 sm:space-y-3 text-left">
-          {packageData.features.map((feature, index) => (
-            <li 
-              key={feature} 
-              className="flex items-center space-x-3 group"
-              style={{ 
-                animationDelay: `${index * 100}ms`,
-                animation: isSelected ? 'fadeInUp 0.5s ease-out forwards' : undefined
-              }}
-            >
-              <Check className={`w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0 transition-colors duration-300 ${
-                isSelected ? 'text-green-500' : 'text-green-500'
-              }`} />
-              <span className={`text-sm sm:text-base transition-colors duration-300 ${
-                isSelected ? 'text-green-800 font-medium' : 'text-gray-700'
-              }`}>
-                {feature}
-              </span>
-            </li>
-          ))}
-        </ul>
-
-        {/* Bot: Enhanced Interactive Button */}
-        <button 
-          onClick={handleClick}
-          disabled={isProcessing || isSelected}
-          className={getButtonStyles()}
-          aria-label={`Select ${packageData.name} package for $${packageData.price}`}
-        >
-          {getButtonContent()}
-        </button>
-
-        {/* Bot: Processing Indicator */}
-        {isProcessing && (
-          <div className="text-center">
-            <div className="inline-flex items-center space-x-2 text-blue-600 text-sm animate-pulse">
-              <div className="w-2 h-2 bg-blue-600 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
-              <div className="w-2 h-2 bg-blue-600 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
-              <div className="w-2 h-2 bg-blue-600 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
-              <span>Preparing your package...</span>
-            </div>
-          </div>
-        )}
-
-        {/* Bot: Success Message */}
-        {isSelected && (
-          <div className="text-center animate-fadeIn">
-            <div className="inline-flex items-center space-x-2 text-green-600 text-sm font-medium bg-green-50 px-3 py-2 rounded-lg">
-              <CheckCircle className="w-4 h-4" />
-              <span>Package selected! Ready to proceed</span>
-            </div>
-          </div>
-        )}
-      </div>
     </div>
   );
 });

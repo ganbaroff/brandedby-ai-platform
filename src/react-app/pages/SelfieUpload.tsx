@@ -1,13 +1,15 @@
 
+import EnhancedImage from "@/react-app/components/EnhancedImage";
 import Footer from "@/react-app/components/Footer";
 import Header from "@/react-app/components/Header";
+import ImageErrorBoundary from "@/react-app/components/ImageErrorBoundary";
 import TemplateModal from "@/react-app/components/TemplateModal";
 import { useFileUpload } from "@/react-app/hooks/useFileUpload";
 import templatesData from "@/shared/templates.json";
 import { Template as BaseTemplate } from "@/shared/types";
 import { useAuth } from "@getmocha/users-service/react";
 import { Image as ImageIcon, Loader, Sparkles, Upload } from "lucide-react";
-import { useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useNavigate } from "react-router";
 
 type Template = BaseTemplate & { emoji: string };
@@ -76,17 +78,19 @@ export default function SelfieUpload() {
   setSelectedPackage(pkg);
   };
 
-  const templates = templatesData;
+  // Memoized templates data
+  const templates = useMemo(() => templatesData, []);
 
-  const videoFormats = [
+  // Memoized video formats - static data
+  const videoFormats = useMemo(() => [
     { id: 'greeting', name: 'Personal Greeting', icon: '👋' },
     { id: 'advertisement', name: 'Advertisement', icon: '📺' },
     { id: 'announcement', name: 'Announcement', icon: '📢' },
     { id: 'entertainment', name: 'Entertainment', icon: '🎬' }
-  ];
+  ], []);
 
-  // Colors for template categories
-  const categoryColors: Record<string, string> = {
+  // Memoized colors for template categories - static data
+  const categoryColors = useMemo((): Record<string, string> => ({
     Birthday: 'bg-pink-100 text-pink-800',
     Holiday: 'bg-blue-100 text-blue-800',
     Business: 'bg-green-100 text-green-800',
@@ -95,18 +99,18 @@ export default function SelfieUpload() {
     Entertainment: 'bg-orange-100 text-orange-800',
     Greeting: 'bg-indigo-100 text-indigo-800',
     Education: 'bg-cyan-100 text-cyan-800',
-  };
+  }), []);
 
-  // AI suggestions by template
-  const getAISuggestion = (templateName: string) => {
-  if (templateName.includes('Birthday')) return 'Congratulate them on their birthday in a special way! Specify the name and your wishes.';
-  if (templateName.includes('Novruz')) return 'Use traditional Novruz greetings and wishes for prosperity.';
-  if (templateName.includes('Business')) return 'Describe your product or service, add a call to action.';
-  if (templateName.includes('Wedding')) return 'Congratulate the newlyweds, add a personal message.';
-  if (templateName.includes('Comedy')) return 'Add a joke or a funny situation for maximum effect.';
-  if (templateName.includes('Educational')) return 'Describe the lesson topic or useful information for the viewer.';
-  return 'Describe what should be in the video and who it is for.';
-  };
+  // Memoized AI suggestions function
+  const getAISuggestion = useCallback((templateName: string) => {
+    if (templateName.includes('Birthday')) return 'Congratulate them on their birthday in a special way! Specify the name and your wishes.';
+    if (templateName.includes('Novruz')) return 'Use traditional Novruz greetings and wishes for prosperity.';
+    if (templateName.includes('Business')) return 'Describe your product or service, add a call to action.';
+    if (templateName.includes('Wedding')) return 'Congratulate the newlyweds, add a personal message.';
+    if (templateName.includes('Comedy')) return 'Add a joke or a funny situation for maximum effect.';
+    if (templateName.includes('Educational')) return 'Describe the lesson topic or useful information for the viewer.';
+    return 'Describe what should be in the video and who it is for.';
+  }, []);
 
   const handleFileSelect = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -162,19 +166,19 @@ export default function SelfieUpload() {
     { 
       name: 'Standard', 
       price: 6, 
-      features: ['30-second video', 'Basic templates', 'With watermark'],
+      features: ['500 generation tokens', 'Basic celebrity templates', 'Standard quality output'],
       recommended: false 
     },
     { 
       name: 'Pro', 
       price: 19, 
-      features: ['60-second video', 'Custom location', 'HD quality', 'No watermark'],
+      features: ['2,000 generation tokens', 'Premium celebrity library', 'HD quality rendering', 'Custom backgrounds'],
       recommended: true 
     },
     { 
       name: 'Premium', 
       price: 49, 
-      features: ['90-second video', 'Unlimited locations', '4K quality', 'Multiple characters'],
+      features: ['10,000 generation tokens', 'Full celebrity collection', '4K ultra-high quality', 'Multi-character videos'],
       recommended: false 
     }
   ];
@@ -229,12 +233,15 @@ export default function SelfieUpload() {
                   />
                 </label>
               ) : (
-                <div className="relative">
-                  <img 
-                    src={previewUrl} 
-                    alt="Preview" 
-                    className="w-full h-64 object-cover rounded-2xl"
-                  />
+                <ImageErrorBoundary>
+                  <div className="relative">
+                    <EnhancedImage
+                      src={previewUrl} 
+                      alt="Preview" 
+                      className="w-full h-64 object-cover rounded-2xl"
+                      height="256"
+                      loading="eager"
+                    />
                   <button 
                     onClick={() => {
                       setSelectedFile(null);
@@ -250,7 +257,8 @@ export default function SelfieUpload() {
                       <span>{selectedFile.name}</span>
                     </p>
                   </div>
-                </div>
+                  </div>
+                </ImageErrorBoundary>
               )}
             </div>
 

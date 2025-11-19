@@ -1,34 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import { User, Users, FileText, Plus, Edit, Trash2, Save, X, Upload, Image as ImageIcon, Download, RefreshCw, Database, LogOut, Shield } from 'lucide-react';
-import { DataPersistence, CelebrityManager, BlogManager, DevTools } from '@/shared/admin-data-utils';
-import { AdminAuth } from '@/shared/admin-auth';
-import AdminLogin from '../components/AdminLogin';
-
-interface Celebrity {
-  id: number;
-  name: string;
-  image: string;
-  description: string;
-  category: string;
-}
-
-interface BlogPost {
-  id: number;
-  title: string;
-  content: string;
-  excerpt: string;
-  image: string;
-  author: string;
-  publishedAt: string;
-  category: string;
-}
+import { BlogManager, CelebrityManager, DataPersistence, DevTools, type BlogPost, type Celebrity } from '@/shared/admin-data-utils';
+import { SecureAuth } from '@/shared/secure-auth';
+import { Database, Download, Edit, FileText, Image as ImageIcon, LogOut, Plus, RefreshCw, Save, Shield, Trash2, Upload, User, Users, X } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import AnalyticsDashboard from '../components/AnalyticsDashboard';
+import BulkOperations from '../components/BulkOperations';
+import EnhancedImage from '../components/EnhancedImage';
+import PerformanceDashboard from '../components/PerformanceDashboard';
+import RichTextEditor from '../components/RichTextEditor';
+import SecureAdminLogin from '../components/SecureAdminLogin';
 
 const AdminPanel: React.FC = () => {
   // Authentication state
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
   
-  const [activeTab, setActiveTab] = useState<'celebrities' | 'blog' | 'analytics'>('celebrities');
+  const [activeTab, setActiveTab] = useState<'celebrities' | 'blog' | 'analytics' | 'dashboard' | 'performance'>('celebrities');
+  
+  // Bulk operations state
+  const [showBulkOperations, setShowBulkOperations] = useState<{
+    show: boolean;
+    type: 'celebrities' | 'blog';
+    data: Celebrity[] | BlogPost[];
+  }>({ show: false, type: 'celebrities', data: [] });
   const [celebrities, setCelebrities] = useState<Celebrity[]>([]);
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
   
@@ -37,9 +30,14 @@ const AdminPanel: React.FC = () => {
   const [showCelebrityForm, setShowCelebrityForm] = useState(false);
   const [newCelebrity, setNewCelebrity] = useState<Omit<Celebrity, 'id'>>({
     name: '',
-    image: '',
+    role: '',
     description: '',
-    category: 'Actor'
+    image_url: '',
+    niches: '["Entertainment"]',
+    rating: 9.0,
+    popularity: 90,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
   });
 
   // Blog management states
@@ -49,7 +47,7 @@ const AdminPanel: React.FC = () => {
     title: '',
     content: '',
     excerpt: '',
-    image: '',
+    image_url: '',
     author: '',
     publishedAt: new Date().toISOString().split('T')[0],
     category: 'News'
@@ -59,11 +57,11 @@ const AdminPanel: React.FC = () => {
   useEffect(() => {
     const checkAuth = () => {
       console.log('🔍 Checking authentication...');
-      const isLoggedIn = AdminAuth.isAuthenticated();
+      const isLoggedIn = SecureAuth.validateSession();
       console.log('🔐 Authentication status:', isLoggedIn);
       
       if (isLoggedIn) {
-        const sessionInfo = AdminAuth.getSessionInfo();
+        const sessionInfo = SecureAuth.getCurrentSession();
         console.log('👤 Session info:', sessionInfo);
       }
       
@@ -110,7 +108,17 @@ const AdminPanel: React.FC = () => {
       const newId = Math.max(...celebrities.map(c => c.id), 0) + 1;
       const celebrityToAdd = { ...newCelebrity, id: newId };
       setCelebrities(prev => [...prev, celebrityToAdd]);
-      setNewCelebrity({ name: '', image: '', description: '', category: 'Actor' });
+      setNewCelebrity({
+        name: '',
+        role: '',
+        description: '',
+        image_url: '',
+        niches: '["Entertainment"]',
+        rating: 9.0,
+        popularity: 90,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
+      });
       setShowCelebrityForm(false);
     }
     
@@ -165,7 +173,7 @@ const AdminPanel: React.FC = () => {
         title: '',
         content: '',
         excerpt: '',
-        image: '',
+        image_url: '',
         author: '',
         publishedAt: new Date().toISOString().split('T')[0],
         category: 'News'
@@ -196,7 +204,7 @@ const AdminPanel: React.FC = () => {
 
   // Handle logout
   const handleLogout = () => {
-    AdminAuth.logout();
+    SecureAuth.logout();
     setIsAuthenticated(false);
   };
 
@@ -214,7 +222,7 @@ const AdminPanel: React.FC = () => {
 
   // Show login screen if not authenticated
   if (!isAuthenticated) {
-    return <AdminLogin onLogin={handleLoginSuccess} />;
+    return <SecureAdminLogin onLogin={handleLoginSuccess} />;
   }
 
   // Main admin panel (authenticated users only)
@@ -229,7 +237,7 @@ const AdminPanel: React.FC = () => {
               <h1 className="text-3xl font-bold text-gray-900">BrandedBy Admin Panel</h1>
               <div className="flex items-center space-x-2 text-sm text-gray-600 bg-gray-100 px-3 py-1 rounded-full">
                 <Shield className="h-4 w-4" />
-                <span>Admin: {AdminAuth.getSessionInfo().user}</span>
+                <span>Admin: {SecureAuth.getCurrentSession()?.username || 'Unknown'}</span>
               </div>
             </div>
             
@@ -281,6 +289,28 @@ const AdminPanel: React.FC = () => {
                 <User className="h-5 w-5 mr-2" />
                 Analytics
               </button>
+              <button
+                onClick={() => setActiveTab('dashboard')}
+                className={`flex items-center px-4 py-2 rounded-lg transition-colors ${
+                  activeTab === 'dashboard'
+                    ? 'bg-blue-100 text-blue-700 border border-blue-200'
+                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                }`}
+              >
+                <Database className="h-5 w-5 mr-2" />
+                Dashboard
+              </button>
+              <button
+                onClick={() => setActiveTab('performance')}
+                className={`flex items-center px-4 py-2 rounded-lg transition-colors ${
+                  activeTab === 'performance'
+                    ? 'bg-blue-100 text-blue-700 border border-blue-200'
+                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                }`}
+              >
+                <Shield className="h-5 w-5 mr-2" />
+                Performance
+              </button>
             </nav>
           </div>
         </div>
@@ -292,13 +322,26 @@ const AdminPanel: React.FC = () => {
           <div>
             <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6 space-y-4 sm:space-y-0">
               <h2 className="text-2xl font-semibold text-gray-900">Celebrity Management</h2>
-              <button
-                onClick={() => setShowCelebrityForm(true)}
-                className="flex items-center justify-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors w-full sm:w-auto"
-              >
-                <Plus className="h-5 w-5 mr-2" />
-                Add Celebrity
-              </button>
+              <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
+                <button
+                  onClick={() => setShowBulkOperations({
+                    show: true,
+                    type: 'celebrities',
+                    data: celebrities
+                  })}
+                  className="flex items-center justify-center px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors w-full sm:w-auto"
+                >
+                  <Database className="h-5 w-5 mr-2" />
+                  Bulk Operations
+                </button>
+                <button
+                  onClick={() => setShowCelebrityForm(true)}
+                  className="flex items-center justify-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors w-full sm:w-auto"
+                >
+                  <Plus className="h-5 w-5 mr-2" />
+                  Add Celebrity
+                </button>
+              </div>
             </div>
 
             {/* Celebrity Form Modal */}
@@ -339,15 +382,32 @@ const AdminPanel: React.FC = () => {
                     </div>
 
                     <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Role/Profession</label>
+                      <input
+                        type="text"
+                        value={editingCelebrity ? editingCelebrity.role : newCelebrity.role}
+                        onChange={(e) => {
+                          if (editingCelebrity) {
+                            setEditingCelebrity({ ...editingCelebrity, role: e.target.value });
+                          } else {
+                            setNewCelebrity({ ...newCelebrity, role: e.target.value });
+                          }
+                        }}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="e.g., Actor & Producer"
+                      />
+                    </div>
+
+                    <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">Image URL</label>
                       <input
                         type="url"
-                        value={editingCelebrity ? editingCelebrity.image : newCelebrity.image}
+                        value={editingCelebrity ? editingCelebrity.image_url : newCelebrity.image_url}
                         onChange={(e) => {
                           if (editingCelebrity) {
-                            setEditingCelebrity({ ...editingCelebrity, image: e.target.value });
+                            setEditingCelebrity({ ...editingCelebrity, image_url: e.target.value });
                           } else {
-                            setNewCelebrity({ ...newCelebrity, image: e.target.value });
+                            setNewCelebrity({ ...newCelebrity, image_url: e.target.value });
                           }
                         }}
                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
@@ -358,9 +418,9 @@ const AdminPanel: React.FC = () => {
                           const name = editingCelebrity ? editingCelebrity.name : newCelebrity.name;
                           const url = generateImageUrl(name);
                           if (editingCelebrity) {
-                            setEditingCelebrity({ ...editingCelebrity, image: url });
+                            setEditingCelebrity({ ...editingCelebrity, image_url: url });
                           } else {
-                            setNewCelebrity({ ...newCelebrity, image: url });
+                            setNewCelebrity({ ...newCelebrity, image_url: url });
                           }
                         }}
                         className="mt-2 text-sm text-blue-600 hover:text-blue-700"
@@ -387,24 +447,112 @@ const AdminPanel: React.FC = () => {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
-                      <select
-                        value={editingCelebrity ? editingCelebrity.category : newCelebrity.category}
-                        onChange={(e) => {
-                          if (editingCelebrity) {
-                            setEditingCelebrity({ ...editingCelebrity, category: e.target.value });
-                          } else {
-                            setNewCelebrity({ ...newCelebrity, category: e.target.value });
-                          }
-                        }}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                      >
-                        <option value="Actor">Actor</option>
-                        <option value="Musician">Musician</option>
-                        <option value="Athlete">Athlete</option>
-                        <option value="Model">Model</option>
-                        <option value="Influencer">Influencer</option>
-                      </select>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Categories</label>
+                      <div className="space-y-2">
+                        <input
+                          type="text"
+                          value={editingCelebrity ? editingCelebrity.niches : newCelebrity.niches}
+                          onChange={(e) => {
+                            if (editingCelebrity) {
+                              setEditingCelebrity({ ...editingCelebrity, niches: e.target.value });
+                            } else {
+                              setNewCelebrity({ ...newCelebrity, niches: e.target.value });
+                            }
+                          }}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                          placeholder='["Entertainment", "Business"]'
+                        />
+                        <p className="text-xs text-gray-500">
+                          Common categories: Entertainment, Business, Sports, Technology, Fashion, Beauty, Fitness, Activism, Music, Comedy
+                        </p>
+                        <div className="flex flex-wrap gap-2">
+                          {['Entertainment', 'Business', 'Sports', 'Technology', 'Fashion', 'Beauty', 'Fitness', 'Activism', 'Music', 'Comedy'].map((cat) => (
+                            <button
+                              key={cat}
+                              type="button"
+                              onClick={() => {
+                                const current = editingCelebrity ? editingCelebrity.niches : newCelebrity.niches;
+                                try {
+                                  const currentNiches = JSON.parse(current || '[]');
+                                  const newNiches = currentNiches.includes(cat) 
+                                    ? currentNiches.filter((n: string) => n !== cat)
+                                    : [...currentNiches, cat];
+                                  const newValue = JSON.stringify(newNiches);
+                                  
+                                  if (editingCelebrity) {
+                                    setEditingCelebrity({ ...editingCelebrity, niches: newValue });
+                                  } else {
+                                    setNewCelebrity({ ...newCelebrity, niches: newValue });
+                                  }
+                                } catch {
+                                  // Handle invalid JSON
+                                  const newValue = JSON.stringify([cat]);
+                                  if (editingCelebrity) {
+                                    setEditingCelebrity({ ...editingCelebrity, niches: newValue });
+                                  } else {
+                                    setNewCelebrity({ ...newCelebrity, niches: newValue });
+                                  }
+                                }
+                              }}
+                              className={`px-2 py-1 text-xs rounded-full border ${
+                                (() => {
+                                  try {
+                                    const current = editingCelebrity ? editingCelebrity.niches : newCelebrity.niches;
+                                    const niches = JSON.parse(current || '[]');
+                                    return niches.includes(cat) 
+                                      ? 'bg-blue-100 text-blue-700 border-blue-200' 
+                                      : 'bg-gray-100 text-gray-600 border-gray-200 hover:bg-gray-200';
+                                  } catch {
+                                    return 'bg-gray-100 text-gray-600 border-gray-200 hover:bg-gray-200';
+                                  }
+                                })()
+                              }`}
+                            >
+                              {cat}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Rating (1-10)</label>
+                        <input
+                          type="number"
+                          min="1"
+                          max="10"
+                          step="0.1"
+                          value={editingCelebrity ? editingCelebrity.rating : newCelebrity.rating}
+                          onChange={(e) => {
+                            const value = parseFloat(e.target.value);
+                            if (editingCelebrity) {
+                              setEditingCelebrity({ ...editingCelebrity, rating: value });
+                            } else {
+                              setNewCelebrity({ ...newCelebrity, rating: value });
+                            }
+                          }}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Popularity (1-100)</label>
+                        <input
+                          type="number"
+                          min="1"
+                          max="100"
+                          value={editingCelebrity ? editingCelebrity.popularity : newCelebrity.popularity}
+                          onChange={(e) => {
+                            const value = parseInt(e.target.value);
+                            if (editingCelebrity) {
+                              setEditingCelebrity({ ...editingCelebrity, popularity: value });
+                            } else {
+                              setNewCelebrity({ ...newCelebrity, popularity: value });
+                            }
+                          }}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                        />
+                      </div>
                     </div>
                   </div>
 
@@ -434,14 +582,35 @@ const AdminPanel: React.FC = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
               {celebrities.map((celebrity) => (
                 <div key={celebrity.id} className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow overflow-hidden">
-                  <img
-                    src={celebrity.image}
+                  <EnhancedImage
+                    src={celebrity.image_url}
                     alt={celebrity.name}
                     className="w-full h-40 sm:h-48 object-cover"
+                    height="192"
                   />
                   <div className="p-4">
-                    <h3 className="font-semibold text-lg text-gray-900 mb-1 truncate">{celebrity.name}</h3>
-                    <p className="text-sm text-blue-600 mb-2 font-medium">{celebrity.category}</p>
+                    <div className="flex items-start justify-between mb-2">
+                      <h3 className="font-semibold text-lg text-gray-900 truncate flex-1">{celebrity.name}</h3>
+                      <div className="flex items-center ml-2">
+                        <span className="text-yellow-500">★</span>
+                        <span className="text-sm text-gray-600 ml-1">{celebrity.rating}</span>
+                      </div>
+                    </div>
+                    <p className="text-sm text-gray-700 mb-2 font-medium">{celebrity.role}</p>
+                    <div className="flex flex-wrap gap-1 mb-3">
+                      {(() => {
+                        try {
+                          const niches = JSON.parse(celebrity.niches || '[]');
+                          return niches.slice(0, 3).map((niche: string, index: number) => (
+                            <span key={index} className="px-2 py-1 text-xs bg-blue-100 text-blue-700 rounded-full">
+                              {niche}
+                            </span>
+                          ));
+                        } catch {
+                          return <span className="px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded-full">Entertainment</span>;
+                        }
+                      })()}
+                    </div>
                     <p className="text-gray-600 text-sm mb-4 line-clamp-2 min-h-[2.5rem]">{celebrity.description}</p>
                     <div className="flex flex-col sm:flex-row gap-2">
                       <button
@@ -471,13 +640,26 @@ const AdminPanel: React.FC = () => {
           <div>
             <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6 space-y-4 sm:space-y-0">
               <h2 className="text-2xl font-semibold text-gray-900">Blog Management</h2>
-              <button
-                onClick={() => setShowPostForm(true)}
-                className="flex items-center justify-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors w-full sm:w-auto"
-              >
-                <Plus className="h-5 w-5 mr-2" />
-                Create Post
-              </button>
+              <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
+                <button
+                  onClick={() => setShowBulkOperations({
+                    show: true,
+                    type: 'blog',
+                    data: blogPosts
+                  })}
+                  className="flex items-center justify-center px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors w-full sm:w-auto"
+                >
+                  <Database className="h-5 w-5 mr-2" />
+                  Bulk Operations
+                </button>
+                <button
+                  onClick={() => setShowPostForm(true)}
+                  className="flex items-center justify-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors w-full sm:w-auto"
+                >
+                  <Plus className="h-5 w-5 mr-2" />
+                  Create Post
+                </button>
+              </div>
             </div>
 
             {/* Blog Post Form Modal */}
@@ -535,19 +717,17 @@ const AdminPanel: React.FC = () => {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Content</label>
-                      <textarea
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Content</label>
+                      <RichTextEditor
                         value={editingPost ? editingPost.content : newPost.content}
-                        onChange={(e) => {
+                        onChange={(content) => {
                           if (editingPost) {
-                            setEditingPost({ ...editingPost, content: e.target.value });
+                            setEditingPost({ ...editingPost, content });
                           } else {
-                            setNewPost({ ...newPost, content: e.target.value });
+                            setNewPost({ ...newPost, content });
                           }
                         }}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                        rows={8}
-                        placeholder="Main post content (supports Markdown)"
+                        placeholder="Write your blog post content here..."
                       />
                     </div>
 
@@ -612,12 +792,12 @@ const AdminPanel: React.FC = () => {
                         <label className="block text-sm font-medium text-gray-700 mb-1">Featured Image</label>
                         <input
                           type="url"
-                          value={editingPost ? editingPost.image : newPost.image}
+                          value={editingPost ? editingPost.image_url : newPost.image_url}
                           onChange={(e) => {
                             if (editingPost) {
-                              setEditingPost({ ...editingPost, image: e.target.value });
+                              setEditingPost({ ...editingPost, image_url: e.target.value });
                             } else {
-                              setNewPost({ ...newPost, image: e.target.value });
+                              setNewPost({ ...newPost, image_url: e.target.value });
                             }
                           }}
                           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
@@ -669,9 +849,9 @@ const AdminPanel: React.FC = () => {
                     </div>
                     
                     <div className="flex flex-col sm:flex-row sm:items-start space-y-3 sm:space-y-0 sm:space-x-3 sm:ml-4">
-                      {post.image && (
+                      {post.image_url && (
                         <img
-                          src={post.image}
+                          src={post.image_url}
                           alt={post.title}
                           className="w-full sm:w-20 md:w-24 h-24 sm:h-16 md:h-20 object-cover rounded-lg"
                         />
@@ -757,7 +937,9 @@ const AdminPanel: React.FC = () => {
                   <div>
                     <p className="text-sm font-medium text-gray-600">Active Categories</p>
                     <p className="text-3xl font-bold text-purple-600">
-                      {new Set(celebrities.map(c => c.category)).size}
+                      {new Set(celebrities.flatMap(c => {
+                        try { return JSON.parse(c.niches); } catch { return []; }
+                      })).size}
                     </p>
                   </div>
                   <ImageIcon className="h-8 w-8 text-purple-500" />
@@ -822,7 +1004,14 @@ const AdminPanel: React.FC = () => {
               <div className="space-y-3">
                 {Object.entries(
                   celebrities.reduce((acc, celebrity) => {
-                    acc[celebrity.category] = (acc[celebrity.category] || 0) + 1;
+                    try {
+                      const niches = JSON.parse(celebrity.niches || '[]');
+                      niches.forEach((niche: string) => {
+                        acc[niche] = (acc[niche] || 0) + 1;
+                      });
+                    } catch {
+                      acc['Entertainment'] = (acc['Entertainment'] || 0) + 1;
+                    }
                     return acc;
                   }, {} as Record<string, number>)
                 ).map(([category, count]) => (
@@ -861,6 +1050,65 @@ const AdminPanel: React.FC = () => {
                     </div>
                   ))}
               </div>
+            </div>
+          </div>
+        )}
+
+        {/* Dashboard Tab */}
+        {activeTab === 'dashboard' && (
+          <div>
+            <AnalyticsDashboard 
+              data={{
+                celebrities,
+                blogPosts
+              }}
+            />
+          </div>
+        )}
+
+        {/* Performance Tab */}
+        {activeTab === 'performance' && (
+          <div>
+            <PerformanceDashboard />
+          </div>
+        )}
+
+        {/* Bulk Operations Modal */}
+        {showBulkOperations.show && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-lg p-6 w-full max-w-4xl max-h-[90vh] overflow-y-auto">
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-xl font-semibold">
+                  {showBulkOperations.type === 'celebrities' ? 'Celebrity' : 'Blog Post'} Bulk Operations
+                </h2>
+                <button
+                  onClick={() => setShowBulkOperations({ show: false, type: 'celebrities', data: [] })}
+                  className="text-gray-500 hover:text-gray-700"
+                >
+                  <X className="h-6 w-6" />
+                </button>
+              </div>
+              <BulkOperations
+                items={showBulkOperations.data}
+                selectedItems={[]}
+                onSelectionChange={() => {}}
+                onBulkDelete={(items) => {
+                  if (showBulkOperations.type === 'celebrities') {
+                    const itemIds = items.map(item => (item as Celebrity).id);
+                    const updatedCelebrities = celebrities.filter(c => !itemIds.includes(c.id));
+                    setCelebrities(updatedCelebrities);
+                    CelebrityManager.saveCelebrities(updatedCelebrities);
+                  } else {
+                    const itemIds = items.map(item => (item as BlogPost).id);
+                    const updatedPosts = blogPosts.filter(p => !itemIds.includes(p.id));
+                    setBlogPosts(updatedPosts);
+                    BlogManager.saveBlogPosts(updatedPosts);
+                  }
+                  setShowBulkOperations({ show: false, type: 'celebrities', data: [] });
+                }}
+                getItemId={(item) => showBulkOperations.type === 'celebrities' ? (item as Celebrity).id : (item as BlogPost).id}
+                getItemTitle={(item) => showBulkOperations.type === 'celebrities' ? (item as Celebrity).name : (item as BlogPost).title}
+              />
             </div>
           </div>
         )}

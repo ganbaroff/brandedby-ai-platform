@@ -1,5 +1,6 @@
 import { Sparkles, Users } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import EnhancedImage from './EnhancedImage';
 
 const FaceMorphingDemo = () => {
   const [currentFaceIndex, setCurrentFaceIndex] = useState(0);
@@ -16,15 +17,22 @@ const FaceMorphingDemo = () => {
   ];
 
   useEffect(() => {
-    const interval = setInterval(() => {
+    let animationTimeout: NodeJS.Timeout;
+    
+    const animate = () => {
       setIsAnimating(true);
-      setTimeout(() => {
+      animationTimeout = setTimeout(() => {
         setCurrentFaceIndex((prev) => (prev + 1) % demoFaces.length);
         setIsAnimating(false);
       }, 300);
-    }, 2500);
+    };
 
-    return () => clearInterval(interval);
+    const mainInterval = setInterval(animate, 2500);
+
+    return () => {
+      clearInterval(mainInterval);
+      clearTimeout(animationTimeout);
+    };
   }, [demoFaces.length]);
 
   return (
@@ -57,10 +65,13 @@ const FaceMorphingDemo = () => {
             {/* Main face display */}
             <div className="relative w-48 h-48 mx-auto mb-6">
               <div className={`absolute inset-0 transition-all duration-300 ${isAnimating ? 'scale-110 blur-sm opacity-80' : 'scale-100 blur-0 opacity-100'}`}>
-                <img
+                <EnhancedImage
                   src={demoFaces[currentFaceIndex]}
                   alt="AI Generated Face"
                   className="w-full h-full rounded-full object-cover shadow-2xl border-4 border-white"
+                  width="192"
+                  height="192"
+                  loading="eager"
                 />
               </div>
               
@@ -86,10 +97,12 @@ const FaceMorphingDemo = () => {
                       : 'border-gray-300 opacity-60'
                   }`}
                 >
-                  <img
+                  <EnhancedImage
                     src={face}
                     alt=""
                     className="w-full h-full rounded-full object-cover"
+                    width="32"
+                    height="32"
                   />
                 </div>
               ))}

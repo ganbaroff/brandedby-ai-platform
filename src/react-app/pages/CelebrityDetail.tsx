@@ -1,7 +1,6 @@
 import AIAssistant from "@/react-app/components/AIAssistant";
 import Footer from "@/react-app/components/Footer";
 import Header from "@/react-app/components/Header";
-import HomerSimpson3D from "@/react-app/components/HomerSimpson3D";
 import celebritiesData from "@/shared/celebrities.json";
 import { Celebrity } from "@/shared/types";
 import { useAuth } from "@getmocha/users-service/react";
@@ -139,10 +138,13 @@ export default function CelebrityDetail() {
             
             {/* Left Side - 3D Character */}
             <div className="space-y-6">
-              <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-3xl p-4 h-96 relative overflow-hidden">
-                <HomerSimpson3D onInteract={() => console.log('Homer interacted!')} />
-                <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-sm rounded-xl px-3 py-2 shadow-lg">
-                  <p className="text-sm text-gray-600">Drag to rotate • Click Homer to interact</p>
+              <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-3xl p-8 h-96 relative overflow-hidden flex items-center justify-center">
+                <div className="text-center">
+                  <div className="w-32 h-32 bg-gradient-to-br from-purple-400 to-blue-500 rounded-full mx-auto mb-4 flex items-center justify-center">
+                    <Sparkles className="w-16 h-16 text-white" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-gray-800 mb-2">AI Video Preview</h3>
+                  <p className="text-gray-600">Your video will appear here after generation</p>
                 </div>
               </div>
               

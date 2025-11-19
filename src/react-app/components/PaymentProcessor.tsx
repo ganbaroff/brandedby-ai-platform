@@ -1,5 +1,6 @@
 import { AlertCircle, CheckCircle, CreditCard, Lock } from 'lucide-react';
 import { useState } from 'react';
+import { analytics } from '../../shared/advanced-analytics';
 
 interface ProjectData {
   celebrity_id?: number;
@@ -145,10 +146,14 @@ export default function PaymentProcessor({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    // Track payment initiation
+    analytics.trackEvent('payment', 'payment_initiated', projectData.package_type, { amount });
+    
     const validationError = validateForm();
     if (validationError) {
       setErrorMessage(validationError);
       setPaymentStatus('error');
+      analytics.trackEvent('payment', 'validation_error', validationError);
       return;
     }
     
@@ -160,12 +165,14 @@ export default function PaymentProcessor({
       const result = await processPayment();
       
       setPaymentStatus('success');
+      analytics.trackEvent('conversion', 'payment_success', projectData.package_type, { amount });
       onPaymentSuccess?.(result.projectId);
       
     } catch (error) {
       const errorMsg = error instanceof Error ? error.message : 'Payment failed. Please try again.';
       setErrorMessage(errorMsg);
       setPaymentStatus('error');
+      analytics.trackEvent('payment', 'payment_failed', errorMsg);
       onPaymentError?.(errorMsg);
     } finally {
       setIsProcessing(false);

@@ -1,10 +1,6 @@
 import React from 'react';
 
-interface AuthenticationSystemProps {
-  // Add props here
-}
-
-const AuthenticationSystem: React.FC<AuthenticationSystemProps> = (props) => {
+const AuthenticationSystem: React.FC = () => {
   return (
     <div className="authenticationsystem">
       <h1>AuthenticationSystem Component</h1>

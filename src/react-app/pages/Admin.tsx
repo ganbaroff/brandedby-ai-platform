@@ -1,18 +1,22 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router";
-import { useAuth } from "@getmocha/users-service/react";
-import Header from "@/react-app/components/Header";
 import Footer from "@/react-app/components/Footer";
-import { 
-  Users, 
-  Video, 
-  Plus, 
-  Edit2, 
-  Trash2,
-  Save,
-  X,
-  Sparkles
+import Header from "@/react-app/components/Header";
+import { useAuth } from "@getmocha/users-service/react";
+import {
+    BarChart3,
+    Edit2,
+    Key,
+    Plus,
+    Save,
+    Sparkles,
+    Trash2,
+    Users,
+    Video,
+    X
 } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
+import { useNavigate } from "react-router";
+import APIConfiguration from "../components/APIConfiguration";
+import { AnalyticsVisualization } from "../components/AnalyticsVisualization";
 
 interface Celebrity {
   id: number;
@@ -37,25 +41,14 @@ interface Template {
 export default function Admin() {
   const navigate = useNavigate();
   const { user, isPending } = useAuth();
-  const [activeTab, setActiveTab] = useState<'celebrities' | 'templates'>('celebrities');
+  const [activeTab, setActiveTab] = useState<'celebrities' | 'templates' | 'analytics' | 'api-config'>('celebrities');
   const [celebrities, setCelebrities] = useState<Celebrity[]>([]);
   const [templates, setTemplates] = useState<Template[]>([]);
   const [loading, setLoading] = useState(true);
   const [editingId, setEditingId] = useState<number | null>(null);
   const [editForm, setEditForm] = useState<Partial<Celebrity>>({});
 
-  useEffect(() => {
-    if (!isPending && !user) {
-      navigate('/');
-      return;
-    }
-
-    if (user) {
-      fetchData();
-    }
-  }, [user, isPending, navigate, activeTab]);
-
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     setLoading(true);
     try {
       if (activeTab === 'celebrities') {
@@ -76,7 +69,18 @@ export default function Admin() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [activeTab]);
+
+  useEffect(() => {
+    if (!user && !isPending) {
+      navigate('/');
+      return;
+    }
+
+    if (user && activeTab !== 'analytics' && activeTab !== 'api-config') {
+      fetchData();
+    }
+  }, [user, isPending, navigate, activeTab, fetchData]);
 
   const startEdit = (item: Celebrity) => {
     setEditingId(item.id);
@@ -166,15 +170,39 @@ export default function Admin() {
               <Video className="w-5 h-5" />
               <span>Templates ({templates.length})</span>
             </button>
+            <button
+              onClick={() => setActiveTab('analytics')}
+              className={`flex items-center space-x-2 px-6 py-3 font-semibold transition-colors ${
+                activeTab === 'analytics'
+                  ? 'text-purple-600 border-b-2 border-purple-600'
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              <BarChart3 className="w-5 h-5" />
+              <span>Analytics</span>
+            </button>
+            <button
+              onClick={() => setActiveTab('api-config')}
+              className={`flex items-center space-x-2 px-6 py-3 font-semibold transition-colors ${
+                activeTab === 'api-config'
+                  ? 'text-purple-600 border-b-2 border-purple-600'
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              <Key className="w-5 h-5" />
+              <span>API Config</span>
+            </button>
           </div>
 
           {/* Add New Button */}
-          <div className="mb-8">
-            <button className="flex items-center space-x-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transition-all">
-              <Plus className="w-5 h-5" />
-              <span>Add New {activeTab === 'celebrities' ? 'Celebrity' : 'Template'}</span>
-            </button>
-          </div>
+          {(activeTab === 'celebrities' || activeTab === 'templates') && (
+            <div className="mb-8">
+              <button className="flex items-center space-x-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transition-all">
+                <Plus className="w-5 h-5" />
+                <span>Add New {activeTab === 'celebrities' ? 'Celebrity' : 'Template'}</span>
+              </button>
+            </div>
+          )}
 
           {/* Content */}
           {activeTab === 'celebrities' ? (
@@ -301,6 +329,14 @@ export default function Admin() {
                 </div>
               ))}
             </div>
+          )}
+          
+          {activeTab === 'analytics' && (
+            <AnalyticsVisualization />
+          )}
+          
+          {activeTab === 'api-config' && (
+            <APIConfiguration />
           )}
         </div>
       </section>

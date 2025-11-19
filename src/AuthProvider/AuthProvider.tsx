@@ -1,10 +1,6 @@
 import React from 'react';
 
-interface AuthProviderProps {
-  // Add props here
-}
-
-const AuthProvider: React.FC<AuthProviderProps> = (props) => {
+const AuthProvider: React.FC = () => {
   return (
     <div className="authprovider">
       <h1>AuthProvider Component</h1>

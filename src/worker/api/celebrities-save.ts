@@ -1,8 +1,9 @@
 ﻿// API endpoint for saving celebrities data
-export default async function handler(request, response) {
+export default async function handler(request: Request): Promise<Response> {
   if (request.method === 'POST') {
     try {
-      const { celebrities } = await request.json();
+      const body = await request.json() as { celebrities: unknown[] };
+      const { celebrities } = body;
       
       // В реальном приложении здесь был бы код для сохранения в базу данных
       // Для демо версии логируем данные
@@ -18,7 +19,7 @@ export default async function handler(request, response) {
     } catch (error) {
       return new Response(JSON.stringify({ 
         success: false, 
-        error: error.message 
+        error: error instanceof Error ? error.message : 'Unknown error'
       }), { 
         status: 500,
         headers: { 'Content-Type': 'application/json' }

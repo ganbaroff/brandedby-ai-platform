@@ -4,9 +4,14 @@
 export interface Celebrity {
   id: number;
   name: string;
-  image: string;
+  role: string;
   description: string;
-  category: string;
+  image_url: string;
+  niches: string;
+  rating: number;
+  popularity: number;
+  created_at: string;
+  updated_at: string;
 }
 
 export interface BlogPost {
@@ -14,7 +19,7 @@ export interface BlogPost {
   title: string;
   content: string;
   excerpt: string;
-  image: string;
+  image_url: string;
   author: string;
   publishedAt: string;
   category: string;
@@ -152,23 +157,38 @@ export class CelebrityManager {
       {
         id: 1,
         name: "Taylor Swift",
-        image: "https://images.unsplash.com/photo-1494790108755-2616c27ac65b?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
+        role: "Singer-Songwriter",
+        image_url: "https://images.unsplash.com/photo-1494790108755-2616c27ac65b?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
         description: "Global music superstar and songwriter",
-        category: "Musician"
+        niches: JSON.stringify(["Entertainment", "Music", "Pop Culture"]),
+        rating: 9.8,
+        popularity: 10,
+        created_at: "2024-01-01T00:00:00.000Z",
+        updated_at: "2024-01-01T00:00:00.000Z"
       },
       {
         id: 2,
         name: "Ryan Reynolds",
-        image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
+        role: "Actor & Producer",
+        image_url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
         description: "Canadian-American actor and producer",
-        category: "Actor"
+        niches: JSON.stringify(["Entertainment", "Comedy", "Action Films"]),
+        rating: 9.2,
+        popularity: 9,
+        created_at: "2024-01-01T00:00:00.000Z",
+        updated_at: "2024-01-01T00:00:00.000Z"
       },
       {
         id: 3,
         name: "Zendaya",
-        image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
+        role: "Actress & Singer",
+        image_url: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
         description: "American actress and singer",
-        category: "Actor"
+        niches: JSON.stringify(["Entertainment", "Fashion", "Youth Culture"]),
+        rating: 9.5,
+        popularity: 9,
+        created_at: "2024-01-01T00:00:00.000Z",
+        updated_at: "2024-01-01T00:00:00.000Z"
       }
     ];
 
@@ -200,7 +220,7 @@ export class BlogManager {
 <h2>Industry applications</h2>
 <p>From film industry to social media - AI photography is changing all areas of visual content.</p>`,
         excerpt: 'How AI technologies are transforming photography and video production',
-        image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=500&fit=crop&auto=format&q=80',
+        image_url: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=500&fit=crop&auto=format&q=80',
         author: 'BrandedBy Team',
         publishedAt: '2025-11-06',
         category: 'Technology'
@@ -226,7 +246,7 @@ export class BlogManager {
 <li>Avoid sunglasses and covering accessories</li>
 </ul>`,
         excerpt: 'Step-by-step guide to creating AI videos with selfies',
-        image: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&h=500&fit=crop&auto=format&q=80',
+        image_url: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&h=500&fit=crop&auto=format&q=80',
         author: 'Alex Johnson',
         publishedAt: '2025-11-05',
         category: 'Tutorial'
@@ -256,7 +276,7 @@ export class BlogManager {
 <li>Interactive AR/VR worlds</li>
 </ul>`,
         excerpt: 'A look into the future of AI entertainment and personalized content',
-        image: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=800&h=500&fit=crop&auto=format&q=80',
+        image_url: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=800&h=500&fit=crop&auto=format&q=80',
         author: 'Maria Garcia',
         publishedAt: '2025-11-04',
         category: 'AI'
@@ -302,16 +322,26 @@ export class DevTools {
       {
         id: 4,
         name: "Dwayne Johnson",
-        image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
+        role: "Actor & Producer",
+        image_url: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
         description: "American actor and former professional wrestler",
-        category: "Actor"
+        niches: JSON.stringify(["Entertainment", "Action Films", "Sports"]),
+        rating: 9.3,
+        popularity: 9,
+        created_at: "2024-01-01T00:00:00.000Z",
+        updated_at: "2024-01-01T00:00:00.000Z"
       },
       {
         id: 5,
         name: "Ariana Grande",
-        image: "https://images.unsplash.com/photo-1494790108755-2616c27ac65b?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
+        role: "Singer & Actress",
+        image_url: "https://images.unsplash.com/photo-1494790108755-2616c27ac65b?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
         description: "American singer, songwriter and actress",
-        category: "Musician"
+        niches: JSON.stringify(["Entertainment", "Pop Music", "Broadway"]),
+        rating: 9.4,
+        popularity: 9,
+        created_at: "2024-01-01T00:00:00.000Z",
+        updated_at: "2024-01-01T00:00:00.000Z"
       }
     ];
 
@@ -325,7 +355,7 @@ export class DevTools {
       title: 'Getting Started with AI Video Generation',
       content: '<p>This is a comprehensive guide to getting started with AI video generation on our platform.</p><h2>Basic Steps</h2><p>Follow these simple steps to create your first AI video...</p>',
       excerpt: 'Complete beginner guide to AI video generation',
-      image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&h=500&fit=crop&auto=format&q=80',
+      image_url: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&h=500&fit=crop&auto=format&q=80',
       author: 'Tutorial Team',
       publishedAt: '2025-11-06',
       category: 'Tutorial'

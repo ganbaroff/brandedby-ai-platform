@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Calendar, User, ArrowRight, ExternalLink } from 'lucide-react';
+import { ArrowRight, Calendar, ExternalLink, User } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
 
 interface BlogPost {
   id: number;

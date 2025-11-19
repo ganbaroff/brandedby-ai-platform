@@ -3,6 +3,7 @@
  * Provides better error handling and user experience
  */
 
+import { addBreadcrumb, captureException } from "@/react-app/sentry.config";
 import logger from "@/shared/logger";
 import { AlertTriangle, RefreshCw } from "lucide-react";
 import { Component, ErrorInfo, ReactNode } from "react";
@@ -41,9 +42,22 @@ class EnhancedErrorBoundary extends Component<Props, State> {
       componentStack: errorInfo.componentStack,
       timestamp: new Date().toISOString()
     });
+
+    // Send to Sentry
+    captureException(error, {
+      errorInfo: errorInfo.componentStack,
+      severity: 'error'
+    });
+
+    // Add breadcrumb for tracking
+    addBreadcrumb('Error Boundary triggered', {
+      errorMessage: error.message,
+      componentStack: errorInfo.componentStack
+    }, 'error');
   }
 
   handleRetry = () => {
+    addBreadcrumb('User clicked retry on error boundary', {}, 'info');
     this.setState({ hasError: false, error: null, errorInfo: null });
     window.location.reload();
   };
@@ -67,7 +81,7 @@ class EnhancedErrorBoundary extends Component<Props, State> {
             </h2>
             
             <p className="text-gray-600 mb-6">
-              We've encountered an unexpected error. Don't worry, we're working to fix it.
+              We've encountered an unexpected error. Our team has been notified and we're working to fix it.
             </p>
 
             <button
@@ -79,7 +93,7 @@ class EnhancedErrorBoundary extends Component<Props, State> {
             </button>
 
             {/* Development mode: Show error details */}
-            {process.env.NODE_ENV === 'development' && this.state.error && (
+            {import.meta.env.DEV && this.state.error && (
               <details className="mt-6 text-left">
                 <summary className="cursor-pointer text-sm text-gray-500 hover:text-gray-700">
                   Error Details (Development)

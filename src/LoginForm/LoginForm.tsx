@@ -1,10 +1,6 @@
 import React from 'react';
 
-interface LoginFormProps {
-  // Add props here
-}
-
-const LoginForm: React.FC<LoginFormProps> = (props) => {
+const LoginForm: React.FC = () => {
   return (
     <div className="loginform">
       <h1>LoginForm Component</h1>

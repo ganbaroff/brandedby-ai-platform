@@ -1,10 +1,6 @@
 import React from 'react';
 
-interface PasswordResetProps {
-  // Add props here
-}
-
-const PasswordReset: React.FC<PasswordResetProps> = (props) => {
+const PasswordReset: React.FC = () => {
   return (
     <div className="passwordreset">
       <h1>PasswordReset Component</h1>

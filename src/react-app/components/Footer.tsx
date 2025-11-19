@@ -1,10 +1,23 @@
-import { Sparkles, Mail, Twitter, Instagram, Youtube } from "lucide-react";
+import { Instagram, Mail, Sparkles, Twitter, Youtube } from "lucide-react";
+import { useState } from "react";
 
 export default function Footer() {
+  const [email, setEmail] = useState("");
+  const [subscribed, setSubscribed] = useState(false);
+
+  const handleSubscribe = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (email) {
+      // Here you would normally send to your newsletter service
+      setSubscribed(true);
+      setEmail("");
+      setTimeout(() => setSubscribed(false), 3000);
+    }
+  };
   return (
-    <footer className="bg-gray-900 text-white py-16">
+    <footer className="bg-gray-900 text-white py-12 sm:py-16">
       <div className="container mx-auto px-4 max-w-7xl">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
           
           {/* Brand */}
           <div className="space-y-4">
@@ -66,16 +79,22 @@ export default function Footer() {
             </div>
             <div className="space-y-2">
               <p className="text-sm text-gray-400">Subscribe to our newsletter</p>
-              <div className="flex">
+              <form onSubmit={handleSubscribe} className="flex flex-col xs:flex-row gap-2 xs:gap-0">
                 <input 
                   type="email" 
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email" 
-                  className="flex-1 px-3 py-2 bg-gray-800 rounded-l-lg border-0 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  className="flex-1 px-3 py-2 bg-gray-800 rounded-lg xs:rounded-l-lg xs:rounded-r-none border-0 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  required
                 />
-                <button className="px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 rounded-r-lg text-sm font-medium hover:opacity-90 transition-opacity">
-                  Subscribe
+                <button 
+                  type="submit"
+                  className="px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg xs:rounded-r-lg xs:rounded-l-none text-sm font-medium hover:opacity-90 transition-opacity whitespace-nowrap"
+                >
+                  {subscribed ? "✓ Subscribed!" : "Subscribe"}
                 </button>
-              </div>
+              </form>
             </div>
           </div>
         </div>

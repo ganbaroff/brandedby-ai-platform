@@ -1,10 +1,6 @@
 import React from 'react';
 
-interface TestComponentProps {
-  // Add props here
-}
-
-const TestComponent: React.FC<TestComponentProps> = (props) => {
+const TestComponent: React.FC = () => {
   return (
     <div className="testcomponent">
       <h1>TestComponent Component</h1>

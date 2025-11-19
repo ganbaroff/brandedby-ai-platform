@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { Calendar, User, ArrowLeft, Search, Filter, Eye } from 'lucide-react';
-import Header from '../components/Header';
+import { ArrowLeft, Calendar, Eye, Filter, Search, User } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { createSafeHtml } from '../../shared/htmlSanitizer';
 import Footer from '../components/Footer';
-import { useNavigate } from 'react-router';
+import Header from '../components/Header';
+// import { useNavigate } from 'react-router';
 
 interface BlogPost {
   id: number;
@@ -16,7 +17,7 @@ interface BlogPost {
 }
 
 const BlogPage: React.FC = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
@@ -196,7 +197,7 @@ const BlogPage: React.FC = () => {
 
                 <div 
                   className="prose prose-lg max-w-none text-gray-700 leading-relaxed"
-                  dangerouslySetInnerHTML={{ __html: selectedPost.content }}
+                  dangerouslySetInnerHTML={createSafeHtml(selectedPost.content)}
                 />
               </div>
             </article>

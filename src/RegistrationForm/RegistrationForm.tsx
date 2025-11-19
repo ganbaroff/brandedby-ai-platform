@@ -1,10 +1,6 @@
 import React from 'react';
 
-interface RegistrationFormProps {
-  // Add props here
-}
-
-const RegistrationForm: React.FC<RegistrationFormProps> = (props) => {
+const RegistrationForm: React.FC = () => {
   return (
     <div className="registrationform">
       <h1>RegistrationForm Component</h1>

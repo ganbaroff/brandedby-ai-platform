@@ -1,5 +1,5 @@
+import { Eye, EyeOff, Lock, Shield, User } from 'lucide-react';
 import React, { useState } from 'react';
-import { Lock, User, Eye, EyeOff, Shield } from 'lucide-react';
 import { AdminAuth, validateCredentials } from '../../shared/admin-auth';
 
 interface AdminLoginProps {
