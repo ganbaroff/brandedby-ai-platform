@@ -3,10 +3,10 @@ import { SecureAuth } from '@/shared/secure-auth';
 import { Database, Download, Edit, FileText, Image as ImageIcon, LogOut, Plus, RefreshCw, Save, Shield, Trash2, Upload, User, Users, X } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import AnalyticsDashboard from '../components/AnalyticsDashboard';
+import BlogEditor from '../components/BlogEditor';
 import BulkOperations from '../components/BulkOperations';
 import EnhancedImage from '../components/EnhancedImage';
 import PerformanceDashboard from '../components/PerformanceDashboard';
-import RichTextEditor from '../components/RichTextEditor';
 import SecureAdminLogin from '../components/SecureAdminLogin';
 
 const AdminPanel: React.FC = () => {
@@ -43,15 +43,6 @@ const AdminPanel: React.FC = () => {
   // Blog management states
   const [editingPost, setEditingPost] = useState<BlogPost | null>(null);
   const [showPostForm, setShowPostForm] = useState(false);
-  const [newPost, setNewPost] = useState<Omit<BlogPost, 'id'>>({
-    title: '',
-    content: '',
-    excerpt: '',
-    image_url: '',
-    author: '',
-    publishedAt: new Date().toISOString().split('T')[0],
-    category: 'News'
-  });
 
   // Check authentication on component mount
   useEffect(() => {
@@ -143,45 +134,6 @@ const AdminPanel: React.FC = () => {
   };
 
   // Blog CRUD operations
-  const savePost = () => {
-    if (editingPost) {
-      // Validate post data
-      const validation = BlogManager.validatePost(editingPost);
-      if (!validation.valid) {
-        alert('Please fill in all required fields:\n' + validation.errors.join('\n'));
-        return;
-      }
-
-      const updatedPosts = blogPosts.map(p => p.id === editingPost.id ? editingPost : p);
-      setBlogPosts(updatedPosts);
-      BlogManager.saveBlogPosts(updatedPosts);
-      setEditingPost(null);
-    } else {
-      // Validate post data
-      const validation = BlogManager.validatePost(newPost);
-      if (!validation.valid) {
-        alert('Please fill in all required fields:\n' + validation.errors.join('\n'));
-        return;
-      }
-
-      const newId = BlogManager.generateNewId(blogPosts);
-      const postToAdd = { ...newPost, id: newId };
-      const updatedPosts = [...blogPosts, postToAdd];
-      setBlogPosts(updatedPosts);
-      BlogManager.saveBlogPosts(updatedPosts);
-      setNewPost({
-        title: '',
-        content: '',
-        excerpt: '',
-        image_url: '',
-        author: '',
-        publishedAt: new Date().toISOString().split('T')[0],
-        category: 'News'
-      });
-      setShowPostForm(false);
-    }
-  };
-
   const deletePost = (id: number) => {
     if (confirm('Are you sure you want to delete this post?')) {
       const updatedPosts = blogPosts.filter(p => p.id !== id);
@@ -662,169 +614,29 @@ const AdminPanel: React.FC = () => {
               </div>
             </div>
 
-            {/* Blog Post Form Modal */}
+            {/* Blog Editor Modal */}
             {(showPostForm || editingPost) && (
               <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-                <div className="bg-white rounded-lg p-4 md:p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-                  <div className="flex justify-between items-center mb-4">
-                    <h3 className="text-lg font-semibold">
-                      {editingPost ? 'Edit Post' : 'Create New Post'}
-                    </h3>
-                    <button
-                      onClick={() => {
-                        setShowPostForm(false);
-                        setEditingPost(null);
-                      }}
-                      className="text-gray-500 hover:text-gray-700"
-                    >
-                      <X className="h-5 w-5" />
-                    </button>
-                  </div>
-
-                  <div className="space-y-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
-                      <input
-                        type="text"
-                        value={editingPost ? editingPost.title : newPost.title}
-                        onChange={(e) => {
-                          if (editingPost) {
-                            setEditingPost({ ...editingPost, title: e.target.value });
-                          } else {
-                            setNewPost({ ...newPost, title: e.target.value });
-                          }
-                        }}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                        placeholder="Enter post title"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Excerpt</label>
-                      <input
-                        type="text"
-                        value={editingPost ? editingPost.excerpt : newPost.excerpt}
-                        onChange={(e) => {
-                          if (editingPost) {
-                            setEditingPost({ ...editingPost, excerpt: e.target.value });
-                          } else {
-                            setNewPost({ ...newPost, excerpt: e.target.value });
-                          }
-                        }}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                        placeholder="Brief description for preview"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Content</label>
-                      <RichTextEditor
-                        value={editingPost ? editingPost.content : newPost.content}
-                        onChange={(content) => {
-                          if (editingPost) {
-                            setEditingPost({ ...editingPost, content });
-                          } else {
-                            setNewPost({ ...newPost, content });
-                          }
-                        }}
-                        placeholder="Write your blog post content here..."
-                      />
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Author</label>
-                        <input
-                          type="text"
-                          value={editingPost ? editingPost.author : newPost.author}
-                          onChange={(e) => {
-                            if (editingPost) {
-                              setEditingPost({ ...editingPost, author: e.target.value });
-                            } else {
-                              setNewPost({ ...newPost, author: e.target.value });
-                            }
-                          }}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                          placeholder="Author name"
-                        />
-                      </div>
-
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Publish Date</label>
-                        <input
-                          type="date"
-                          value={editingPost ? editingPost.publishedAt : newPost.publishedAt}
-                          onChange={(e) => {
-                            if (editingPost) {
-                              setEditingPost({ ...editingPost, publishedAt: e.target.value });
-                            } else {
-                              setNewPost({ ...newPost, publishedAt: e.target.value });
-                            }
-                          }}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
-                        <select
-                          value={editingPost ? editingPost.category : newPost.category}
-                          onChange={(e) => {
-                            if (editingPost) {
-                              setEditingPost({ ...editingPost, category: e.target.value });
-                            } else {
-                              setNewPost({ ...newPost, category: e.target.value });
-                            }
-                          }}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                        >
-                          <option value="News">News</option>
-                          <option value="Technology">Technology</option>
-                          <option value="Tutorial">Tutorial</option>
-                          <option value="Updates">Updates</option>
-                          <option value="AI">Artificial Intelligence</option>
-                        </select>
-                      </div>
-
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Featured Image</label>
-                        <input
-                          type="url"
-                          value={editingPost ? editingPost.image_url : newPost.image_url}
-                          onChange={(e) => {
-                            if (editingPost) {
-                              setEditingPost({ ...editingPost, image_url: e.target.value });
-                            } else {
-                              setNewPost({ ...newPost, image_url: e.target.value });
-                            }
-                          }}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                          placeholder="Image URL"
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="flex space-x-3 mt-6">
-                    <button
-                      onClick={savePost}
-                      className="flex-1 flex items-center justify-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
-                    >
-                      <Save className="h-4 w-4 mr-2" />
-                      Save
-                    </button>
-                    <button
-                      onClick={() => {
-                        setShowPostForm(false);
-                        setEditingPost(null);
-                      }}
-                      className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors"
-                    >
-                      Cancel
-                    </button>
-                  </div>
+                <div className="bg-white rounded-lg p-4 md:p-6 w-full max-w-4xl max-h-[90vh] overflow-y-auto">
+                  <BlogEditor
+                    initialData={editingPost || undefined}
+                    isLoading={false}
+                    onSave={(data) => {
+                      if (editingPost) {
+                        const updated = { ...editingPost, ...data };
+                        BlogManager.updateBlogPost(updated);
+                      } else {
+                        BlogManager.addBlogPost(data);
+                      }
+                      loadBlogPosts();
+                      setShowPostForm(false);
+                      setEditingPost(null);
+                    }}
+                    onCancel={() => {
+                      setShowPostForm(false);
+                      setEditingPost(null);
+                    }}
+                  />
                 </div>
               </div>
             )}

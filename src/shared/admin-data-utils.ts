@@ -302,6 +302,26 @@ export class BlogManager {
 
     return { valid: errors.length === 0, errors };
   }
+
+  static addBlogPost(post: Omit<BlogPost, 'id'>): BlogPost {
+    const posts = this.loadBlogPosts();
+    const newId = this.generateNewId(posts);
+    const newPost: BlogPost = { ...post, id: newId };
+    posts.push(newPost);
+    this.saveBlogPosts(posts);
+    return newPost;
+  }
+
+  static updateBlogPost(post: BlogPost): boolean {
+    const posts = this.loadBlogPosts();
+    const index = posts.findIndex(p => p.id === post.id);
+    if (index === -1) {
+      console.error(`❌ Blog post with id ${post.id} not found`);
+      return false;
+    }
+    posts[index] = post;
+    return this.saveBlogPosts(posts);
+  }
 }
 
 // Development utilities

@@ -10,14 +10,14 @@ import { analytics } from "@/shared/advanced-analytics";
 import celebritiesData from "@/shared/celebrities.json";
 import logger from "@/shared/logger";
 import {
-  ArrowRight,
-  Camera,
-  Play,
-  Sparkles,
-  Star,
-  Video,
-  X,
-  Zap
+    ArrowRight,
+    Camera,
+    Play,
+    Sparkles,
+    Star,
+    Video,
+    X,
+    Zap
 } from "lucide-react";
 import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router";

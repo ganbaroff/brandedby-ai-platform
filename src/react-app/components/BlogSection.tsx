@@ -1,6 +1,6 @@
 import { ArrowRight, Calendar, ExternalLink, User } from "lucide-react";
-import { useNavigate } from "react-router";
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from "react-router";
 
 interface BlogPost {
   id: number;
