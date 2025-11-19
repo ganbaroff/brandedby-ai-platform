@@ -1,7 +1,9 @@
 import { Instagram, Mail, Sparkles, Twitter, Youtube } from "lucide-react";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 
 export default function Footer() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
 
@@ -13,6 +15,10 @@ export default function Footer() {
       setEmail("");
       setTimeout(() => setSubscribed(false), 3000);
     }
+  };
+
+  const handleNavigation = (path: string) => {
+    navigate(path);
   };
   return (
     <footer className="bg-gray-900 text-white py-12 sm:py-16">
@@ -40,11 +46,11 @@ export default function Footer() {
           <div className="space-y-4">
             <h4 className="text-lg font-semibold">Product</h4>
             <ul className="space-y-2 text-sm">
-              <li><a href="/celebrities" className="text-gray-400 hover:text-white transition-colors">Celebrities</a></li>
-              <li><a href="/selfie-upload" className="text-gray-400 hover:text-white transition-colors">Upload Selfie</a></li>
-              <li><a href="#templates" className="text-gray-400 hover:text-white transition-colors">Templates</a></li>
-              <li><a href="#pricing" className="text-gray-400 hover:text-white transition-colors">Pricing</a></li>
-              <li><a href="#gallery" className="text-gray-400 hover:text-white transition-colors">Gallery</a></li>
+              <li><button onClick={() => handleNavigation('/celebrities')} className="text-gray-400 hover:text-white transition-colors text-left">Celebrities</button></li>
+              <li><button onClick={() => handleNavigation('/selfie-upload')} className="text-gray-400 hover:text-white transition-colors text-left">Upload Selfie</button></li>
+              <li><button onClick={() => handleNavigation('/')} className="text-gray-400 hover:text-white transition-colors text-left">Home</button></li>
+              <li><button onClick={() => { handleNavigation('/'); setTimeout(() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' }), 100); }} className="text-gray-400 hover:text-white transition-colors text-left">Pricing</button></li>
+              <li><button onClick={() => handleNavigation('/blog')} className="text-gray-400 hover:text-white transition-colors text-left">Blog</button></li>
             </ul>
           </div>
 
@@ -52,11 +58,11 @@ export default function Footer() {
           <div className="space-y-4">
             <h4 className="text-lg font-semibold">Support</h4>
             <ul className="space-y-2 text-sm">
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Help Center</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">FAQ</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Contact Us</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Privacy Policy</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Terms of Service</a></li>
+              <li><a href="mailto:support@brandedby.com" className="text-gray-400 hover:text-white transition-colors">Help Center</a></li>
+              <li><a href="mailto:faq@brandedby.com" className="text-gray-400 hover:text-white transition-colors">FAQ</a></li>
+              <li><a href="mailto:contact@brandedby.com" className="text-gray-400 hover:text-white transition-colors">Contact Us</a></li>
+              <li><a href="/privacy" className="text-gray-400 hover:text-white transition-colors">Privacy Policy</a></li>
+              <li><a href="/terms" className="text-gray-400 hover:text-white transition-colors">Terms of Service</a></li>
             </ul>
           </div>
 
@@ -64,16 +70,16 @@ export default function Footer() {
           <div className="space-y-4">
             <h4 className="text-lg font-semibold">Connect</h4>
             <div className="flex space-x-4">
-              <a href="#" className="p-2 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors">
+              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="p-2 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors">
                 <Twitter className="w-5 h-5" />
               </a>
-              <a href="#" className="p-2 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors">
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="p-2 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors">
                 <Instagram className="w-5 h-5" />
               </a>
-              <a href="#" className="p-2 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors">
+              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="p-2 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors">
                 <Youtube className="w-5 h-5" />
               </a>
-              <a href="#" className="p-2 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors">
+              <a href="mailto:contact@brandedby.com" className="p-2 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors">
                 <Mail className="w-5 h-5" />
               </a>
             </div>
@@ -107,7 +113,7 @@ export default function Footer() {
             </p>
             {/* Admin Access Button */}
             <button
-              onClick={() => window.location.href = '/admin-panel'}
+              onClick={() => handleNavigation('/admin-panel')}
               className="text-xs text-gray-600 hover:text-gray-400 transition-colors opacity-50 hover:opacity-100"
               title="Admin Panel Access"
             >

@@ -116,8 +116,11 @@ export default function Header() {
               Upload
             </button>
             <button 
-              onClick={() => navigate('/#pricing')}
-              className="text-sm lg:text-base text-gray-600 hover:text-purple-600 transition-colors duration-200 font-medium"
+              onClick={() => {
+                navigate('/');
+                setTimeout(() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' }), 100);
+              }}
+              className="text-sm lg:text-base text-gray-600 hover:text-purple-600 transition-colors duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-purple-500 rounded px-2 py-1"
             >
               Pricing
             </button>
@@ -222,7 +225,10 @@ export default function Header() {
                 Upload Selfie
               </button>
               <button 
-                onClick={() => handleNavigate('/#pricing')}
+                onClick={() => {
+                  handleNavigate('/');
+                  setTimeout(() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' }), 100);
+                }}
                 className="w-full text-left px-4 py-4 text-gray-700 hover:bg-gradient-to-r hover:from-purple-50 hover:to-blue-50 hover:text-purple-600 rounded-xl font-medium transition-all duration-200 border border-transparent hover:border-purple-200"
               >
                 Pricing

@@ -295,7 +295,7 @@ const Home = memo(function Home() {
       </section>
 
       {/* Pricing Section */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-gradient-to-br from-neutral-900 to-neutral-800">
+      <section id="pricing" className="py-12 sm:py-16 lg:py-20 bg-gradient-to-br from-neutral-900 to-neutral-800">
         <div className="container mx-auto px-4 max-w-7xl">
           <div className="text-center mb-16">
             <h2 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-6">
