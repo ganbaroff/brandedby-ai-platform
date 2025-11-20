@@ -1,6 +1,7 @@
 import { ArrowLeft, Calendar, Eye, Filter, Search, User } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import { BlogManager, type BlogPost } from '@/shared/admin-data-utils';
+import { analytics } from '@/shared/advanced-analytics';
 import { createSafeHtml } from '../../shared/htmlSanitizer';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
@@ -16,6 +17,8 @@ const BlogPage: React.FC = () => {
 
   useEffect(() => {
     loadBlogPosts();
+    // Track blog page view
+    analytics.trackEvent('user', 'page_view', 'blog');
   }, []);
 
   const loadBlogPosts = () => {
@@ -58,6 +61,11 @@ const BlogPage: React.FC = () => {
   });
 
   const categories = Array.from(new Set(blogPosts.map(post => post.category)));
+
+  const handlePostClick = (post: BlogPost) => {
+    analytics.trackEvent('user', 'blog_post_click', post.title, { category: post.category });
+    setSelectedPost(post);
+  };
 
   if (selectedPost) {
     return (
@@ -183,7 +191,7 @@ const BlogPage: React.FC = () => {
                   <article
                     key={post.id}
                     className="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-lg transition-all duration-300 group cursor-pointer"
-                    onClick={() => setSelectedPost(post)}
+                    onClick={() => handlePostClick(post)}
                   >
                     <div className="relative overflow-hidden h-48">
                       <img
