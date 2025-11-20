@@ -128,17 +128,17 @@ export default function CelebrityDetail() {
           {/* Back Button */}
           <button 
             onClick={() => navigate('/celebrities')}
-            className="flex items-center space-x-2 text-gray-600 hover:text-purple-600 transition-colors mb-8"
+            className="flex items-center space-x-2 text-gray-600 hover:text-purple-600 transition-colors mb-8 font-medium"
           >
             <ArrowLeft className="w-5 h-5" />
-            <span>Back to Celebrities</span>
+            <span className="text-sm sm:text-base">Back to Celebrities</span>
           </button>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
             
             {/* Left Side - 3D Character */}
             <div className="space-y-6">
-              <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-3xl p-8 h-96 relative overflow-hidden flex items-center justify-center">
+              <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl sm:rounded-3xl p-6 sm:p-8 h-80 sm:h-96 relative overflow-hidden flex items-center justify-center">
                 <div className="text-center">
                   <div className="w-32 h-32 bg-gradient-to-br from-purple-400 to-blue-500 rounded-full mx-auto mb-4 flex items-center justify-center">
                     <Sparkles className="w-16 h-16 text-white" />
@@ -149,23 +149,23 @@ export default function CelebrityDetail() {
               </div>
               
               {/* Celebrity Info */}
-              <div className="bg-white rounded-2xl p-6 border border-gray-100">
+              <div className="bg-white rounded-2xl p-4 sm:p-6 border border-gray-100">
                 <div className="flex items-start space-x-4">
                   <img 
                     src={celebrity.image_url || undefined} 
                     alt={celebrity.name}
-                    className="w-16 h-16 rounded-2xl object-cover"
+                    className="w-14 sm:w-16 h-14 sm:h-16 rounded-2xl object-cover flex-shrink-0"
                   />
-                  <div className="flex-1">
-                    <h2 className="text-2xl font-bold text-gray-900">{celebrity.name}</h2>
-                    <p className="text-purple-600 font-medium">{celebrity.role}</p>
+                  <div className="flex-1 min-w-0">
+                    <h2 className="text-xl sm:text-2xl font-bold text-gray-900 truncate">{celebrity.name}</h2>
+                    <p className="text-purple-600 font-medium text-sm sm:text-base truncate">{celebrity.role}</p>
                     <div className="flex items-center space-x-2 mt-2">
-                      <Star className="w-4 h-4 text-yellow-500 fill-current" />
+                      <Star className="w-4 h-4 text-yellow-500 fill-current flex-shrink-0" />
                       <span className="text-sm font-medium">{celebrity.rating}</span>
                     </div>
                   </div>
                 </div>
-                <p className="text-gray-600 mt-4 leading-relaxed">{celebrity.description}</p>
+                <p className="text-gray-600 text-sm sm:text-base mt-4 leading-relaxed line-clamp-3">{celebrity.description}</p>
               </div>
             </div>
 
@@ -174,19 +174,19 @@ export default function CelebrityDetail() {
               
               {/* Niche Selection */}
               <div>
-                <h3 className="text-xl font-bold text-gray-900 mb-4">Choose Video Purpose</h3>
-                <div className="grid grid-cols-2 gap-3">
+                <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-4">Choose Video Purpose</h3>
+                <div className="grid grid-cols-2 gap-2 sm:gap-3">
                   {parseNiches(celebrity.niches).map((niche) => (
                     <button
                       key={niche}
                       onClick={() => setSelectedNiche(niche)}
-                      className={`p-4 rounded-xl border-2 text-left transition-all ${
+                      className={`p-3 sm:p-4 rounded-lg sm:rounded-xl border-2 text-left transition-all text-sm sm:text-base ${
                         selectedNiche === niche
                           ? 'border-purple-500 bg-purple-50'
                           : 'border-gray-200 hover:border-purple-300'
                       }`}
                     >
-                      <div className="font-semibold">{niche}</div>
+                      <div className="font-semibold truncate">{niche}</div>
                     </button>
                   ))}
                 </div>
@@ -194,7 +194,7 @@ export default function CelebrityDetail() {
 
               {/* Video Format Selection */}
               <div>
-                <h3 className="text-xl font-bold text-gray-900 mb-4">Video Format</h3>
+                <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-4">Video Format</h3>
                 
                 {/* Dropdown for format selection */}
                 <div className="mb-4">
@@ -209,7 +209,7 @@ export default function CelebrityDetail() {
                         setCustomFormat('');
                       }
                     }}
-                    className="w-full p-4 border-2 border-gray-200 rounded-xl focus:border-purple-500 focus:outline-none bg-white"
+                    className="w-full p-3 sm:p-4 text-sm sm:text-base border-2 border-gray-200 rounded-lg sm:rounded-xl focus:border-purple-500 focus:outline-none bg-white"
                   >
                     <option value="">Select video format...</option>
                     {videoFormats.map((format) => (
@@ -258,10 +258,10 @@ export default function CelebrityDetail() {
               {/* Project Description */}
               <div>
                 <div className="flex items-center space-x-2 mb-4">
-                  <h3 className="text-xl font-bold text-gray-900">Project Description</h3>
+                  <h3 className="text-lg sm:text-xl font-bold text-gray-900">Project Description</h3>
                   <button 
                     onClick={() => setShowAIAssistant(true)}
-                    className="flex items-center space-x-1 text-purple-600 text-sm hover:text-purple-700 transition-colors"
+                    className="flex items-center space-x-1 text-purple-600 text-xs sm:text-sm hover:text-purple-700 transition-colors"
                   >
                     <Sparkles className="w-4 h-4" />
                     <span>AI Assist</span>
@@ -271,29 +271,29 @@ export default function CelebrityDetail() {
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   placeholder="Describe your video vision..."
-                  className="w-full h-32 p-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
+                  className="w-full h-32 p-3 sm:p-4 text-sm sm:text-base border border-gray-300 rounded-lg sm:rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
                 />
               </div>
 
               {/* Demo Video Section */}
               <div>
-                <h3 className="text-xl font-bold text-gray-900 mb-4">Preview Sample Video</h3>
-                <div className="bg-gray-100 rounded-xl p-6 text-center">
-                  <div className="aspect-video bg-gradient-to-br from-purple-100 to-blue-100 rounded-xl flex items-center justify-center mb-4">
-                    <div className="text-center space-y-3">
-                      <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto shadow-lg">
-                        <span className="text-2xl">🎬</span>
+                <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-4">Preview Sample Video</h3>
+                <div className="bg-gray-100 rounded-lg sm:rounded-xl p-4 sm:p-6 text-center">
+                  <div className="aspect-video bg-gradient-to-br from-purple-100 to-blue-100 rounded-lg sm:rounded-xl flex items-center justify-center mb-4">
+                    <div className="text-center space-y-3 px-4">
+                      <div className="w-14 sm:w-16 h-14 sm:h-16 bg-white rounded-full flex items-center justify-center mx-auto shadow-lg">
+                        <span className="text-xl sm:text-2xl">🎬</span>
                       </div>
                       <div>
-                        <h4 className="font-semibold text-gray-900">Sample Video with {celebrity.name}</h4>
-                        <p className="text-sm text-gray-600">See how your video will look</p>
+                        <h4 className="font-semibold text-gray-900 text-sm sm:text-base">Sample Video with {celebrity.name}</h4>
+                        <p className="text-xs sm:text-sm text-gray-600">See how your video will look</p>
                       </div>
-                      <button className="bg-purple-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-purple-700 transition-colors">
+                      <button className="bg-purple-600 text-white px-4 sm:px-6 py-2 rounded-lg font-medium hover:bg-purple-700 transition-colors text-sm sm:text-base">
                         ▶ Watch Preview
                       </button>
                     </div>
                   </div>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-xs sm:text-sm text-gray-600">
                     This is a sample video showing the quality and style you can expect from {celebrity.name}
                   </p>
                 </div>
@@ -302,7 +302,7 @@ export default function CelebrityDetail() {
               {/* Continue Button */}
               <button 
                 onClick={handleContinue}
-                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-4 rounded-xl font-semibold text-lg hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105"
+                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 sm:py-4 rounded-lg sm:rounded-xl font-semibold text-base sm:text-lg hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105"
               >
                 {user ? 'Continue to Pricing & Payment' : 'Sign In to Continue'}
               </button>

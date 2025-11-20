@@ -114,24 +114,24 @@ export default function Dashboard() {
       <section className="pt-24 pb-16 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
         <div className="container mx-auto px-4 max-w-7xl">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center space-y-6 md:space-y-0">
-            <div>
-              <div className="inline-flex items-center space-x-2 bg-white/60 backdrop-blur-sm border border-purple-200 rounded-full px-4 py-2 mb-4">
-                <Sparkles className="w-4 h-4 text-purple-600" />
-                <span className="text-sm font-medium text-purple-800">Your Dashboard</span>
+            <div className="flex-1">
+              <div className="inline-flex items-center space-x-2 bg-white/60 backdrop-blur-sm border border-purple-200 rounded-full px-3 sm:px-4 py-2 mb-4 text-xs sm:text-sm">
+                <Sparkles className="w-4 h-4 text-purple-600 flex-shrink-0" />
+                <span className="font-medium text-purple-800">Your Dashboard</span>
               </div>
-              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-2">
+              <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-2">
                 Welcome back, {user?.google_user_data.given_name || 'Creator'}!
               </h1>
-              <p className="text-xl text-gray-600">
+              <p className="text-sm xs:text-base sm:text-lg md:text-xl text-gray-600">
                 Manage your video projects and track their progress
               </p>
             </div>
             
             <button
               onClick={() => navigate('/celebrities')}
-              className="flex items-center space-x-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg hover:shadow-purple-500/25 transition-all transform hover:scale-105"
+              className="flex items-center space-x-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg sm:rounded-xl font-semibold hover:shadow-lg hover:shadow-purple-500/25 transition-all transform hover:scale-105 text-sm sm:text-base whitespace-nowrap"
             >
-              <Plus className="w-5 h-5" />
+              <Plus className="w-4 sm:w-5 h-4 sm:h-5 flex-shrink-0" />
               <span>New Project</span>
             </button>
           </div>
@@ -141,18 +141,18 @@ export default function Dashboard() {
       {/* Stats */}
       <section className="py-8 bg-white border-b border-gray-100">
         <div className="container mx-auto px-4 max-w-7xl">
-          <div className="grid grid-cols-1 sm:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-6">
             {[
               { label: 'Total Projects', value: projects.length, color: 'text-blue-600' },
               { label: 'Completed', value: projects.filter(p => p.status === 'completed').length, color: 'text-green-600' },
               { label: 'Processing', value: projects.filter(p => p.status === 'processing').length, color: 'text-yellow-600' },
               { label: 'Pending', value: projects.filter(p => p.status === 'pending').length, color: 'text-purple-600' }
             ].map((stat) => (
-              <div key={stat.label} className="bg-gray-50 rounded-2xl p-6 text-center">
-                <div className={`text-3xl font-bold ${stat.color} mb-1`}>
+              <div key={stat.label} className="bg-gray-50 rounded-lg sm:rounded-2xl p-4 sm:p-6 text-center">
+                <div className={`text-2xl sm:text-3xl font-bold ${stat.color} mb-1`}>
                   {stat.value}
                 </div>
-                <div className="text-sm text-gray-600">{stat.label}</div>
+                <div className="text-xs sm:text-sm text-gray-600">{stat.label}</div>
               </div>
             ))}
           </div>
@@ -162,16 +162,16 @@ export default function Dashboard() {
       {/* Projects List */}
       <section className="py-16">
         <div className="container mx-auto px-4 max-w-7xl">
-          <h2 className="text-3xl font-bold text-gray-900 mb-8">Your Projects</h2>
+          <h2 className="text-2xl xs:text-3xl sm:text-4xl font-bold text-gray-900 mb-8">Your Projects</h2>
           
           {projects.length === 0 ? (
             <div className="text-center py-16">
-              <Video className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">No projects yet</h3>
-              <p className="text-gray-600 mb-6">Start creating amazing videos with celebrities or your own selfie</p>
+              <Video className="w-12 sm:w-16 h-12 sm:h-16 text-gray-300 mx-auto mb-4" />
+              <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">No projects yet</h3>
+              <p className="text-sm sm:text-base text-gray-600 mb-6">Start creating amazing videos with celebrities or your own selfie</p>
               <button
                 onClick={() => navigate('/celebrities')}
-                className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-2xl font-semibold hover:shadow-lg transition-all"
+                className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg sm:rounded-2xl font-semibold hover:shadow-lg transition-all text-sm sm:text-base"
               >
                 Create Your First Project
               </button>
