@@ -1,20 +1,10 @@
 import { ArrowLeft, Calendar, Eye, Filter, Search, User } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
+import { BlogManager, type BlogPost } from '@/shared/admin-data-utils';
 import { createSafeHtml } from '../../shared/htmlSanitizer';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 // import { useNavigate } from 'react-router';
-
-interface BlogPost {
-  id: number;
-  title: string;
-  content: string;
-  excerpt: string;
-  image: string;
-  author: string;
-  publishedAt: string;
-  category: string;
-}
 
 const BlogPage: React.FC = () => {
   // const navigate = useNavigate();
@@ -30,94 +20,11 @@ const BlogPage: React.FC = () => {
 
   const loadBlogPosts = () => {
     try {
-      const saved = localStorage.getItem('blogPosts');
-      if (saved) {
-        setBlogPosts(JSON.parse(saved));
-      } else {
-        const defaultPosts: BlogPost[] = [
-          {
-            id: 1,
-            title: 'AI Photography Revolution',
-            content: `<p>Artificial intelligence is fundamentally changing the way we create and process photographs. New technologies allow for incredibly realistic image generation in seconds.</p>
-
-<h2>What makes AI photography special?</h2>
-<p>AI technologies open unlimited possibilities for creativity:</p>
-<ul>
-<li><strong>Instant creation</strong> - image generation in seconds</li>
-<li><strong>Personalization</strong> - adaptation to your preferences</li>
-<li><strong>High quality</strong> - professional results without experience</li>
-</ul>
-
-<h2>Industry applications</h2>
-<p>From film industry to social media - AI photography is changing all areas of visual content.</p>`,
-            excerpt: 'How AI technologies are transforming photography and video production',
-            image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=500&fit=crop&auto=format&q=80',
-            author: 'BrandedBy Team',
-            publishedAt: '2025-11-06',
-            category: 'Technology'
-          },
-          {
-            id: 2,
-            title: 'Creating Personal Videos with Celebrities',
-            content: `<p>Learn how our platform allows you to create unique videos where you can interact with your favorite celebrities.</p>
-
-<h2>Step-by-step process</h2>
-<ol>
-<li><strong>Upload selfie</strong> - quality face photo</li>
-<li><strong>Choose celebrity</strong> - from our star database</li>
-<li><strong>Configure settings</strong> - duration and video style</li>
-<li><strong>Get result</strong> - HD video in minutes</li>
-</ol>
-
-<h2>Tips for best results</h2>
-<p>For maximum realistic results, follow these recommendations:</p>
-<ul>
-<li>Use clear photo with good lighting</li>
-<li>Face should be fully visible</li>
-<li>Avoid sunglasses and covering accessories</li>
-</ul>`,
-            excerpt: 'Step-by-step guide to creating AI videos with selfies',
-            image: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&h=500&fit=crop&auto=format&q=80',
-            author: 'Alex Johnson',
-            publishedAt: '2025-11-05',
-            category: 'Tutorial'
-          },
-          {
-            id: 3,
-            title: 'The Future of Entertainment: AI and Personalization',
-            content: `<p>Exploring how artificial intelligence is shaping the future of the entertainment industry and creating new forms of interaction.</p>
-
-<h2>AI Entertainment Trends</h2>
-<p>The entertainment industry is experiencing a revolution thanks to AI:</p>
-
-<h3>1. Personalized Content</h3>
-<p>AI analyzes user preferences and creates unique content for everyone.</p>
-
-<h3>2. Interactive Media</h3>
-<p>Viewers become part of the story, influencing the plot in real time.</p>
-
-<h3>3. Virtual Actors</h3>
-<p>AI characters become increasingly realistic and emotional.</p>
-
-<h2>What awaits us?</h2>
-<p>In the near future we will see:</p>
-<ul>
-<li>Fully personalized movies</li>
-<li>AI friends and companions</li>
-<li>Interactive AR/VR worlds</li>
-</ul>`,
-            excerpt: 'A look into the future of AI entertainment and personalized content',
-            image: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=800&h=500&fit=crop&auto=format&q=80',
-            author: 'Maria Garcia',
-            publishedAt: '2025-11-04',
-            category: 'AI'
-          }
-        ];
-        setBlogPosts(defaultPosts);
-        localStorage.setItem('blogPosts', JSON.stringify(defaultPosts));
-      }
+      const posts = BlogManager.loadBlogPosts();
+      setBlogPosts(posts);
     } catch (error) {
       console.error('Error loading blog posts:', error);
+      setBlogPosts([]);
     } finally {
       setLoading(false);
     }
@@ -169,7 +76,7 @@ const BlogPage: React.FC = () => {
 
             <article className="bg-white rounded-xl shadow-sm overflow-hidden">
               <img
-                src={selectedPost.image}
+                src={selectedPost.image_url}
                 alt={selectedPost.title}
                 className="w-full h-64 md:h-96 object-cover"
               />
@@ -280,7 +187,7 @@ const BlogPage: React.FC = () => {
                   >
                     <div className="relative overflow-hidden h-48">
                       <img
-                        src={post.image}
+                        src={post.image_url}
                         alt={post.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       />
