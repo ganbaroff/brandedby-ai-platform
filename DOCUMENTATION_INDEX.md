@@ -22,12 +22,18 @@
    - Security notes
    - What each setting means
 
-3. **[DEPLOY_INSTRUCTIONS_RU.md](./DEPLOY_INSTRUCTIONS_RU.md)**
+3. **[FIND_ACCOUNT_ID.md](./FIND_ACCOUNT_ID.md)** 🆕 **← If you can't find Account ID**
+   - 3 different ways to find it
+   - Screenshots locations
+   - Mobile instructions
+   - Troubleshooting tips
+
+4. **[DEPLOY_INSTRUCTIONS_RU.md](./DEPLOY_INSTRUCTIONS_RU.md)**
    - Russian language instructions
    - 5 quick steps
    - Same information, different format
 
-4. **[README.md](./README.md)**
+5. **[README.md](./README.md)**
    - Project overview
    - Development setup
    - Deployment quick start

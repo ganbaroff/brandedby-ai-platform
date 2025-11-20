@@ -56,6 +56,8 @@ Account ID: (some number like abc123def456)
 Click the copy icon or select all text
 ✅ Copy your Account ID
 
+**👉 Can't find it? See detailed guide: [FIND_ACCOUNT_ID.md](./FIND_ACCOUNT_ID.md)**
+
 ---
 
 ## STEP 3: Add to GitHub Secrets ✅
