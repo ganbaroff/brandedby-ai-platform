@@ -1,6 +1,7 @@
 import { ArrowRight, Calendar, ExternalLink, User } from "lucide-react";
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from "react-router";
+import { analytics } from '@/shared/advanced-analytics';
 import { BlogManager, type BlogPost } from '@/shared/admin-data-utils';
 
 const BlogSection: React.FC = () => {
@@ -22,6 +23,11 @@ const BlogSection: React.FC = () => {
       setLoading(false);
     }
   };
+
+  const handleBlogNavigate = useCallback((path: string) => {
+    analytics.trackEvent('user', 'blog_section_click', path);
+    navigate(path);
+  }, [navigate]);
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('ru-RU', {
@@ -139,7 +145,7 @@ const BlogSection: React.FC = () => {
         {/* View All Posts Button */}
         <div className="text-center">
           <button 
-            onClick={() => navigate('/blog')}
+            onClick={() => handleBlogNavigate('/blog')}
             className="inline-flex items-center bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-3 rounded-lg font-semibold hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105"
           >
             All Blog Posts
