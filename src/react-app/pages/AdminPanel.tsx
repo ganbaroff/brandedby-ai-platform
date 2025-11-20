@@ -622,15 +622,29 @@ const AdminPanel: React.FC = () => {
                     initialData={editingPost || undefined}
                     isLoading={false}
                     onSave={(data) => {
-                      if (editingPost) {
-                        const updated = { ...editingPost, ...data };
-                        BlogManager.updateBlogPost(updated);
-                      } else {
-                        BlogManager.addBlogPost(data);
+                      try {
+                        if (editingPost) {
+                          const updated: typeof editingPost = {
+                            id: editingPost.id,
+                            title: data.title,
+                            content: data.content,
+                            excerpt: data.excerpt,
+                            image_url: data.image_url,
+                            author: data.author,
+                            publishedAt: data.publishedAt,
+                            category: data.category,
+                          };
+                          BlogManager.updateBlogPost(updated);
+                        } else {
+                          BlogManager.addBlogPost(data);
+                        }
+                        loadBlogPosts();
+                        setShowPostForm(false);
+                        setEditingPost(null);
+                      } catch (error) {
+                        console.error('Error saving blog post:', error);
+                        alert('Failed to save blog post. Please try again.');
                       }
-                      loadBlogPosts();
-                      setShowPostForm(false);
-                      setEditingPost(null);
                     }}
                     onCancel={() => {
                       setShowPostForm(false);
