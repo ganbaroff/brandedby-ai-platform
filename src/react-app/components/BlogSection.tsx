@@ -1,17 +1,7 @@
 import { ArrowRight, Calendar, ExternalLink, User } from "lucide-react";
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router";
-
-interface BlogPost {
-  id: number;
-  title: string;
-  content: string;
-  excerpt: string;
-  image: string;
-  author: string;
-  publishedAt: string;
-  category: string;
-}
+import { BlogManager, type BlogPost } from '@/shared/admin-data-utils';
 
 const BlogSection: React.FC = () => {
   const navigate = useNavigate();
@@ -24,50 +14,10 @@ const BlogSection: React.FC = () => {
 
   const loadBlogPosts = () => {
     try {
-      // Load from localStorage or set default posts
-      const saved = localStorage.getItem('blogPosts');
-      if (saved) {
-        const posts = JSON.parse(saved);
-        setBlogPosts(posts.slice(0, 3)); // Show only latest 3 posts
-      } else {
-        // Default blog posts
-        const defaultPosts: BlogPost[] = [
-          {
-            id: 1,
-            title: 'AI Photography Revolution',
-            content: 'Artificial intelligence is fundamentally changing the way we create and process photographs. New technologies allow for incredibly realistic image generation in seconds.',
-            excerpt: 'How AI technologies are transforming photography and video production',
-            image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&h=400&fit=crop&auto=format&q=80',
-            author: 'BrandedBy Team',
-            publishedAt: '2025-11-06',
-            category: 'Technology'
-          },
-          {
-            id: 2,
-            title: 'Creating Personal Videos with Celebrities',
-            content: 'Learn how our platform allows you to create unique videos where you can interact with your favorite celebrities.',
-            excerpt: 'Step-by-step guide to creating AI videos with selfies',
-            image: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600&h=400&fit=crop&auto=format&q=80',
-            author: 'Alex Johnson',
-            publishedAt: '2025-11-05',
-            category: 'Tutorial'
-          },
-          {
-            id: 3,
-            title: 'The Future of Entertainment: AI and Personalization',
-            content: 'Exploring how artificial intelligence is shaping the future of the entertainment industry and creating new forms of interaction.',
-            excerpt: 'A look into the future of AI entertainment and personalized content',
-            image: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=600&h=400&fit=crop&auto=format&q=80',
-            author: 'Maria Garcia',
-            publishedAt: '2025-11-04',
-            category: 'AI'
-          }
-        ];
-        setBlogPosts(defaultPosts);
-        localStorage.setItem('blogPosts', JSON.stringify(defaultPosts));
-      }
+      const posts = BlogManager.loadBlogPosts();
+      setBlogPosts(posts.slice(0, 3)); // Show only latest 3 posts
     } catch (error) {
-      console.error('Ошибка загрузки постов блога:', error);
+      console.error('Error loading blog posts:', error);
     } finally {
       setLoading(false);
     }
@@ -142,7 +92,7 @@ const BlogSection: React.FC = () => {
             >
               <div className={`relative overflow-hidden ${index === 0 ? 'h-64 md:h-80' : 'h-48'}`}>
                 <img
-                  src={post.image}
+                  src={post.image_url}
                   alt={post.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
