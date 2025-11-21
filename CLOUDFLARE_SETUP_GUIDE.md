@@ -229,4 +229,11 @@ https://[your-project-name].pages.dev
 
 ---
 
+## Альтернатива: быстрый деплой через Vercel (рекомендуется для простоты)
+
+Если вы хотите избежать ручной работы с токенами и Account ID, можно быстро подключить репозиторий к Vercel — он сам собирает и публикует проект, создаёт preview для PR и продакшн для `main`.
+
+- Полное руководство по шагам: [VERCEL_SETUP.md](./VERCEL_SETUP.md)
+- Коротко: импортируете репозиторий в Vercel, указываете `npm run build` и `dist/client` как output, добавляете переменные окружения при необходимости и деплоите.
+
 **Need more help? Check the detailed guide in API_TOKEN_GUIDE.md**

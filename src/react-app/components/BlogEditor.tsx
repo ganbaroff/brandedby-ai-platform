@@ -4,8 +4,9 @@
  */
 
 import { Eye, EyeOff, Save } from "lucide-react";
-import { useCallback, useState } from "react";
-import RichTextEditor from "./RichTextEditor";
+import { Suspense, useCallback, useState } from "react";
+import { LazyRichTextEditor } from "@/shared/performance-optimizer";
+import LoadingSpinner from "./LoadingSpinner";
 
 export interface BlogEditorData {
   id?: number;
@@ -277,12 +278,14 @@ const BlogEditor: React.FC<BlogEditorProps> = ({
               </div>
             ) : (
               <div>
-                <RichTextEditor
-                  value={data.content}
-                  onChange={(value) => handleChange('content', value)}
-                  placeholder="Write your post content here..."
-                  height="400px"
-                />
+                <Suspense fallback={<LoadingSpinner message="Loading editor..." />}>
+                  <LazyRichTextEditor
+                    value={data.content}
+                    onChange={(value) => handleChange('content', value)}
+                    placeholder="Write your post content here..."
+                    height="400px"
+                  />
+                </Suspense>
                 <p className="text-xs text-gray-500 mt-2">
                   Word count: {wordCount}
                 </p>

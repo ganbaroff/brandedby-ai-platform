@@ -39,6 +39,11 @@
    - Deployment quick start
    - Project status badges
 
+6. **[VERCEL_SETUP.md](./VERCEL_SETUP.md)**
+   - Быстрый вариант для деплоя (Vercel)
+   - Не требует Cloudflare токенов
+   - Автоматические preview deploys для PR
+
 ---
 
 ## 📋 What You'll Get

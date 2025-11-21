@@ -1,14 +1,14 @@
 import { useAuth } from "@getmocha/users-service/react";
 import { LogOut, Menu, Sparkles, User, X } from "lucide-react";
-import { useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 
-export default function Header() {
+const Header = memo(function Header() {
   const navigate = useNavigate();
   const { user, redirectToLogin, logout } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const handleAuthAction = async () => {
+  const handleAuthAction = useCallback(async () => {
     if (user) {
       await logout();
       navigate('/');
@@ -16,12 +16,12 @@ export default function Header() {
       await redirectToLogin();
     }
     setMobileMenuOpen(false);
-  };
+  }, [user, logout, navigate, redirectToLogin]);
 
-  const handleNavigate = (path: string) => {
+  const handleNavigate = useCallback((path: string) => {
     navigate(path);
     setMobileMenuOpen(false);
-  };
+  }, [navigate]);
 
   // Закрывать меню при изменении размера экрана на десктоп
   useEffect(() => {
@@ -274,4 +274,6 @@ export default function Header() {
         </div>
     </header>
   );
-}
+});
+
+export default Header;

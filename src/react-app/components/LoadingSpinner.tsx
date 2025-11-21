@@ -1,11 +1,12 @@
 import { Sparkles } from 'lucide-react';
+import { memo } from 'react';
 
 interface LoadingSpinnerProps {
   message?: string;
   fullScreen?: boolean;
 }
 
-export default function LoadingSpinner({ 
+const LoadingSpinner = memo(function LoadingSpinner({ 
   message = 'Loading...', 
   fullScreen = false 
 }: LoadingSpinnerProps) {
@@ -30,4 +31,6 @@ export default function LoadingSpinner({
   }
 
   return content;
-}
+});
+
+export default LoadingSpinner;

@@ -2,7 +2,7 @@
  * Enhanced Image Component with Fallbacks and Error Handling
  */
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
 
 interface EnhancedImageProps {
   src: string;
@@ -16,7 +16,7 @@ interface EnhancedImageProps {
   onError?: (error: Event) => void;
 }
 
-const EnhancedImage: React.FC<EnhancedImageProps> = ({
+const EnhancedImage: React.FC<EnhancedImageProps> = memo(({
   src,
   alt,
   width,
@@ -61,14 +61,16 @@ const EnhancedImage: React.FC<EnhancedImageProps> = ({
     return () => observerRef.current?.disconnect();
   }, [loading]);
 
-  const handleLoad = () => {
+  const handleLoad = useCallback(() => {
     setIsLoading(false);
     setHasError(false);
     onLoad?.();
-  };
+  }, [onLoad]);
 
-  const handleError = (event: React.SyntheticEvent<HTMLImageElement, Event>) => {
-    console.warn('Image failed to load:', currentSrc);
+  const handleError = useCallback((event: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    if (process.env.NODE_ENV === 'development') {
+      console.warn('Image failed to load:', currentSrc);
+    }
     
     if (currentSrc !== defaultFallback) {
       // Try fallback image
@@ -81,7 +83,7 @@ const EnhancedImage: React.FC<EnhancedImageProps> = ({
     }
     
     onError?.(event.nativeEvent);
-  };
+  }, [currentSrc, defaultFallback, onError]);
 
   // Reset when src changes
   useEffect(() => {
@@ -140,6 +142,8 @@ const EnhancedImage: React.FC<EnhancedImageProps> = ({
       )}
     </div>
   );
-};
+});
+
+EnhancedImage.displayName = 'EnhancedImage';
 
 export default EnhancedImage;

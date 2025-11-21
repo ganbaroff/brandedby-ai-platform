@@ -1,13 +1,13 @@
 import { Instagram, Mail, Sparkles, Twitter, Youtube } from "lucide-react";
-import { useState } from "react";
+import { memo, useCallback, useState } from "react";
 import { useNavigate } from "react-router";
 
-export default function Footer() {
+const Footer = memo(function Footer() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
 
-  const handleSubscribe = (e: React.FormEvent) => {
+  const handleSubscribe = useCallback((e: React.FormEvent) => {
     e.preventDefault();
     if (email) {
       // Here you would normally send to your newsletter service
@@ -15,11 +15,11 @@ export default function Footer() {
       setEmail("");
       setTimeout(() => setSubscribed(false), 3000);
     }
-  };
+  }, [email]);
 
-  const handleNavigation = (path: string) => {
+  const handleNavigation = useCallback((path: string) => {
     navigate(path);
-  };
+  }, [navigate]);
   return (
     <footer className="bg-gray-900 text-white py-12 sm:py-16">
       <div className="container mx-auto px-4 max-w-7xl">
@@ -127,4 +127,6 @@ export default function Footer() {
       </div>
     </footer>
   );
-}
+});
+
+export default Footer;

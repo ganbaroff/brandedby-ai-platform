@@ -11,9 +11,9 @@ npm install
 npm run dev
 ```
 
-### 🌐 Развертывание (FREE на Cloudflare Pages)
+### 🌐 Развертывание (Cloudflare Pages или быстрый вариант — Vercel)
 
-**⏱️ Займет 5 минут!**
+**Cloudflare Pages (текущий быстрый путь, 5 минут)**
 
 Полные инструкции в файле: [`DEPLOY_INSTRUCTIONS_RU.md`](./DEPLOY_INSTRUCTIONS_RU.md)
 
@@ -23,6 +23,12 @@ npm run dev
 3. Добавьте secrets в GitHub (Settings → Secrets and variables)
 4. Создайте проект в Cloudflare Pages
 5. Ваш сайт будет доступен: **https://brandedby.pages.dev** ✅
+
+**Быстрый альтернативный вариант: Vercel (рекомендую если нужны минимальные настройки)**
+
+- Vercel подключается к GitHub, автоматически строит проект и создаёт preview для PR — не требует ручной настройки Cloudflare токенов или Account ID.
+- Подробная инструкция: [`VERCEL_SETUP.md`](./VERCEL_SETUP.md)
+
 
 ### 📊 Текущий статус
 

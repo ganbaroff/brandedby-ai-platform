@@ -11,6 +11,21 @@
 
 ---
 
+## ALTERNATIVE: Quick Vercel Deploy (1–2 minutes)
+
+If you prefer to avoid Cloudflare API tokens and Account IDs, deploy to Vercel — it automatically builds from GitHub and provides preview URLs for PRs.
+
+- Steps (short):
+   1. Go to https://vercel.com and sign in with GitHub.
+   2. Import repository `ganbaroff/brandedby-ai-platform`.
+   3. Set Build Command: `npm run build` and Output Directory: `dist/client`.
+   4. Add any needed Environment Variables in Vercel dashboard.
+   5. Click Deploy. See full steps: [`VERCEL_SETUP.md`](./VERCEL_SETUP.md)
+
+---
+
+---
+
 ## PHASE 1: Cloudflare Account Setup (3 minutes)
 
 ### Step 1: Create Cloudflare Account

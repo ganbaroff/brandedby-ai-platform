@@ -1,39 +1,33 @@
 import { Sparkles, Users } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import EnhancedImage from './EnhancedImage';
 
-const FaceMorphingDemo = () => {
+const FaceMorphingDemo = memo(() => {
   const [currentFaceIndex, setCurrentFaceIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
 
   // Массив изображений лиц для демонстрации
-  const demoFaces = [
+  const demoFaces = useMemo(() => [
     "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face",
     "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=200&h=200&fit=crop&crop=face",
     "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop&crop=face",
     "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=200&fit=crop&crop=face",
     "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&h=200&fit=crop&crop=face",
     "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&h=200&fit=crop&crop=face"
-  ];
+  ], []);
+
+  const animate = useCallback(() => {
+    setIsAnimating(true);
+    setTimeout(() => {
+      setCurrentFaceIndex((prev) => (prev + 1) % demoFaces.length);
+      setIsAnimating(false);
+    }, 300);
+  }, [demoFaces.length]);
 
   useEffect(() => {
-    let animationTimeout: NodeJS.Timeout;
-    
-    const animate = () => {
-      setIsAnimating(true);
-      animationTimeout = setTimeout(() => {
-        setCurrentFaceIndex((prev) => (prev + 1) % demoFaces.length);
-        setIsAnimating(false);
-      }, 300);
-    };
-
     const mainInterval = setInterval(animate, 2500);
-
-    return () => {
-      clearInterval(mainInterval);
-      clearTimeout(animationTimeout);
-    };
-  }, [demoFaces.length]);
+    return () => clearInterval(mainInterval);
+  }, [animate]);
 
   return (
     <div className="relative bg-gradient-to-br from-purple-100 to-blue-100 rounded-3xl p-8 overflow-hidden">
@@ -128,6 +122,8 @@ const FaceMorphingDemo = () => {
       </div>
     </div>
   );
-};
+});
+
+FaceMorphingDemo.displayName = 'FaceMorphingDemo';
 
 export default FaceMorphingDemo;
