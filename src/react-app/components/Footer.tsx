@@ -70,16 +70,16 @@ const Footer = memo(function Footer() {
           <div className="space-y-4">
             <h4 className="text-lg font-semibold">Connect</h4>
             <div className="flex space-x-4">
-              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="p-2 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors">
+              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="p-2 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors" title="Twitter" aria-label="Twitter">
                 <Twitter className="w-5 h-5" />
               </a>
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="p-2 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors">
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="p-2 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors" title="Instagram" aria-label="Instagram">
                 <Instagram className="w-5 h-5" />
               </a>
-              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="p-2 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors">
+              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="p-2 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors" title="YouTube" aria-label="YouTube">
                 <Youtube className="w-5 h-5" />
               </a>
-              <a href="mailto:contact@brandedby.com" className="p-2 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors">
+              <a href="mailto:contact@brandedby.com" className="p-2 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors" title="Email Us" aria-label="Email Us">
                 <Mail className="w-5 h-5" />
               </a>
             </div>
@@ -111,13 +111,13 @@ const Footer = memo(function Footer() {
             <p className="text-gray-400 text-sm">
               © 2024 BrandedBY. All rights reserved.
             </p>
-            {/* Admin Access Button */}
+            {/* Яркая кнопка для входа в админ-панель */}
             <button
               onClick={() => handleNavigation('/admin-panel')}
-              className="text-xs text-gray-600 hover:text-gray-400 transition-colors opacity-50 hover:opacity-100"
-              title="Admin Panel Access"
+              className="ml-4 px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg text-xs font-semibold shadow hover:from-blue-600 hover:to-purple-600 transition-all"
+              title="Войти в админ-панель"
             >
-              Admin
+              🔐 Админ-панель
             </button>
           </div>
           <p className="text-gray-400 text-sm mt-4 md:mt-0">

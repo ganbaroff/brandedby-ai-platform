@@ -12,6 +12,14 @@ export const CelebritySchema = z.object({
   popularity: z.number(),
   created_at: z.string(),
   updated_at: z.string(),
+  biography_ru: z.string().optional(),
+  achievements: z.array(z.string()).optional(),
+  career_milestones: z.array(z.object({
+    year: z.number(),
+    title: z.string(),
+    description: z.string(),
+    category: z.string(),
+  })).optional(),
 });
 
 export type Celebrity = z.infer<typeof CelebritySchema>;

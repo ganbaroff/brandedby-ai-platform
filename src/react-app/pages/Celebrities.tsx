@@ -5,8 +5,8 @@ import Header from "@/react-app/components/Header";
 import SearchFilter, { FilterOptions } from "@/react-app/components/SearchFilter";
 import { CelebrityGridSkeleton } from "@/react-app/components/SkeletonLoaders";
 import { useCelebritiesSEO } from "@/react-app/hooks/useSEO";
+import { CelebrityManager, type Celebrity } from "@/shared/admin-data-utils";
 import { analytics } from "@/shared/advanced-analytics";
-import celebritiesData from "@/shared/celebrities.json";
 import { Star, TrendingUp, Users, Zap } from "lucide-react";
 import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router";
@@ -16,7 +16,8 @@ const Celebrities = memo(function Celebrities() {
   useCelebritiesSEO();
   
   const navigate = useNavigate();
-  const [loading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [celebritiesData, setCelebritiesData] = useState<Celebrity[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [filters, setFilters] = useState<FilterOptions>({
     category: '',
@@ -24,6 +25,21 @@ const Celebrities = memo(function Celebrities() {
     sortBy: 'popularity',
     sortOrder: 'desc'
   });
+
+  useEffect(() => {
+    const loadData = async () => {
+      setLoading(true);
+      try {
+        const data = await CelebrityManager.loadCelebrities();
+        setCelebritiesData(data);
+      } catch (error) {
+        console.error("Failed to load celebrities:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadData();
+  }, []);
 
   // Parse niches helper
   const parseNiches = useCallback((nichesJson: string): string[] => {
@@ -42,7 +58,7 @@ const Celebrities = memo(function Celebrities() {
       niches.forEach(niche => categoriesSet.add(niche));
     });
     return Array.from(categoriesSet).sort();
-  }, [parseNiches]);
+  }, [celebritiesData, parseNiches]);
 
   // Filter and sort celebrities
   const filteredCelebrities = useMemo(() => {
@@ -52,7 +68,7 @@ const Celebrities = memo(function Celebrities() {
         const query = searchQuery.toLowerCase();
         const matchesName = celebrity.name.toLowerCase().includes(query);
         const matchesRole = celebrity.role.toLowerCase().includes(query);
-        const matchesDescription = celebrity.description.toLowerCase().includes(query);
+        const matchesDescription = celebrity.description?.toLowerCase().includes(query) || false;
         const matchesNiches = parseNiches(celebrity.niches).some(niche => 
           niche.toLowerCase().includes(query)
         );
@@ -115,7 +131,7 @@ const Celebrities = memo(function Celebrities() {
     });
 
     return filtered;
-  }, [searchQuery, filters, parseNiches]);
+  }, [celebritiesData, searchQuery, filters, parseNiches]);
 
   const handleSearch = useCallback((query: string) => {
     setSearchQuery(query);
@@ -146,8 +162,10 @@ const Celebrities = memo(function Celebrities() {
   const stats = useMemo(() => ({
     total: celebritiesData.length,
     categories: allCategories.length,
-    avgRating: (celebritiesData.reduce((sum, celeb) => sum + celeb.rating, 0) / celebritiesData.length).toFixed(1)
-  }), [allCategories.length]);
+    avgRating: celebritiesData.length > 0 
+      ? (celebritiesData.reduce((sum, celeb) => sum + celeb.rating, 0) / celebritiesData.length).toFixed(1)
+      : "0.0"
+  }), [celebritiesData, allCategories.length]);
 
   // Track page view
   useEffect(() => {
@@ -278,7 +296,7 @@ const Celebrities = memo(function Celebrities() {
                       navigate(`/celebrity/${celebrity.id}`);
                     }}
                     className="group cursor-pointer bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden animate-scale-in"
-                    style={{ animationDelay: `${index * 50}ms` }}
+                    style={{ '--animation-delay': `${index * 50}ms` } as React.CSSProperties}
                   >
                     {/* Image */}
                     <div className="aspect-[3/4] overflow-hidden relative">

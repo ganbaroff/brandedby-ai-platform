@@ -5,11 +5,11 @@ import Header from "@/react-app/components/Header";
 import ImageErrorBoundary from "@/react-app/components/ImageErrorBoundary";
 import TemplateModal from "@/react-app/components/TemplateModal";
 import { useFileUpload } from "@/react-app/hooks/useFileUpload";
-import templatesData from "@/shared/templates.json";
+import { TemplateManager } from "@/shared/admin-data-utils";
 import { Template as BaseTemplate } from "@/shared/types";
 import { useAuth } from "@getmocha/users-service/react";
 import { Image as ImageIcon, Loader, Sparkles, Upload } from "lucide-react";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router";
 
 type Template = BaseTemplate & { emoji: string };
@@ -29,6 +29,27 @@ export default function SelfieUpload() {
   // Modal state for template editing
   const [modalOpen, setModalOpen] = useState(false);
   const [modalTemplate, setModalTemplate] = useState<Template | null>(null);
+  const [templates, setTemplates] = useState<Template[]>([]);
+  const [loadingTemplates, setLoadingTemplates] = useState(true);
+
+  useEffect(() => {
+    const fetchTemplates = async () => {
+      try {
+        const fetchedTemplates = await TemplateManager.loadTemplates();
+        // Ensure fetched templates have emoji property or provide default
+        const templatesWithEmoji = fetchedTemplates.map(t => ({
+          ...t,
+          emoji: t.emoji || '✨' 
+        })) as Template[];
+        setTemplates(templatesWithEmoji);
+      } catch (error) {
+        console.error("Failed to load templates", error);
+      } finally {
+        setLoadingTemplates(false);
+      }
+    };
+    fetchTemplates();
+  }, []);
 
   // Automatic package upgrade logic
   const handlePackageLogic = (templateId: string, formatId: string) => {
@@ -77,9 +98,6 @@ export default function SelfieUpload() {
   else setShowDowngradeWarning(false);
   setSelectedPackage(pkg);
   };
-
-  // Memoized templates data
-  const templates = useMemo(() => templatesData, []);
 
   // Memoized video formats - static data
   const videoFormats = useMemo(() => [
@@ -265,42 +283,48 @@ export default function SelfieUpload() {
             {/* Template Selection */}
             <div>
               <h2 className="text-2xl font-bold text-gray-900 mb-6">Choose Template</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                {templates.map((template: Template) => (
-                  <div key={template.id} className="relative group">
-                    <button
-                      onClick={() => handleTemplateSelect(template.id.toString())}
-                      className={`w-full p-6 rounded-2xl border-2 text-center transition-all hover:scale-105 ${
-                        selectedTemplate === template.id.toString()
-                          ? 'border-purple-500 bg-purple-50'
-                          : 'border-gray-200 hover:border-purple-300'
-                      }`}
-                    >
-                      <div className="text-4xl mb-3">{template.emoji}</div>
-                      <h3 className="font-semibold text-lg mb-1">
-                        {template.name}
-                        {template.is_azeri && <span className="ml-2">🇦🇿</span>}
-                      </h3>
-                      <span className={`inline-block px-2 py-1 rounded-full text-xs font-medium mb-1 ${categoryColors[template.category] || 'bg-gray-100 text-gray-800'}`}>{template.category}</span>
-                    </button>
-                    <button
-                      type="button"
-                      className="absolute top-2 right-2 bg-white/90 rounded-full p-1 shadow hover:bg-purple-100 text-purple-600 text-xs opacity-0 group-hover:opacity-100 transition-opacity"
-                      title="Edit template fields"
-                      onClick={() => handleEditTemplate(template)}
-                    >
-                      Edit
-                    </button>
-                  </div>
-                ))}
-      {/* Template Modal for editing fields */}
-      <TemplateModal
-        open={modalOpen}
-        template={modalTemplate}
-        onClose={() => setModalOpen(false)}
-        onSave={handleSaveTemplateFields}
-      />
-              </div>
+              {loadingTemplates ? (
+                 <div className="flex justify-center py-8">
+                   <Loader className="w-8 h-8 text-purple-600 animate-spin" />
+                 </div>
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                  {templates.map((template: Template) => (
+                    <div key={template.id} className="relative group">
+                      <button
+                        onClick={() => handleTemplateSelect(template.id.toString())}
+                        className={`w-full p-6 rounded-2xl border-2 text-center transition-all hover:scale-105 ${
+                          selectedTemplate === template.id.toString()
+                            ? 'border-purple-500 bg-purple-50'
+                            : 'border-gray-200 hover:border-purple-300'
+                        }`}
+                      >
+                        <div className="text-4xl mb-3">{template.emoji}</div>
+                        <h3 className="font-semibold text-lg mb-1">
+                          {template.name}
+                          {template.is_azeri && <span className="ml-2">🇦🇿</span>}
+                        </h3>
+                        <span className={`inline-block px-2 py-1 rounded-full text-xs font-medium mb-1 ${categoryColors[template.category] || 'bg-gray-100 text-gray-800'}`}>{template.category}</span>
+                      </button>
+                      <button
+                        type="button"
+                        className="absolute top-2 right-2 bg-white/90 rounded-full p-1 shadow hover:bg-purple-100 text-purple-600 text-xs opacity-0 group-hover:opacity-100 transition-opacity"
+                        title="Edit template fields"
+                        onClick={() => handleEditTemplate(template)}
+                      >
+                        Edit
+                      </button>
+                    </div>
+                  ))}
+                  {/* Template Modal for editing fields */}
+                  <TemplateModal
+                    open={modalOpen}
+                    template={modalTemplate}
+                    onClose={() => setModalOpen(false)}
+                    onSave={handleSaveTemplateFields}
+                  />
+                </div>
+              )}
             </div>
 
             {/* Video Format */}
@@ -407,8 +431,8 @@ export default function SelfieUpload() {
                   </div>
                   <div className="w-full bg-gray-200 rounded-full h-2">
                     <div 
-                      className="bg-gradient-to-r from-blue-600 to-purple-600 h-2 rounded-full transition-all duration-300"
-                      style={{ width: `${progress}%` }}
+                      className="bg-gradient-to-r from-blue-600 to-purple-600 h-2 rounded-full transition-all duration-300 w-[var(--progress-width)]"
+                      style={{ '--progress-width': `${progress}%` } as React.CSSProperties}
                     />
                   </div>
                 </div>

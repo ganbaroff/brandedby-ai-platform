@@ -3,6 +3,7 @@
 ## Способ 1: Быстрый способ (30 секунд)
 
 ### Шаг 1: Откройте Cloudflare
+
 ```
 https://dash.cloudflare.com/
 ```
@@ -10,6 +11,7 @@ https://dash.cloudflare.com/
 ### Шаг 2: Посмотрите в ЛЕВЫЙ НИЖНИЙ угол экрана
 
 Там вы увидите такой блок:
+
 ```
 ┌─────────────────────┐
 │   Account Details   │
@@ -20,6 +22,7 @@ https://dash.cloudflare.com/
 ```
 
 ### Шаг 3: Нажмите на кнопку копирования
+
 - Рядом с Account ID есть маленькая иконка копирования
 - Нажмите на неё
 - ✅ ID скопирован!
@@ -29,6 +32,7 @@ https://dash.cloudflare.com/
 ## Способ 2: Если не видите в левом углу
 
 ### Шаг 1: Откройте Cloudflare
+
 ```
 https://dash.cloudflare.com/
 ```
@@ -40,6 +44,7 @@ https://dash.cloudflare.com/
 ### Шаг 3: Нажмите на неё
 
 Вы увидите меню:
+
 ```
 ┌─────────────────────┐
 │ Manage Account      │
@@ -54,6 +59,7 @@ https://dash.cloudflare.com/
 ### Шаг 5: В левой панели найдите "Account"
 
 Там вы видите:
+
 ```
 Account
 ├─ Home
@@ -66,6 +72,7 @@ Account
 ### Шаг 6: Нажмите "Home" в секции Account
 
 ### Шаг 7: На этой странице вы найдёте:
+
 ```
 Account ID: abc123def456789xyz
 ```
@@ -79,6 +86,7 @@ Account ID: abc123def456789xyz
 ### Шаг 1: Посмотрите на адресную строку
 
 После `/dash.cloudflare.com/` обычно идёт:
+
 ```
 https://dash.cloudflare.com/abc123def456789xyz/overview
                            ↑
@@ -110,14 +118,17 @@ https://dash.cloudflare.com/abc123def456789xyz/overview
 ### Проверьте:
 
 1. **Вы в правильной учетной записи?**
+
    - Может быть логированы в другой аккаунт
    - Выйдите и войдите заново
 
 2. **Ваш аккаунт активен?**
+
    - Проверьте email на письмо от Cloudflare
    - Подтвердите email если нужно
 
 3. **Попробуйте другой браузер**
+
    - Иногда есть проблемы с кэшем
    - Откройте в режиме инкогнито (Ctrl+Shift+Delete)
 
@@ -130,6 +141,7 @@ https://dash.cloudflare.com/abc123def456789xyz/overview
 ## 📱 На мобильном телефоне?
 
 ### Шаг 1: Откройте сайт
+
 ```
 https://dash.cloudflare.com/
 ```
@@ -154,6 +166,7 @@ https://dash.cloudflare.com/
 ИЛИ
 
 Просто создайте новый проект в Cloudflare Pages:
+
 1. Pages → Create a project
 2. Connect to Git
 3. На следующей странице Cloudflare автоматически вставит Account ID

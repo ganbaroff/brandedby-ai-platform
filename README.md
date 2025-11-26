@@ -6,6 +6,7 @@ Need help or want to join the community? Join our [Discord](https://discord.gg/s
 ### 🚀 Быстрый старт
 
 To run the devserver:
+
 ```bash
 npm install
 npm run dev
@@ -18,6 +19,7 @@ npm run dev
 Полные инструкции в файле: [`DEPLOY_INSTRUCTIONS_RU.md`](./DEPLOY_INSTRUCTIONS_RU.md)
 
 Коротко:
+
 1. Создайте аккаунт: https://dash.cloudflare.com/sign-up
 2. Получите API токен: https://dash.cloudflare.com/profile/api-tokens
 3. Добавьте secrets в GitHub (Settings → Secrets and variables)
@@ -28,7 +30,6 @@ npm run dev
 
 - Vercel подключается к GitHub, автоматически строит проект и создаёт preview для PR — не требует ручной настройки Cloudflare токенов или Account ID.
 - Подробная инструкция: [`VERCEL_SETUP.md`](./VERCEL_SETUP.md)
-
 
 ### 📊 Текущий статус
 

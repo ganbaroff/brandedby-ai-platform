@@ -1,3 +1,4 @@
+
 import AccessibilityWidget from "@/react-app/components/AccessibilityWidget";
 import BlogSection from "@/react-app/components/BlogSection";
 import EnhancedPackageButton from "@/react-app/components/EnhancedPackageButton";
@@ -6,8 +7,8 @@ import Footer from "@/react-app/components/Footer";
 import Header from "@/react-app/components/Header";
 import PerformanceWidget from "@/react-app/components/PerformanceWidget";
 import { useHomeSEO } from "@/react-app/hooks/useSEO";
+import { CelebrityManager, type Celebrity } from "@/shared/admin-data-utils";
 import { analytics } from "@/shared/advanced-analytics";
-import celebritiesData from "@/shared/celebrities.json";
 import logger from "@/shared/logger";
 import {
     ArrowRight,
@@ -28,9 +29,20 @@ const Home = memo(function Home() {
   
   const navigate = useNavigate();
   const [videoModal, setVideoModal] = useState<{ url: string; title: string; celebrity: string } | null>(null);
+  const [celebrities, setCelebrities] = useState<Celebrity[]>([]);
 
-  // Memoized celebrities data - show all available celebrities
-  const celebrities = useMemo(() => celebritiesData, []);
+  // Load celebrities data
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const data = await CelebrityManager.loadCelebrities();
+        setCelebrities(data);
+      } catch (error) {
+        console.error("Failed to load celebrities:", error);
+      }
+    };
+    loadData();
+  }, []);
 
   // Memoized close modal callback
   const closeModal = useCallback(() => setVideoModal(null), []);
@@ -105,8 +117,8 @@ const Home = memo(function Home() {
         
         {/* Floating Elements - Hidden on mobile for better UX */}
         <div className="hidden md:block absolute top-20 left-10 w-20 h-20 bg-primary-200/30 rounded-full animate-float" />
-        <div className="hidden md:block absolute top-32 right-16 w-16 h-16 bg-secondary-200/30 rounded-full animate-float" style={{ animationDelay: '2s' }} />
-        <div className="hidden lg:block absolute bottom-40 left-20 w-12 h-12 bg-accent-200/30 rounded-full animate-float" style={{ animationDelay: '4s' }} />
+        <div className="hidden md:block absolute top-32 right-16 w-16 h-16 bg-secondary-200/30 rounded-full animate-float" style={{ '--animation-delay': '2s' } as React.CSSProperties} />
+        <div className="hidden lg:block absolute bottom-40 left-20 w-12 h-12 bg-accent-200/30 rounded-full animate-float" style={{ '--animation-delay': '4s' } as React.CSSProperties} />
         
         <div className="relative container mx-auto px-4 max-w-7xl">
           <div className="grid lg:grid-cols-2 gap-6 lg:gap-12 items-center">
@@ -168,7 +180,7 @@ const Home = memo(function Home() {
             </div>
             
             {/* Hero Visual */}
-            <div className="relative lg:block animate-scale-in" style={{ animationDelay: '0.3s' }}>
+            <div className="relative lg:block animate-scale-in" style={{ '--animation-delay': '0.3s' } as React.CSSProperties}>
               <div className="relative">
                 {/* Main Demo Container */}
                 <div className="glass rounded-3xl p-6 shadow-2xl">
@@ -205,7 +217,7 @@ const Home = memo(function Home() {
                   <Camera className="w-8 h-8 text-primary-600" />
                 </div>
                 
-                <div className="hidden sm:flex absolute -bottom-4 -left-4 w-16 h-16 bg-secondary-500 rounded-2xl shadow-xl items-center justify-center animate-float" style={{ animationDelay: '1s' }}>
+                <div className="hidden sm:flex absolute -bottom-4 -left-4 w-16 h-16 bg-secondary-500 rounded-2xl shadow-xl items-center justify-center animate-float" style={{ '--animation-delay': '1s' } as React.CSSProperties}>
                   <Video className="w-6 h-6 text-white" />
                 </div>
               </div>
@@ -414,6 +426,7 @@ const Home = memo(function Home() {
         </div>
       )}
 
+      {/* ...existing code... */}
       <Footer />
       <AccessibilityWidget />
       <PerformanceWidget />

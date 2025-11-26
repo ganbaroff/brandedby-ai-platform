@@ -1,10 +1,11 @@
 import AIAssistant from "@/react-app/components/AIAssistant";
+import CelebrityBiography from "@/react-app/components/CelebrityBiography";
 import Footer from "@/react-app/components/Footer";
 import Header from "@/react-app/components/Header";
-import celebritiesData from "@/shared/celebrities.json";
+import { CelebrityManager } from "@/shared/admin-data-utils";
 import { Celebrity } from "@/shared/types";
 import { useAuth } from "@getmocha/users-service/react";
-import { ArrowLeft, Sparkles, Star } from "lucide-react";
+import { ArrowLeft, BookOpen, Briefcase, Sparkles, Star } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 
@@ -19,14 +20,15 @@ export default function CelebrityDetail() {
   const [customFormat, setCustomFormat] = useState('');
   const [showCustomFormat, setShowCustomFormat] = useState(false);
   const [description, setDescription] = useState('');
+  const [activeTab, setActiveTab] = useState<'overview' | 'biography'>('overview');
 
   const [showAIAssistant, setShowAIAssistant] = useState(false);
 
   useEffect(() => {
-    const fetchCelebrity = () => {
+    const fetchCelebrity = async () => {
       try {
         const celebrityId = parseInt(id || '0');
-        const foundCelebrity = celebritiesData.find(c => c.id === celebrityId);
+        const foundCelebrity = await CelebrityManager.getCelebrityById(celebrityId);
         
         if (foundCelebrity) {
           setCelebrity(foundCelebrity);
@@ -128,12 +130,39 @@ export default function CelebrityDetail() {
           {/* Back Button */}
           <button 
             onClick={() => navigate('/celebrities')}
-            className="flex items-center space-x-2 text-gray-600 hover:text-purple-600 transition-colors mb-8 font-medium"
+            className="flex items-center space-x-2 text-gray-600 hover:text-purple-600 transition-colors mb-6 font-medium"
           >
             <ArrowLeft className="w-5 h-5" />
             <span className="text-sm sm:text-base">Back to Celebrities</span>
           </button>
 
+          {/* Tab Navigation */}
+          <div className="flex space-x-2 mb-8 border-b border-gray-200">
+            <button
+              onClick={() => setActiveTab('overview')}
+              className={`flex items-center space-x-2 px-4 sm:px-6 py-3 font-semibold transition-all ${
+                activeTab === 'overview'
+                  ? 'text-purple-600 border-b-2 border-purple-600'
+                  : 'text-gray-600 hover:text-purple-600'
+              }`}
+            >
+              <Briefcase className="w-5 h-5" />
+              <span>Обзор</span>
+            </button>
+            <button
+              onClick={() => setActiveTab('biography')}
+              className={`flex items-center space-x-2 px-4 sm:px-6 py-3 font-semibold transition-all ${
+                activeTab === 'biography'
+                  ? 'text-purple-600 border-b-2 border-purple-600'
+                  : 'text-gray-600 hover:text-purple-600'
+              }`}
+            >
+              <BookOpen className="w-5 h-5" />
+              <span>Биография</span>
+            </button>
+          </div>
+
+          {activeTab === 'overview' ? (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
             
             {/* Left Side - 3D Character */}
@@ -210,6 +239,8 @@ export default function CelebrityDetail() {
                       }
                     }}
                     className="w-full p-3 sm:p-4 text-sm sm:text-base border-2 border-gray-200 rounded-lg sm:rounded-xl focus:border-purple-500 focus:outline-none bg-white"
+                    title="Select Video Format"
+                    aria-label="Select Video Format"
                   >
                     <option value="">Select video format...</option>
                     {videoFormats.map((format) => (
@@ -308,6 +339,9 @@ export default function CelebrityDetail() {
               </button>
             </div>
           </div>
+          ) : (
+            <CelebrityBiography celebrity={celebrity} />
+          )}
         </div>
       </div>
 

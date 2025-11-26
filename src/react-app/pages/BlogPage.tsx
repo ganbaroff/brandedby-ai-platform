@@ -1,37 +1,32 @@
-import { ArrowLeft, Calendar, Eye, Filter, Search, User } from 'lucide-react';
-import React, { useEffect, useState } from 'react';
 import { BlogManager, type BlogPost } from '@/shared/admin-data-utils';
 import { analytics } from '@/shared/advanced-analytics';
+import { ArrowLeft, Calendar, Eye, Filter, Search, User } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
 import { createSafeHtml } from '../../shared/htmlSanitizer';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
-// import { useNavigate } from 'react-router';
 
 const BlogPage: React.FC = () => {
-  // const navigate = useNavigate();
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
 
+  // Load blog posts on mount
   useEffect(() => {
-    loadBlogPosts();
-    // Track blog page view
-    analytics.trackEvent('user', 'page_view', 'blog');
+    const loadPosts = async () => {
+      try {
+        const posts = await BlogManager.loadBlogPosts();
+        setBlogPosts(posts);
+      } catch (error) {
+        console.error('Failed to load blog posts:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadPosts();
   }, []);
-
-  const loadBlogPosts = () => {
-    try {
-      const posts = BlogManager.loadBlogPosts();
-      setBlogPosts(posts);
-    } catch (error) {
-      console.error('Error loading blog posts:', error);
-      setBlogPosts([]);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {

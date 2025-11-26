@@ -1,6 +1,6 @@
 /* Import modern fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -8,19 +8,19 @@
 
 :root {
   /* Typography */
-  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  
+
   /* Colors */
   --color-primary: #3b82f6;
   --color-secondary: #a855f7;
   --color-accent: #06b6d4;
-  
+
   /* Gradients */
   --gradient-brand: linear-gradient(135deg, #3b82f6 0%, #a855f7 100%);
   --gradient-glow: 0 0 20px rgb(59 130 246 / 0.5);
@@ -111,20 +111,26 @@ html {
 }
 
 .shimmer::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
   transform: translateX(-100%);
   animation: shimmer 1.5s infinite;
 }
 
 /* Custom utility animations */
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px);
   }
   50% {
@@ -176,6 +182,8 @@ html {
 
 .animate-scale-in {
   animation: scale-in 0.4s ease-out;
+  animation-delay: var(--animation-delay, 0ms);
+  animation-fill-mode: both;
 }
 
 .animate-slide-in {
@@ -315,12 +323,24 @@ html {
   line-height: 1.6 !important;
 }
 
-.large-text h1 { font-size: 3rem !important; }
-.large-text h2 { font-size: 2.5rem !important; }
-.large-text h3 { font-size: 2rem !important; }
-.large-text h4 { font-size: 1.75rem !important; }
-.large-text h5 { font-size: 1.5rem !important; }
-.large-text h6 { font-size: 1.25rem !important; }
+.large-text h1 {
+  font-size: 3rem !important;
+}
+.large-text h2 {
+  font-size: 2.5rem !important;
+}
+.large-text h3 {
+  font-size: 2rem !important;
+}
+.large-text h4 {
+  font-size: 1.75rem !important;
+}
+.large-text h5 {
+  font-size: 1.5rem !important;
+}
+.large-text h6 {
+  font-size: 1.25rem !important;
+}
 
 .large-text button,
 .large-text input,
@@ -443,27 +463,27 @@ textarea:disabled {
   h1 {
     font-size: 1.875rem !important; /* 30px instead of default */
   }
-  
+
   h2 {
     font-size: 1.5rem !important; /* 24px */
   }
-  
+
   /* Reduce padding on containers */
   .container {
     padding-left: 0.75rem !important;
     padding-right: 0.75rem !important;
   }
-  
+
   /* Stack buttons vertically on very small screens */
   .button-group {
     flex-direction: column !important;
   }
-  
+
   /* Reduce spacing between elements */
   .space-y-8 > * + * {
     margin-top: 1.5rem !important;
   }
-  
+
   .space-y-6 > * + * {
     margin-top: 1rem !important;
   }
@@ -475,7 +495,7 @@ textarea:disabled {
   .animate-float {
     animation-duration: 8s !important;
   }
-  
+
   /* Disable heavy animations on slow devices */
   @media (prefers-reduced-motion: reduce) {
     .animate-float,
@@ -491,12 +511,12 @@ textarea:disabled {
   .no-print {
     display: none !important;
   }
-  
+
   * {
     color: black !important;
     background: white !important;
   }
-  
+
   a[href]:after {
     content: " (" attr(href) ")";
   }

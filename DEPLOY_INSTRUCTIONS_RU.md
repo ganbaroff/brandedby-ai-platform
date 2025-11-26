@@ -3,17 +3,21 @@
 ## Развертывание на Cloudflare Pages (БЕСПЛАТНО)
 
 ### ✅ Шаг 1: Создайте аккаунт Cloudflare
+
 https://dash.cloudflare.com/sign-up
 
 ### ✅ Шаг 2: Получите API токен
+
 1. https://dash.cloudflare.com/profile/api-tokens
 2. "Create Token" → "Edit Cloudflare Workers" → Создать
 3. Скопируйте токен
 
 ### ✅ Шаг 3: Получите Account ID
+
 https://dash.cloudflare.com/ (справа внизу - Account ID)
 
 ### ✅ Шаг 4: Добавьте Secrets в GitHub
+
 1. https://github.com/ganbaroff/brandedby-ai-platform
 2. Settings → Secrets and variables → Actions
 3. New secret:
@@ -21,6 +25,7 @@ https://dash.cloudflare.com/ (справа внизу - Account ID)
    - `CLOUDFLARE_ACCOUNT_ID` = (ID из шага 3)
 
 ### ✅ Шаг 5: Создайте проект в Cloudflare Pages
+
 1. https://dash.cloudflare.com/
 2. Pages → Create a project → Connect to Git
 3. Выберите: `brandedby-ai-platform`

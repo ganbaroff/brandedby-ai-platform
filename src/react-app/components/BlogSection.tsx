@@ -1,8 +1,8 @@
+import { BlogManager, type BlogPost } from '@/shared/admin-data-utils';
+import { analytics } from '@/shared/advanced-analytics';
 import { ArrowRight, Calendar, ExternalLink, User } from "lucide-react";
 import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from "react-router";
-import { analytics } from '@/shared/advanced-analytics';
-import { BlogManager, type BlogPost } from '@/shared/admin-data-utils';
 
 const BlogSection: React.FC = () => {
   const navigate = useNavigate();

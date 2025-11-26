@@ -1,17 +1,17 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router";
-import { useAuth } from "@getmocha/users-service/react";
-import Header from "@/react-app/components/Header";
 import Footer from "@/react-app/components/Footer";
-import { 
-  Video, 
-  Clock, 
-  CheckCircle, 
-  XCircle, 
-  Download,
-  Plus,
-  Sparkles
+import Header from "@/react-app/components/Header";
+import { useAuth } from "@getmocha/users-service/react";
+import {
+    CheckCircle,
+    Clock,
+    Download,
+    Plus,
+    Sparkles,
+    Video,
+    XCircle
 } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 
 interface Project {
   id: number;

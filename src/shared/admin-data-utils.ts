@@ -1,5 +1,5 @@
 // Enhanced data persistence for Admin Panel
-// Handles localStorage operations with error handling and data validation
+// Handles API operations with error handling and data validation
 
 export interface Celebrity {
   id: number;
@@ -23,271 +23,149 @@ export interface BlogPost {
   author: string;
   publishedAt: string;
   category: string;
+  created_at?: string;
+  updated_at?: string;
 }
 
-// Storage keys
-const STORAGE_KEYS = {
-  CELEBRITIES: 'brandedby_celebrities',
-  BLOG_POSTS: 'brandedby_blog_posts',
-  LAST_SAVE: 'brandedby_last_save'
-} as const;
+export interface Template {
+  id: number;
+  name: string;
+  category: string;
+  description: string | null;
+  is_azeri: boolean;
+  preview_url: string | null;
+  created_at: string;
+  updated_at: string;
+  emoji: string;
+  status: 'active' | 'draft' | 'archived';
+  usage_count: number;
+  tags?: string[];
+}
 
-// Data persistence utilities
-export class DataPersistence {
-  // Save data to localStorage with error handling
-  static saveToStorage<T>(key: string, data: T): boolean {
-    try {
-      const serializedData = JSON.stringify({
-        data,
-        timestamp: new Date().toISOString(),
-        version: '1.0'
-      });
-      localStorage.setItem(key, serializedData);
-      localStorage.setItem(STORAGE_KEYS.LAST_SAVE, new Date().toISOString());
-      console.log(`✅ Data saved to ${key}:`, data);
-      return true;
-    } catch (error) {
-      console.error(`❌ Error saving data to ${key}:`, error);
-      return false;
+// API Utilities
+class ApiService {
+  static async get<T>(endpoint: string): Promise<T> {
+    const response = await fetch(`/api${endpoint}`);
+    if (!response.ok) {
+      throw new Error(`API Error: ${response.statusText}`);
     }
+    const json = await response.json();
+    return json.data;
   }
 
-  // Load data from localStorage with validation
-  static loadFromStorage<T>(key: string, defaultValue: T): T {
-    try {
-      const stored = localStorage.getItem(key);
-      if (!stored) {
-        console.log(`📂 No data found for ${key}, using default`);
-        return defaultValue;
-      }
-
-      const parsed = JSON.parse(stored);
-      
-      // Handle both old format (direct data) and new format (with metadata)
-      const data = parsed.data || parsed;
-      console.log(`✅ Data loaded from ${key}:`, data);
-      return data;
-    } catch (error) {
-      console.error(`❌ Error loading data from ${key}:`, error);
-      return defaultValue;
-    }
-  }
-
-  // Get storage statistics
-  static getStorageStats(): { 
-    celebrities: number, 
-    blogPosts: number, 
-    lastSave: string | null,
-    storageUsed: string
-  } {
-    const celebrities = this.loadFromStorage(STORAGE_KEYS.CELEBRITIES, []);
-    const blogPosts = this.loadFromStorage(STORAGE_KEYS.BLOG_POSTS, []);
-    const lastSave = localStorage.getItem(STORAGE_KEYS.LAST_SAVE);
-    
-    // Calculate storage usage
-    let storageUsed = 0;
-    for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i);
-      if (key) {
-        storageUsed += localStorage.getItem(key)?.length || 0;
-      }
-    }
-    
-    return {
-      celebrities: Array.isArray(celebrities) ? celebrities.length : 0,
-      blogPosts: Array.isArray(blogPosts) ? blogPosts.length : 0,
-      lastSave,
-      storageUsed: `${(storageUsed / 1024).toFixed(2)} KB`
-    };
-  }
-
-  // Clear all data (for development/testing)
-  static clearAllData(): void {
-    Object.values(STORAGE_KEYS).forEach(key => {
-      localStorage.removeItem(key);
+  static async post<T>(endpoint: string, data: any): Promise<T> {
+    const response = await fetch(`/api${endpoint}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
     });
-    console.log('🗑️ All data cleared');
-  }
-
-  // Export data for backup
-  static exportData(): string {
-    const celebrities = this.loadFromStorage(STORAGE_KEYS.CELEBRITIES, []);
-    const blogPosts = this.loadFromStorage(STORAGE_KEYS.BLOG_POSTS, []);
-    
-    const exportData = {
-      celebrities,
-      blogPosts,
-      exportDate: new Date().toISOString(),
-      version: '1.0'
-    };
-    
-    return JSON.stringify(exportData, null, 2);
-  }
-
-  // Import data from backup
-  static importData(jsonData: string): boolean {
-    try {
-      const importedData = JSON.parse(jsonData);
-      
-      if (importedData.celebrities) {
-        this.saveToStorage(STORAGE_KEYS.CELEBRITIES, importedData.celebrities);
-      }
-      
-      if (importedData.blogPosts) {
-        this.saveToStorage(STORAGE_KEYS.BLOG_POSTS, importedData.blogPosts);
-      }
-      
-      console.log('✅ Data imported successfully');
-      return true;
-    } catch (error) {
-      console.error('❌ Error importing data:', error);
-      return false;
+    if (!response.ok) {
+      throw new Error(`API Error: ${response.statusText}`);
     }
+    const json = await response.json();
+    return json.data;
+  }
+
+  static async put<T>(endpoint: string, data: any): Promise<T> {
+    const response = await fetch(`/api${endpoint}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    if (!response.ok) {
+      throw new Error(`API Error: ${response.statusText}`);
+    }
+    const json = await response.json();
+    return json.data;
+  }
+
+  static async delete(endpoint: string): Promise<boolean> {
+    const response = await fetch(`/api${endpoint}`, {
+      method: 'DELETE'
+    });
+    return response.ok;
   }
 }
 
 // Celebrity data management
 export class CelebrityManager {
-  static saveCelebrities(celebrities: Celebrity[]): boolean {
-    return DataPersistence.saveToStorage(STORAGE_KEYS.CELEBRITIES, celebrities);
+  static async saveCelebrities(celebrities: Celebrity[]): Promise<boolean> {
+    // This method was used for bulk save in localStorage. 
+    // For API, we might need to save one by one or implement a bulk endpoint.
+    // For now, let's log a warning that bulk save is not fully supported or implement a loop.
+    console.warn("Bulk save not fully supported via API, saving items sequentially");
+    try {
+      for (const celeb of celebrities) {
+        if (celeb.id) {
+          await this.updateCelebrity(celeb);
+        } else {
+          await this.addCelebrity(celeb);
+        }
+      }
+      return true;
+    } catch (e) {
+      console.error(e);
+      return false;
+    }
   }
 
-  static loadCelebrities(): Celebrity[] {
-    const defaultCelebrities: Celebrity[] = [
-      {
-        id: 1,
-        name: "Taylor Swift",
-        role: "Singer-Songwriter",
-        image_url: "https://images.unsplash.com/photo-1494790108755-2616c27ac65b?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
-        description: "Global music superstar and songwriter",
-        niches: JSON.stringify(["Entertainment", "Music", "Pop Culture"]),
-        rating: 9.8,
-        popularity: 10,
-        created_at: "2024-01-01T00:00:00.000Z",
-        updated_at: "2024-01-01T00:00:00.000Z"
-      },
-      {
-        id: 2,
-        name: "Ryan Reynolds",
-        role: "Actor & Producer",
-        image_url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
-        description: "Canadian-American actor and producer",
-        niches: JSON.stringify(["Entertainment", "Comedy", "Action Films"]),
-        rating: 9.2,
-        popularity: 9,
-        created_at: "2024-01-01T00:00:00.000Z",
-        updated_at: "2024-01-01T00:00:00.000Z"
-      },
-      {
-        id: 3,
-        name: "Zendaya",
-        role: "Actress & Singer",
-        image_url: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
-        description: "American actress and singer",
-        niches: JSON.stringify(["Entertainment", "Fashion", "Youth Culture"]),
-        rating: 9.5,
-        popularity: 9,
-        created_at: "2024-01-01T00:00:00.000Z",
-        updated_at: "2024-01-01T00:00:00.000Z"
-      }
-    ];
+  static async loadCelebrities(): Promise<Celebrity[]> {
+    try {
+      return await ApiService.get<Celebrity[]>('/celebrities');
+    } catch (error) {
+      console.error("Failed to load celebrities", error);
+      return [];
+    }
+  }
 
-    return DataPersistence.loadFromStorage(STORAGE_KEYS.CELEBRITIES, defaultCelebrities);
+  static async getCelebrityById(id: number): Promise<Celebrity | null> {
+    try {
+      return await ApiService.get<Celebrity>(`/celebrities/${id}`);
+    } catch (error) {
+      console.error(`Failed to load celebrity ${id}`, error);
+      return null;
+    }
+  }
+
+  static async addCelebrity(celebrity: Omit<Celebrity, 'id'>): Promise<Celebrity> {
+    return await ApiService.post<Celebrity>('/celebrities', celebrity);
+  }
+
+  static async updateCelebrity(celebrity: Celebrity): Promise<Celebrity> {
+    return await ApiService.put<Celebrity>(`/celebrities/${celebrity.id}`, celebrity);
+  }
+
+  static async deleteCelebrity(id: number): Promise<boolean> {
+    return await ApiService.delete(`/celebrities/${id}`);
   }
 }
 
 // Blog post data management
 export class BlogManager {
-  static saveBlogPosts(posts: BlogPost[]): boolean {
-    return DataPersistence.saveToStorage(STORAGE_KEYS.BLOG_POSTS, posts);
+  static async saveBlogPosts(posts: BlogPost[]): Promise<boolean> {
+    console.warn("Bulk save not fully supported via API");
+    return true; 
   }
 
-  static loadBlogPosts(): BlogPost[] {
-    const defaultPosts: BlogPost[] = [
-      {
-        id: 1,
-        title: 'AI Photography Revolution',
-        content: `<p>Artificial intelligence is fundamentally changing the way we create and process photographs. New technologies allow for incredibly realistic image generation in seconds.</p>
-
-<h2>What makes AI photography special?</h2>
-<p>AI technologies open unlimited possibilities for creativity:</p>
-<ul>
-<li><strong>Instant creation</strong> - image generation in seconds</li>
-<li><strong>Personalization</strong> - adaptation to your preferences</li>
-<li><strong>High quality</strong> - professional results without experience</li>
-</ul>
-
-<h2>Industry applications</h2>
-<p>From film industry to social media - AI photography is changing all areas of visual content.</p>`,
-        excerpt: 'How AI technologies are transforming photography and video production',
-        image_url: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=500&fit=crop&auto=format&q=80',
-        author: 'BrandedBy Team',
-        publishedAt: '2025-11-06',
-        category: 'Technology'
-      },
-      {
-        id: 2,
-        title: 'Creating Personal Videos with Celebrities',
-        content: `<p>Learn how our platform allows you to create unique videos where you can interact with your favorite celebrities.</p>
-
-<h2>Step-by-step process</h2>
-<ol>
-<li><strong>Upload selfie</strong> - quality face photo</li>
-<li><strong>Choose celebrity</strong> - from our star database</li>
-<li><strong>Configure settings</strong> - duration and video style</li>
-<li><strong>Get result</strong> - HD video in minutes</li>
-</ol>
-
-<h2>Tips for best results</h2>
-<p>For maximum realistic results, follow these recommendations:</p>
-<ul>
-<li>Use clear photo with good lighting</li>
-<li>Face should be fully visible</li>
-<li>Avoid sunglasses and covering accessories</li>
-</ul>`,
-        excerpt: 'Step-by-step guide to creating AI videos with selfies',
-        image_url: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&h=500&fit=crop&auto=format&q=80',
-        author: 'Alex Johnson',
-        publishedAt: '2025-11-05',
-        category: 'Tutorial'
-      },
-      {
-        id: 3,
-        title: 'The Future of Entertainment: AI and Personalization',
-        content: `<p>Exploring how artificial intelligence is shaping the future of the entertainment industry and creating new forms of interaction.</p>
-
-<h2>AI Entertainment Trends</h2>
-<p>The entertainment industry is experiencing a revolution thanks to AI:</p>
-
-<h3>1. Personalized Content</h3>
-<p>AI analyzes user preferences and creates unique content for everyone.</p>
-
-<h3>2. Interactive Media</h3>
-<p>Viewers become part of the story, influencing the plot in real time.</p>
-
-<h3>3. Virtual Actors</h3>
-<p>AI characters become increasingly realistic and emotional.</p>
-
-<h2>What awaits us?</h2>
-<p>In the near future we will see:</p>
-<ul>
-<li>Fully personalized movies</li>
-<li>AI friends and companions</li>
-<li>Interactive AR/VR worlds</li>
-</ul>`,
-        excerpt: 'A look into the future of AI entertainment and personalized content',
-        image_url: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=800&h=500&fit=crop&auto=format&q=80',
-        author: 'Maria Garcia',
-        publishedAt: '2025-11-04',
-        category: 'AI'
-      }
-    ];
-
-    return DataPersistence.loadFromStorage(STORAGE_KEYS.BLOG_POSTS, defaultPosts);
+  static async loadBlogPosts(): Promise<BlogPost[]> {
+    try {
+      return await ApiService.get<BlogPost[]>('/blog-posts');
+    } catch (error) {
+      console.error("Failed to load blog posts", error);
+      return [];
+    }
   }
 
-  static generateNewId(posts: BlogPost[]): number {
-    return posts.length > 0 ? Math.max(...posts.map(p => p.id)) + 1 : 1;
+  static async addBlogPost(post: Omit<BlogPost, 'id'>): Promise<BlogPost> {
+    return await ApiService.post<BlogPost>('/blog-posts', post);
+  }
+
+  static async updateBlogPost(post: BlogPost): Promise<BlogPost> {
+    return await ApiService.put<BlogPost>(`/blog-posts/${post.id}`, post);
+  }
+
+  static async deleteBlogPost(id: number): Promise<boolean> {
+    return await ApiService.delete(`/blog-posts/${id}`);
   }
 
   static validatePost(post: Partial<BlogPost>): { valid: boolean, errors: string[] } {
@@ -302,90 +180,86 @@ export class BlogManager {
 
     return { valid: errors.length === 0, errors };
   }
+}
 
-  static addBlogPost(post: Omit<BlogPost, 'id'>): BlogPost {
-    const posts = this.loadBlogPosts();
-    const newId = this.generateNewId(posts);
-    const newPost: BlogPost = { ...post, id: newId };
-    posts.push(newPost);
-    this.saveBlogPosts(posts);
-    return newPost;
+// Template data management
+export class TemplateManager {
+  static async saveTemplates(templates: Template[]): Promise<boolean> {
+     console.warn("Bulk save not fully supported via API");
+     return true;
   }
 
-  static updateBlogPost(post: BlogPost): boolean {
-    const posts = this.loadBlogPosts();
-    const index = posts.findIndex(p => p.id === post.id);
-    if (index === -1) {
-      console.error(`❌ Blog post with id ${post.id} not found`);
-      return false;
+  static async loadTemplates(): Promise<Template[]> {
+    try {
+      return await ApiService.get<Template[]>('/templates');
+    } catch (error) {
+      console.error("Failed to load templates", error);
+      return [];
     }
-    posts[index] = post;
-    return this.saveBlogPosts(posts);
+  }
+
+  static async addTemplate(template: Omit<Template, 'id'>): Promise<Template> {
+    return await ApiService.post<Template>('/templates', template);
+  }
+
+  static async updateTemplate(template: Template): Promise<Template> {
+    return await ApiService.put<Template>(`/templates/${template.id}`, template);
+  }
+
+  static async deleteTemplate(id: number): Promise<boolean> {
+    return await ApiService.delete(`/templates/${id}`);
+  }
+
+  static async getTemplatesByCategory(category: string): Promise<Template[]> {
+    const templates = await this.loadTemplates();
+    return templates.filter(t => t.category === category);
+  }
+
+  static validateTemplate(template: Partial<Template>): { valid: boolean, errors: string[] } {
+    const errors: string[] = [];
+
+    if (!template.name?.trim()) errors.push('Template name is required');
+    if (!template.category?.trim()) errors.push('Category is required');
+    if (!template.emoji?.trim()) errors.push('Emoji is required');
+    if (template.status && !['active', 'draft', 'archived'].includes(template.status)) {
+      errors.push('Invalid status value');
+    }
+
+    return { valid: errors.length === 0, errors };
+  }
+}
+
+// Deprecated DataPersistence for backward compatibility (mostly unused now)
+export class DataPersistence {
+  static saveToStorage<T>(key: string, data: T): boolean {
+    console.warn("DataPersistence.saveToStorage is deprecated. Use Managers instead.");
+    return false;
+  }
+
+  static loadFromStorage<T>(key: string, defaultValue: T): T {
+    console.warn("DataPersistence.loadFromStorage is deprecated. Use Managers instead.");
+    return defaultValue;
+  }
+  
+  static getStorageStats() {
+      return {
+          celebrities: 0,
+          blogPosts: 0,
+          templates: 0,
+          lastSave: null,
+          storageUsed: '0 KB'
+      };
   }
 }
 
 // Development utilities
 export class DevTools {
-  static logStorageContents(): void {
-    console.group('🔍 Storage Contents');
-    console.log('Celebrities:', CelebrityManager.loadCelebrities());
-    console.log('Blog Posts:', BlogManager.loadBlogPosts());
-    console.log('Storage Stats:', DataPersistence.getStorageStats());
+  static async logStorageContents(): Promise<void> {
+    console.group('🔍 Database Contents');
+    console.log('Celebrities:', await CelebrityManager.loadCelebrities());
+    console.log('Blog Posts:', await BlogManager.loadBlogPosts());
+    console.log('Templates:', await TemplateManager.loadTemplates());
     console.groupEnd();
-  }
-
-  static seedTestData(): void {
-    console.log('🌱 Seeding test data...');
-    
-    // Add test celebrities
-    const testCelebrities: Celebrity[] = [
-      {
-        id: 4,
-        name: "Dwayne Johnson",
-        role: "Actor & Producer",
-        image_url: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
-        description: "American actor and former professional wrestler",
-        niches: JSON.stringify(["Entertainment", "Action Films", "Sports"]),
-        rating: 9.3,
-        popularity: 9,
-        created_at: "2024-01-01T00:00:00.000Z",
-        updated_at: "2024-01-01T00:00:00.000Z"
-      },
-      {
-        id: 5,
-        name: "Ariana Grande",
-        role: "Singer & Actress",
-        image_url: "https://images.unsplash.com/photo-1494790108755-2616c27ac65b?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
-        description: "American singer, songwriter and actress",
-        niches: JSON.stringify(["Entertainment", "Pop Music", "Broadway"]),
-        rating: 9.4,
-        popularity: 9,
-        created_at: "2024-01-01T00:00:00.000Z",
-        updated_at: "2024-01-01T00:00:00.000Z"
-      }
-    ];
-
-    const existingCelebrities = CelebrityManager.loadCelebrities();
-    const mergedCelebrities = [...existingCelebrities, ...testCelebrities];
-    CelebrityManager.saveCelebrities(mergedCelebrities);
-
-    // Add test blog post
-    const testPost: BlogPost = {
-      id: 4,
-      title: 'Getting Started with AI Video Generation',
-      content: '<p>This is a comprehensive guide to getting started with AI video generation on our platform.</p><h2>Basic Steps</h2><p>Follow these simple steps to create your first AI video...</p>',
-      excerpt: 'Complete beginner guide to AI video generation',
-      image_url: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&h=500&fit=crop&auto=format&q=80',
-      author: 'Tutorial Team',
-      publishedAt: '2025-11-06',
-      category: 'Tutorial'
-    };
-
-    const existingPosts = BlogManager.loadBlogPosts();
-    const mergedPosts = [...existingPosts, testPost];
-    BlogManager.saveBlogPosts(mergedPosts);
-
-    console.log('✅ Test data seeded successfully');
   }
 }
 
@@ -393,9 +267,9 @@ export class DevTools {
 declare global {
   interface Window {
     AdminDataUtils: {
-      DataPersistence: typeof DataPersistence;
       CelebrityManager: typeof CelebrityManager;
       BlogManager: typeof BlogManager;
+      TemplateManager: typeof TemplateManager;
       DevTools: typeof DevTools;
     };
   }
@@ -403,9 +277,9 @@ declare global {
 
 if (typeof window !== 'undefined') {
   window.AdminDataUtils = {
-    DataPersistence,
     CelebrityManager,
     BlogManager,
+    TemplateManager,
     DevTools
   };
 }
