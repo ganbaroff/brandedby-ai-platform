@@ -94,19 +94,6 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Skip Vite dev server requests (HMR, @vite, @fs, node_modules)
-  if (url.hostname === 'localhost' && (
-    url.pathname.includes('/@vite/') ||
-    url.pathname.includes('/@fs/') ||
-    url.pathname.includes('/node_modules/') ||
-    url.pathname.includes('/@id/') ||
-    url.pathname.endsWith('.js?') ||
-    url.search.includes('?import') ||
-    url.search.includes('?t=')
-  )) {
-    return; // Let Vite handle it
-  }
-
   // Handle different types of requests
   if (url.pathname.startsWith('/api/')) {
     // API requests - Network first with fallback
@@ -114,12 +101,12 @@ self.addEventListener('fetch', (event) => {
   } else if (url.pathname.match(/\.(png|jpg|jpeg|gif|webp|svg)$/)) {
     // Images - Cache first with network fallback
     event.respondWith(handleImageRequest(request));
-  } else if (url.pathname.match(/\.(css|woff|woff2|ttf|eot)$/)) {
-    // Static assets (excluding .js in dev) - Cache first
+  } else if (url.pathname.match(/\.(css|js|woff|woff2|ttf|eot)$/)) {
+    // Static assets - Cache first
     event.respondWith(handleStaticRequest(request));
-  } else if (url.pathname === '/' || url.pathname.endsWith('.html')) {
-    // HTML pages - Network first in dev
-    event.respondWith(fetch(request));
+  } else {
+    // HTML pages - Stale while revalidate
+    event.respondWith(handlePageRequest(request));
   }
 });
 
