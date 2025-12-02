@@ -34,6 +34,12 @@ export const useServiceWorker = () => {
       return;
     }
 
+    // Disable Service Worker in development mode
+    if (import.meta.env.DEV) {
+      console.log('Service Worker disabled in development mode');
+      return;
+    }
+
     const registerSW = async () => {
       try {
         const reg = await navigator.serviceWorker.register('/sw.js');

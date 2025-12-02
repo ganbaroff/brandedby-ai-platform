@@ -12,6 +12,9 @@ export interface Celebrity {
   popularity: number;
   created_at: string;
   updated_at: string;
+  biography?: string | null;
+  achievements?: string | null;
+  career_milestones?: string | null;
 }
 
 export interface BlogPost {
@@ -42,15 +45,37 @@ export interface Template {
   tags?: string[];
 }
 
-// API Utilities
+// API Utilities with offline support
 class ApiService {
+  private static isOnline = navigator.onLine;
+  
   static async get<T>(endpoint: string): Promise<T> {
-    const response = await fetch(`/api${endpoint}`);
-    if (!response.ok) {
-      throw new Error(`API Error: ${response.statusText}`);
+    try {
+      if (!this.isOnline) {
+        throw new Error('Network offline');
+      }
+      
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10s timeout
+      
+      const response = await fetch(`/api${endpoint}`, {
+        signal: controller.signal,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      
+      clearTimeout(timeoutId);
+      
+      if (!response.ok) {
+        throw new Error(`API Error: ${response.statusText}`);
+      }
+      const json = await response.json();
+      return json.data;
+    } catch (error) {
+      console.error('API GET failed:', error);
+      throw new Error('Network error occurred');
     }
-    const json = await response.json();
-    return json.data;
   }
 
   static async post<T>(endpoint: string, data: any): Promise<T> {
