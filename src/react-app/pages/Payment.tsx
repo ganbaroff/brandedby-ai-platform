@@ -167,7 +167,7 @@ export default function Payment() {
                     niche: '',
                     description: '',
                     tokenPackage: { name: tokenPurchase.name, tokens: tokenPurchase.tokens, priceUSD: tokenPurchase.priceUSD }
-                  } as unknown as ProjectData : projectData}
+                  } as unknown as ProjectData : projectData!}
                   onPaymentSuccess={() => {
                     setPaymentSuccess(true);
                     setShowSuccessAnim(true);

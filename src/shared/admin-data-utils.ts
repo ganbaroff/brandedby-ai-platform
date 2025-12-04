@@ -1,18 +1,9 @@
 // Enhanced data persistence for Admin Panel
 // Handles API operations with error handling and data validation
 
-export interface Celebrity {
-  id: number;
-  name: string;
-  role: string;
-  description: string;
-  image_url: string;
-  niches: string;
-  rating: number;
-  popularity: number;
-  created_at: string;
-  updated_at: string;
-}
+import type { Celebrity as SharedCelebrity } from './types';
+
+export type Celebrity = SharedCelebrity;
 
 export interface BlogPost {
   id: number;
@@ -123,13 +114,14 @@ export class CelebrityManager {
           const module = await import('./azerbaijan-celebrities.json');
           const data = module.default || module;
           console.log(`[CelebrityManager] Loaded ${data.length} Azerbaijan celebrities`);
-          return data;
+          // Ensure region property exists on items
+          return (data as any[]).map(d => ({ ...d, region: 'azerbaijan' }));
         } else {
           console.log('[CelebrityManager] Importing celebrities.json');
           const module = await import('./celebrities.json');
           const data = module.default || module;
           console.log(`[CelebrityManager] Loaded ${data.length} International celebrities`);
-          return data;
+          return (data as any[]).map(d => ({ ...d, region: 'international' }));
         }
       }
       
@@ -149,12 +141,12 @@ export class CelebrityManager {
           const module = await import('./azerbaijan-celebrities.json');
           const data = module.default || module;
           console.log(`[CelebrityManager] Fallback loaded ${data.length} Azerbaijan celebrities`);
-          return data;
+          return (data as any[]).map(d => ({ ...d, region: 'azerbaijan' }));
         } else {
           const module = await import('./celebrities.json');
           const data = module.default || module;
           console.log(`[CelebrityManager] Fallback loaded ${data.length} International celebrities`);
-          return data;
+          return (data as any[]).map(d => ({ ...d, region: 'international' }));
         }
       } catch (fallbackError) {
         console.error("[CelebrityManager] Fallback also failed:", fallbackError);

@@ -252,7 +252,7 @@ var require_tslib = __commonJS({
       __exportStar = function(m, o) {
         for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(o, p)) __createBinding(o, m, p);
       };
-      __createBinding = Object.create ? function(o, m, k, k2) {
+      __createBinding = Object.create ? (function(o, m, k, k2) {
         if (k2 === void 0) k2 = k;
         var desc = Object.getOwnPropertyDescriptor(m, k);
         if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
@@ -261,10 +261,10 @@ var require_tslib = __commonJS({
           } };
         }
         Object.defineProperty(o, k2, desc);
-      } : function(o, m, k, k2) {
+      }) : (function(o, m, k, k2) {
         if (k2 === void 0) k2 = k;
         o[k2] = m[k];
-      };
+      });
       __values = function(o) {
         var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
         if (m) return m.call(o);
@@ -398,9 +398,9 @@ var require_tslib = __commonJS({
         }
         return cooked;
       };
-      var __setModuleDefault = Object.create ? function(o, v) {
+      var __setModuleDefault = Object.create ? (function(o, v) {
         Object.defineProperty(o, "default", { enumerable: true, value: v });
-      } : function(o, v) {
+      }) : function(o, v) {
         o["default"] = v;
       };
       var ownKeys = function(o) {

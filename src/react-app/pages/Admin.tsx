@@ -61,7 +61,13 @@ export default function Admin() {
         }
       } else if (activeTab === 'blog') {
         // Local storage for blog
-        setBlogPosts(BlogManager.loadBlogPosts());
+        try {
+          const posts = await BlogManager.loadBlogPosts();
+          setBlogPosts(posts);
+        } catch (err) {
+          console.error('Failed loading blog posts in admin fetchData', err);
+          setBlogPosts([]);
+        }
       }
     } catch (error) {
       console.error('Error fetching data:', error);

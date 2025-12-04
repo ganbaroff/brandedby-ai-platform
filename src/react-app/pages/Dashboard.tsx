@@ -124,7 +124,7 @@ export default function Dashboard() {
                 <span className="font-medium text-purple-800">Your Dashboard</span>
               </div>
               <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-2">
-                Welcome back, {user?.google_user_data.given_name || 'Creator'}!
+                Welcome back, {(user as any)?.google_user_data?.given_name || 'Creator'}!                                 
               </h1>
               <p className="text-sm xs:text-base sm:text-lg md:text-xl text-gray-600">
                 Manage your video projects and track their progress

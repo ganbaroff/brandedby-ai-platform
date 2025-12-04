@@ -127,8 +127,8 @@ import {
   withComponentProps,
   withErrorBoundaryProps,
   withHydrateFallbackProps
-} from "./chunk-EPBPA4JV.js";
-import "./chunk-VN6DB63A.js";
+} from "./chunk-GCCLON5L.js";
+import "./chunk-Y3RXIPFU.js";
 import "./chunk-G3PMV62Z.js";
 export {
   Await,
@@ -259,4 +259,3 @@ export {
   useSubmit,
   useViewTransitionState
 };
-//# sourceMappingURL=react-router.js.map

@@ -1,11 +1,30 @@
 'use client';
 
 import AuthService from '@/shared/auth/auth-service';
-import { AuthResponse, AuthSession, AuthContext as IAuthContext, LoginCredentials, RegisterData, User } from '@/shared/auth/types';
+import { AuthSession, LoginCredentials, RegisterData, User } from '@/shared/auth/types';
 import React, { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 
 interface AuthProviderProps {
   children: ReactNode;
+}
+
+interface IAuthContext {
+  user: User | null;
+  session: AuthSession | null;
+  isLoading: boolean;
+  isPending: boolean;
+  isAuthenticated: boolean;
+  redirectToLogin: () => Promise<void>;
+  exchangeCodeForSessionToken: (codeArg?: string) => Promise<AuthSession | null>;
+  login: (credentials: LoginCredentials) => Promise<AuthSession | null>;
+  register: (data: RegisterData) => Promise<AuthSession | null>;
+  logout: () => Promise<void>;
+  refreshSession: (refreshToken?: string) => Promise<AuthSession | null>;
+  resetPassword: (email: string) => Promise<void>;
+  updateProfile: (data: Partial<User>) => Promise<User | null>;
+  loginWithGoogle: () => Promise<void>;
+  testLogin: () => Promise<void>;
+  loadCurrentUser: () => Promise<void>;
 }
 
 const AuthContext = createContext<IAuthContext | undefined>(undefined);
@@ -24,6 +43,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<AuthSession | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isPending, setIsPending] = useState(false);
 
   const isAuthenticated = !!user;
 
@@ -36,25 +56,19 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
         if (storedUser && token) {
           setUser(storedUser);
-          // Verify token is still valid, but do not block initial render
+          // We don't have a stored refresh token by default, so avoid calling refreshSession without one.
+          // Instead verify the token by fetching current user (non-blocking for FCP reasons)
           try {
-            const refreshResult = await AuthService.refreshSession();
-            if (refreshResult.success && refreshResult.data) {
-              setSession(refreshResult.data);
-              setUser(refreshResult.data.user);
-            } else {
-              AuthService.clearTokens();
-              setUser(null);
-              setSession(null);
+            const current = await AuthService.fetchCurrentUser();
+            if (current) {
+              setUser(current);
             }
-          } catch {
+          } catch (err) {
             AuthService.clearTokens();
             setUser(null);
             setSession(null);
           }
         } else {
-          // Do not attempt remote fetch on initial mount to avoid delaying FCP.
-          // Users can trigger `loadCurrentUser()` on demand (e.g., visiting protected routes).
           setUser(null);
           setSession(null);
         }
@@ -66,49 +80,40 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       }
     };
 
-    // Fire and forget; avoids repeated retries and heavy network during initial render
     void initializeAuth();
   }, []);
 
-  const login = async (credentials: LoginCredentials): Promise<AuthResponse> => {
+  const login = async (credentials: LoginCredentials): Promise<AuthSession | null> => {
     setIsLoading(true);
     try {
-      const result = await AuthService.login(credentials);
-
-      if (result.success && result.data) {
-        setUser(result.data.user);
-        setSession(result.data);
+      const result = await AuthService.login(credentials.email, credentials.password);
+      if (result) {
+        setUser(result.user);
+        setSession(result);
+        return result;
       }
-
-      return result;
+      return null;
     } catch (error) {
       console.error('Login error:', error);
-      return {
-        success: false,
-        error: error instanceof Error ? error.message : 'Login failed'
-      };
+      return null;
     } finally {
       setIsLoading(false);
     }
   };
 
-  const register = async (data: RegisterData): Promise<AuthResponse> => {
+  const register = async (data: RegisterData): Promise<AuthSession | null> => {
     setIsLoading(true);
     try {
-      const result = await AuthService.register(data);
-
-      if (result.success && result.data) {
-        setUser(result.data.user);
-        setSession(result.data);
+      const result = await AuthService.register(data.email, data.password, data.name || '');
+      if (result) {
+        setUser(result.user);
+        setSession(result);
+        return result;
       }
-
-      return result;
+      return null;
     } catch (error) {
       console.error('Registration error:', error);
-      return {
-        success: false,
-        error: error instanceof Error ? error.message : 'Registration failed'
-      };
+      return null;
     } finally {
       setIsLoading(false);
     }
@@ -127,59 +132,52 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   };
 
-  const refreshSession = async (): Promise<AuthResponse> => {
+  const refreshSession = async (refreshToken?: string): Promise<AuthSession | null> => {
     try {
-      const result = await AuthService.refreshSession();
-
-      if (result.success && result.data) {
-        setSession(result.data);
-        setUser(result.data.user);
-      } else {
-        setUser(null);
-        setSession(null);
+      const tokenToUse = refreshToken ?? session?.refresh_token;
+      if (!tokenToUse) {
+        // nothing to refresh
+        return null;
       }
-
-      return result;
+      const result = await AuthService.refreshSession(tokenToUse);
+      if (result) {
+        setSession(result);
+        setUser(result.user);
+        return result;
+      }
+      setUser(null);
+      setSession(null);
+      return null;
     } catch (error) {
       console.error('Session refresh error:', error);
       setUser(null);
       setSession(null);
-      return {
-        success: false,
-        error: error instanceof Error ? error.message : 'Session refresh failed'
-      };
+      return null;
     }
   };
 
-  const resetPassword = async (email: string): Promise<AuthResponse> => {
+  const resetPassword = async (email: string): Promise<void> => {
     try {
-      return await AuthService.resetPassword(email);
+      await AuthService.resetPassword(email);
     } catch (error) {
       console.error('Password reset error:', error);
-      return {
-        success: false,
-        error: error instanceof Error ? error.message : 'Password reset failed'
-      };
+      throw error;
     }
   };
 
-  const updateProfile = async (data: Partial<User>): Promise<AuthResponse> => {
+  const updateProfile = async (data: Partial<User>): Promise<User | null> => {
     setIsLoading(true);
     try {
       const result = await AuthService.updateProfile(data);
-
-      if (result.success && result.data) {
-        setUser(result.data.user);
-        setSession((prev: AuthSession | null) => prev ? { ...prev, user: result.data!.user } : null);
+      if (result) {
+        setUser(result);
+        setSession((prev: AuthSession | null) => prev ? { ...prev, user: result } : null);
+        return result;
       }
-
-      return result;
+      return null;
     } catch (error) {
       console.error('Profile update error:', error);
-      return {
-        success: false,
-        error: error instanceof Error ? error.message : 'Profile update failed'
-      };
+      return null;
     } finally {
       setIsLoading(false);
     }
@@ -196,6 +194,40 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       // Do not reset loading here if we navigated away
       // In SPA navigation cases, this effect will be replaced by a full page load
       setIsLoading(false);
+    }
+  };
+
+  const redirectToLogin = async (): Promise<void> => {
+    setIsPending(true);
+    try {
+      const url = await AuthService.getGoogleRedirectUrl();
+      window.location.href = url;
+    } catch (err) {
+      console.error('redirectToLogin error:', err);
+    } finally {
+      setIsPending(false);
+    }
+  };
+
+  const exchangeCodeForSessionToken = async (codeArg?: string): Promise<AuthSession | null> => {
+    setIsLoading(true);
+    setIsPending(true);
+    try {
+      const code = codeArg ?? new URLSearchParams(window.location.search).get('code');
+      if (!code) throw new Error('No code provided in URL');
+      const sessionResult = await AuthService.handleGoogleCallback(code);
+      if (sessionResult) {
+        setUser(sessionResult.user);
+        setSession(sessionResult);
+        return sessionResult;
+      }
+      return null;
+    } catch (err) {
+      console.error('exchangeCodeForSessionToken error:', err);
+      return null;
+    } finally {
+      setIsLoading(false);
+      setIsPending(false);
     }
   };
 
@@ -221,7 +253,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
       // Store in localStorage
       localStorage.setItem('user', JSON.stringify(testUser));
-      localStorage.setItem('auth_token', testSession.token);
+      localStorage.setItem('auth_token', String(testSession.token));
       
       setUser(testUser);
       setSession(testSession);
@@ -256,6 +288,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     user,
     session,
     isLoading,
+    isPending,
     isAuthenticated,
     login,
     register,
@@ -264,6 +297,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     resetPassword,
     updateProfile,
     loginWithGoogle,
+    redirectToLogin,
+    exchangeCodeForSessionToken,
     testLogin,
     loadCurrentUser,
   };

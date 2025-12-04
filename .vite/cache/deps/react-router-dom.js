@@ -127,13 +127,13 @@ import {
   withComponentProps,
   withErrorBoundaryProps,
   withHydrateFallbackProps
-} from "./chunk-EPBPA4JV.js";
+} from "./chunk-GCCLON5L.js";
 import {
   require_react_dom
-} from "./chunk-7AQZWROK.js";
+} from "./chunk-J5MV6IEY.js";
 import {
   require_react
-} from "./chunk-VN6DB63A.js";
+} from "./chunk-Y3RXIPFU.js";
 import {
   __toESM
 } from "./chunk-G3PMV62Z.js";
@@ -475,30 +475,4 @@ export {
   useSubmit,
   useViewTransitionState
 };
-/*! Bundled license information:
-
-react-router/dist/development/dom-export.mjs:
-  (**
-   * react-router v7.9.6
-   *
-   * Copyright (c) Remix Software Inc.
-   *
-   * This source code is licensed under the MIT license found in the
-   * LICENSE.md file in the root directory of this source tree.
-   *
-   * @license MIT
-   *)
-
-react-router-dom/dist/index.mjs:
-  (**
-   * react-router-dom v7.9.6
-   *
-   * Copyright (c) Remix Software Inc.
-   *
-   * This source code is licensed under the MIT license found in the
-   * LICENSE.md file in the root directory of this source tree.
-   *
-   * @license MIT
-   *)
-*/
 //# sourceMappingURL=react-router-dom.js.map

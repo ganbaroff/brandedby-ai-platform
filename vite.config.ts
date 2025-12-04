@@ -16,19 +16,8 @@ export default defineConfig({
     react({
       // Use the new JSX runtime
       jsxImportSource: "react",
-      // Enable Babel optimizations only in production
-      babel: isProduction
-        ? {
-            plugins: [
-              [
-                "@babel/plugin-transform-runtime",
-                {
-                  regenerator: true,
-                },
-              ],
-            ],
-          }
-        : {},
+      // Enable Babel optimizations only in production (disabled when plugin not present)
+      babel: isProduction ? {} : {},
     }),
 
     // Generate chunk analysis report (production only)

@@ -5,13 +5,15 @@
 import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
 
 interface EnhancedImageProps {
-  src: string;
+  src?: string | null;
   alt: string;
   width?: number | string;
   height?: number | string;
   className?: string;
   fallbackSrc?: string;
   loading?: 'lazy' | 'eager';
+  sizes?: string;
+  webpSrcSet?: string | undefined;
   onLoad?: () => void;
   onError?: (error: Event) => void;
 }
@@ -24,10 +26,12 @@ const EnhancedImage: React.FC<EnhancedImageProps> = memo(({
   className = '',
   fallbackSrc,
   loading = 'lazy',
+  sizes,
+  webpSrcSet,
   onLoad,
   onError
 }) => {
-  const [currentSrc, setCurrentSrc] = useState(src);
+  const [currentSrc, setCurrentSrc] = useState(src ?? '');
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
   const [isInView, setIsInView] = useState(false);
@@ -87,7 +91,7 @@ const EnhancedImage: React.FC<EnhancedImageProps> = memo(({
 
   // Reset when src changes
   useEffect(() => {
-    setCurrentSrc(src);
+    setCurrentSrc(src ?? '');
     setIsLoading(true);
     setHasError(false);
   }, [src]);
@@ -124,6 +128,8 @@ const EnhancedImage: React.FC<EnhancedImageProps> = memo(({
           alt={alt}
           width={width}
           height={height}
+          sizes={sizes}
+          srcSet={webpSrcSet}
           loading={loading}
           className={`w-full h-full object-cover transition-opacity duration-300 ${
             isLoading ? 'opacity-0' : 'opacity-100'

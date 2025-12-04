@@ -30,6 +30,7 @@ const AdminPanel: React.FC = () => {
     role: '',
     description: '',
     image_url: '',
+    region: 'international',
     niches: '["Entertainment"]',
     rating: 9.0,
     popularity: 90,
@@ -79,6 +80,7 @@ const AdminPanel: React.FC = () => {
           role: '',
           description: '',
           image_url: '',
+          region: 'international',
           niches: '["Entertainment"]',
           rating: 9.0,
           popularity: 90,
@@ -220,7 +222,7 @@ const AdminPanel: React.FC = () => {
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">Image URL</label>
-                      <input type="url" value={editingCelebrity ? editingCelebrity.image_url : newCelebrity.image_url} onChange={e => editingCelebrity ? setEditingCelebrity({ ...editingCelebrity, image_url: e.target.value }) : setNewCelebrity({ ...newCelebrity, image_url: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-5" placeholder="https://images.unsplash.com/..." />
+                      <input type="url" value={editingCelebrity ? (editingCelebrity.image_url ?? '') : (newCelebrity.image_url ?? '')} onChange={e => editingCelebrity ? setEditingCelebrity({ ...editingCelebrity, image_url: e.target.value }) : setNewCelebrity({ ...newCelebrity, image_url: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-5" placeholder="https://images.unsplash.com/..." />
                       <button onClick={() => {
                         const name = editingCelebrity ? editingCelebrity.name : newCelebrity.name;
                         const url = generateImageUrl(name);

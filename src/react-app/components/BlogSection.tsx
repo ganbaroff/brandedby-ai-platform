@@ -10,12 +10,12 @@ const BlogSection: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    loadBlogPosts();
+    void loadBlogPosts();
   }, []);
 
-  const loadBlogPosts = () => {
+  const loadBlogPosts = async () => {
     try {
-      const posts = BlogManager.loadBlogPosts();
+      const posts = await BlogManager.loadBlogPosts();
       setBlogPosts(posts.slice(0, 3)); // Show only latest 3 posts
     } catch (error) {
       console.error('Error loading blog posts:', error);
