@@ -1,13 +1,14 @@
 import { useNavigate } from "react-router";
 
+import BackButton from "@/react-app/components/BackButton";
 import Footer from "@/react-app/components/Footer";
 import Header from "@/react-app/components/Header";
 import LoadingSpinner from "@/react-app/components/LoadingSpinner";
 import PaymentProcessor from "@/react-app/components/PaymentProcessor";
+import ScrollProgressIndicator from "@/react-app/components/ScrollProgressIndicator";
+import { useAuth } from "@/react-app/contexts/AuthContext";
 import { trackingEvents } from "@/shared/tracking-integration";
-import { useAuth } from "@getmocha/users-service/react";
 import {
-    ArrowLeft,
     Check,
     Shield
 } from "lucide-react";
@@ -66,6 +67,7 @@ export default function Payment() {
   const navigate = useNavigate();
   const { user, isPending } = useAuth();
   const [projectData, setProjectData] = useState<ProjectData | null>(null);
+  const [tokenPurchase, setTokenPurchase] = useState<{ name: 'Silver'|'Gold'|'Platinum'; priceUSD: number; tokens: number } | null>(null);
   const [loading, setLoading] = useState(true);
   const [paymentSuccess, setPaymentSuccess] = useState(false);
   const [showSuccessAnim, setShowSuccessAnim] = useState(false);
@@ -76,9 +78,20 @@ export default function Payment() {
       return;
     }
 
-    // Load project data from session storage
+    // Load token purchase or project data
+    const tokenDataRaw = sessionStorage.getItem('tokenPurchase');
+    if (tokenDataRaw) {
+      try {
+        const tokenData = JSON.parse(tokenDataRaw);
+        setTokenPurchase(tokenData);
+        trackingEvents.initiateCheckout(tokenData.priceUSD, 'USD');
+      } catch (e) {
+        console.error('Error parsing tokenPurchase data:', e);
+      }
+    }
+
     const storedData = sessionStorage.getItem('projectData');
-    if (storedData) {
+    if (storedData && !tokenDataRaw) {
       try {
         const data = JSON.parse(storedData);
         setProjectData(data);
@@ -92,13 +105,13 @@ export default function Payment() {
         console.error('Error parsing project data:', error);
         navigate('/celebrities');
       }
-    } else {
+    } else if (!tokenDataRaw) {
       navigate('/celebrities');
     }
     setLoading(false);
   }, [user, isPending, navigate]);
 
-  if (isPending || loading || !projectData) {
+  if (isPending || loading || (!projectData && !tokenPurchase)) {
     return (
       <div className="min-h-screen bg-white">
         <Header />
@@ -108,32 +121,36 @@ export default function Payment() {
     );
   }
 
-  const packageInfo = PACKAGE_DETAILS[projectData.package_type];
-  const orderSummary = {
-    package: `${projectData.package_type} Package`,
-    price: packageInfo.price,
-    duration: packageInfo.duration,
-    features: packageInfo.features
-  };
+  const orderSummary = tokenPurchase ? {
+    package: `${tokenPurchase.name} Tokens` ,
+    price: tokenPurchase.priceUSD,
+    duration: `${tokenPurchase.tokens} tokens` ,
+    features: [
+      'Instant balance top-up',
+      'No expiration',
+      'Use for any influencer',
+    ]
+  } : (() => {
+    const packageInfo = PACKAGE_DETAILS[projectData!.package_type];
+    return {
+      package: `${projectData!.package_type} Package`,
+      price: packageInfo.price,
+      duration: packageInfo.duration,
+      features: packageInfo.features
+    };
+  })();
 
   
 
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
+      <BackButton variant="floating" />
+      <ScrollProgressIndicator position="right" showPercentage={false} />
       
       <div className="pt-24 pb-16">
         <div className="container mx-auto px-4 max-w-6xl">
           
-          {/* Back Button */}
-          <button 
-            onClick={() => navigate(-1)}
-            className="flex items-center space-x-2 text-gray-600 hover:text-purple-600 transition-colors mb-8"
-          >
-            <ArrowLeft className="w-5 h-5" />
-            <span>Back</span>
-          </button>
-
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             
             {/* Payment Form */}
@@ -144,7 +161,13 @@ export default function Payment() {
                 <PaymentProcessor 
                   amount={orderSummary.price}
                   currency="USD"
-                  projectData={projectData}
+                  projectData={tokenPurchase ? {
+                    package_type: 'TokenPackage',
+                    video_format: '',
+                    niche: '',
+                    description: '',
+                    tokenPackage: { name: tokenPurchase.name, tokens: tokenPurchase.tokens, priceUSD: tokenPurchase.priceUSD }
+                  } as unknown as ProjectData : projectData}
                   onPaymentSuccess={() => {
                     setPaymentSuccess(true);
                     setShowSuccessAnim(true);

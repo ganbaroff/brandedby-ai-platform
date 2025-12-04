@@ -1,7 +1,9 @@
+import BackButton from "@/react-app/components/BackButton";
 import Footer from "@/react-app/components/Footer";
 import Header from "@/react-app/components/Header";
+import ScrollProgressIndicator from "@/react-app/components/ScrollProgressIndicator";
 import { BlogManager, type BlogPost } from "@/shared/admin-data-utils";
-import { useAuth } from "@getmocha/users-service/react";
+import { useAuth } from "@/react-app/contexts/AuthContext";
 import {
     Sparkles
 } from "lucide-react";
@@ -127,6 +129,8 @@ export default function Admin() {
   return (
     <div className="min-h-screen bg-white">
       <Header />
+      <BackButton variant="floating" />
+      <ScrollProgressIndicator position="right" showPercentage={false} />
       <div className="pt-24 pb-16">
         <div className="container mx-auto px-4 max-w-7xl">
           <h1 className="text-3xl font-bold mb-8">Admin Dashboard</h1>

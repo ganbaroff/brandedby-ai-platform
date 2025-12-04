@@ -1,7 +1,10 @@
+import BackButton from "@/react-app/components/BackButton";
 import Breadcrumbs, { BreadcrumbContainer } from "@/react-app/components/Breadcrumbs";
+import CelebrityRegionSelector, { CelebrityRegion } from "@/react-app/components/CelebrityRegionSelector";
 import EnhancedImage from "@/react-app/components/EnhancedImage";
 import Footer from "@/react-app/components/Footer";
 import Header from "@/react-app/components/Header";
+import ScrollProgressIndicator from "@/react-app/components/ScrollProgressIndicator";
 import SearchFilter, { FilterOptions } from "@/react-app/components/SearchFilter";
 import { CelebrityGridSkeleton } from "@/react-app/components/SkeletonLoaders";
 import { useCelebritiesSEO } from "@/react-app/hooks/useSEO";
@@ -19,6 +22,7 @@ const Celebrities = memo(function Celebrities() {
   const [loading, setLoading] = useState(true);
   const [celebritiesData, setCelebritiesData] = useState<Celebrity[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedRegion, setSelectedRegion] = useState<CelebrityRegion>('international');
   const [filters, setFilters] = useState<FilterOptions>({
     category: '',
     minRating: 0,
@@ -26,19 +30,34 @@ const Celebrities = memo(function Celebrities() {
     sortOrder: 'desc'
   });
 
+  // Load celebrities based on selected region
+  const loadData = useCallback(async (region: CelebrityRegion) => {
+    console.log(`[Celebrities Page] Loading data for region: ${region}`);
+    setLoading(true);
+    try {
+      const data = await CelebrityManager.loadCelebrities(region);
+      console.log(`[Celebrities Page] Received ${data.length} celebrities for ${region}`);
+      setCelebritiesData(data);
+    } catch (error) {
+      console.error("[Celebrities Page] Failed to load celebrities:", error);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
   useEffect(() => {
-    const loadData = async () => {
-      setLoading(true);
-      try {
-        const data = await CelebrityManager.loadCelebrities();
-        setCelebritiesData(data);
-      } catch (error) {
-        console.error("Failed to load celebrities:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    loadData();
+    console.log(`[Celebrities Page] useEffect triggered - selectedRegion: ${selectedRegion}`);
+    loadData(selectedRegion);
+  }, [selectedRegion, loadData]);
+
+  // Debug: Log when celebritiesData changes
+  useEffect(() => {
+    console.log(`[Celebrities Page] celebritiesData updated: ${celebritiesData.length} items`);
+  }, [celebritiesData]);
+
+  // Handle region change
+  const handleRegionChange = useCallback((region: CelebrityRegion) => {
+    setSelectedRegion(region);
   }, []);
 
   // Parse niches helper
@@ -159,13 +178,17 @@ const Celebrities = memo(function Celebrities() {
   }, []);
 
   // Stats for the top section
-  const stats = useMemo(() => ({
-    total: celebritiesData.length,
-    categories: allCategories.length,
-    avgRating: celebritiesData.length > 0 
-      ? (celebritiesData.reduce((sum, celeb) => sum + celeb.rating, 0) / celebritiesData.length).toFixed(1)
-      : "0.0"
-  }), [celebritiesData, allCategories.length]);
+  const stats = useMemo(() => {
+    const statsObj = {
+      total: celebritiesData.length,
+      categories: allCategories.length,
+      avgRating: celebritiesData.length > 0 
+        ? (celebritiesData.reduce((sum, celeb) => sum + celeb.rating, 0) / celebritiesData.length).toFixed(1)
+        : "0.0"
+    };
+    console.log('[Celebrities Page] Stats calculated:', statsObj);
+    return statsObj;
+  }, [celebritiesData, allCategories.length]);
 
   // Track page view
   useEffect(() => {
@@ -175,6 +198,8 @@ const Celebrities = memo(function Celebrities() {
   return (
     <div className="min-h-screen bg-white">
       <Header />
+      <BackButton variant="floating" />
+      <ScrollProgressIndicator position="right" showPercentage={false} />
       
       {/* Breadcrumbs */}
       <BreadcrumbContainer>
@@ -184,18 +209,26 @@ const Celebrities = memo(function Celebrities() {
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-primary-50 to-secondary-50 py-16">
         <div className="container mx-auto px-4 max-w-7xl">
+          {/* Celebrity Region Selector */}
+          <div className="flex justify-center mb-8">
+            <CelebrityRegionSelector 
+              selectedRegion={selectedRegion}
+              onRegionChange={handleRegionChange}
+            />
+          </div>
+
           <div className="text-center mb-12">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full shadow-sm mb-6">
               <Users className="w-4 h-4 text-primary-600" />
-              <span className="text-primary-700 font-medium">{stats.total} Global Celebrities</span>
+              <span className="text-primary-700 font-medium">{stats.total} {selectedRegion === 'azerbaijan' ? 'Azerbaijan' : 'Global'} Celebrities</span>
             </div>
             
-            <h1 className="text-4xl lg:text-6xl font-bold text-neutral-900 mb-6">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-neutral-900 mb-6">
               Choose Your <span className="gradient-text">Celebrity</span>
             </h1>
             
-            <p className="text-xl text-neutral-600 max-w-2xl mx-auto mb-8">
-              Create stunning AI videos with the world's biggest stars. From Hollywood actors to music legends, 
+            <p className="text-base md:text-lg lg:text-xl text-neutral-600 max-w-2xl mx-auto mb-8">
+              Create stunning AI videos with {selectedRegion === 'azerbaijan' ? "Azerbaijan's biggest stars" : "the world's biggest stars"}. From {selectedRegion === 'azerbaijan' ? 'legendary mugam singers to modern influencers' : 'Hollywood actors to music legends'}, 
               find the perfect celebrity for your project.
             </p>
 
@@ -234,7 +267,7 @@ const Celebrities = memo(function Celebrities() {
           {/* Results Header */}
           <div className="flex items-center justify-between mb-8">
             <div>
-              <h2 className="text-2xl font-bold text-neutral-900">
+              <h2 className="text-2xl md:text-3xl font-bold text-neutral-900">
                 {searchQuery || filters.category ? 'Search Results' : 'All Celebrities'}
               </h2>
               <p className="text-neutral-600 mt-1">
@@ -284,7 +317,7 @@ const Celebrities = memo(function Celebrities() {
 
           {/* Celebrity Grid */}
           {!loading && filteredCelebrities.length > 0 && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6">
               {filteredCelebrities.map((celebrity, index) => {
                 const niches = parseNiches(celebrity.niches);
 
@@ -295,7 +328,7 @@ const Celebrities = memo(function Celebrities() {
                       analytics.trackEvent('celebrity', 'click', celebrity.name);
                       navigate(`/celebrity/${celebrity.id}`);
                     }}
-                    className="group cursor-pointer bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden animate-scale-in"
+                    className="group cursor-pointer bg-white rounded-xl md:rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-1 overflow-hidden animate-scale-in"
                     style={{ '--animation-delay': `${index * 50}ms` } as React.CSSProperties}
                   >
                     {/* Image */}
@@ -311,26 +344,26 @@ const Celebrities = memo(function Celebrities() {
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                       
                       {/* Popularity Badge */}
-                      <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm text-neutral-800 px-3 py-1 rounded-full text-sm font-semibold">
+                      <div className="absolute top-2 right-2 md:top-4 md:right-4 bg-white/90 backdrop-blur-sm text-neutral-800 px-2 py-1 md:px-3 rounded-full text-xs md:text-sm font-semibold">
                         #{celebrity.popularity}
                       </div>
                       
                       {/* Quick Action Button */}
-                      <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <button className="w-full py-3 bg-white/90 backdrop-blur-sm text-neutral-900 font-semibold rounded-xl hover:bg-white transition-colors">
+                      <div className="absolute bottom-2 left-2 right-2 md:bottom-4 md:left-4 md:right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <button className="w-full py-2 md:py-3 bg-white/90 backdrop-blur-sm text-neutral-900 font-semibold rounded-lg md:rounded-xl text-xs md:text-sm hover:bg-white transition-colors">
                           Create Video
                         </button>
                       </div>
                     </div>
 
                     {/* Content */}
-                    <div className="p-6">
-                      <div className="flex items-start justify-between mb-3">
+                    <div className="p-3 md:p-6">
+                      <div className="flex items-start justify-between mb-2 md:mb-3">
                         <div>
-                          <h3 className="text-xl font-bold text-neutral-900 group-hover:text-primary-600 transition-colors">
+                          <h3 className="text-sm md:text-xl font-bold text-neutral-900 group-hover:text-primary-600 transition-colors line-clamp-1">
                             {celebrity.name}
                           </h3>
-                          <p className="text-neutral-600 text-sm">{celebrity.role}</p>
+                          <p className="text-neutral-600 text-xs md:text-sm line-clamp-1">{celebrity.role}</p>
                         </div>
                         
                         <div className="flex items-center gap-1 text-sm">
@@ -339,22 +372,22 @@ const Celebrities = memo(function Celebrities() {
                         </div>
                       </div>
                       
-                      <p className="text-neutral-600 text-sm mb-4 line-clamp-2">
+                      <p className="text-neutral-600 text-xs md:text-sm mb-3 md:mb-4 line-clamp-2">
                         {celebrity.description}
                       </p>
                       
                       {/* Niches */}
-                      <div className="flex flex-wrap gap-2">
+                      <div className="flex flex-wrap gap-1.5 md:gap-2">
                         {niches.slice(0, 3).map((niche, nicheIndex) => (
                           <span
                             key={nicheIndex}
-                            className={`px-2 py-1 text-xs font-medium rounded-full ${getNicheColor(niche)}`}
+                            className={`px-1.5 py-0.5 md:px-2 md:py-1 text-[10px] md:text-xs font-medium rounded-full ${getNicheColor(niche)}`}
                           >
                             {niche}
                           </span>
                         ))}
                         {niches.length > 3 && (
-                          <span className="px-2 py-1 text-xs font-medium rounded-full bg-neutral-100 text-neutral-600">
+                          <span className="px-1.5 py-0.5 md:px-2 md:py-1 text-[10px] md:text-xs font-medium rounded-full bg-neutral-100 text-neutral-600">
                             +{niches.length - 3}
                           </span>
                         )}
@@ -375,18 +408,18 @@ const Celebrities = memo(function Celebrities() {
             <Zap className="w-8 h-8 text-white" />
           </div>
           
-          <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
             Can't Find Your Celebrity?
           </h2>
           
-          <p className="text-xl text-white/90 mb-8">
+          <p className="text-base md:text-lg lg:text-xl text-white/90 mb-8">
             We're constantly adding new celebrities to our platform. 
             Request your favorite star and get notified when they're available!
           </p>
           
           <button
             onClick={() => navigate('/selfie-upload')}
-            className="px-8 py-4 bg-white text-primary-600 font-bold rounded-2xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
+            className="px-6 py-3 md:px-8 md:py-4 bg-white text-primary-600 font-bold rounded-xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 text-sm md:text-base"
           >
             Request Celebrity
           </button>

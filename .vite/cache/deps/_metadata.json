@@ -1,0 +1,82 @@
+{
+  "hash": "df9eec86",
+  "configHash": "85596c60",
+  "lockfileHash": "bb9a9361",
+  "browserHash": "717cb21a",
+  "optimized": {
+    "react": {
+      "src": "../../../node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "dd21309d",
+      "needsInterop": true
+    },
+    "react-dom": {
+      "src": "../../../node_modules/react-dom/index.js",
+      "file": "react-dom.js",
+      "fileHash": "6e0ecde5",
+      "needsInterop": true
+    },
+    "react-router-dom": {
+      "src": "../../../node_modules/react-router-dom/dist/index.mjs",
+      "file": "react-router-dom.js",
+      "fileHash": "790a6fb2",
+      "needsInterop": false
+    },
+    "lucide-react": {
+      "src": "../../../node_modules/lucide-react/dist/esm/lucide-react.js",
+      "file": "lucide-react.js",
+      "fileHash": "a7a9b264",
+      "needsInterop": false
+    },
+    "tslib": {
+      "src": "../../../node_modules/tslib/tslib.js",
+      "file": "tslib.js",
+      "fileHash": "4927ee54",
+      "needsInterop": true
+    },
+    "react/jsx-dev-runtime": {
+      "src": "../../../node_modules/react/jsx-dev-runtime.js",
+      "file": "react_jsx-dev-runtime.js",
+      "fileHash": "ec4b88bc",
+      "needsInterop": true
+    },
+    "react/jsx-runtime": {
+      "src": "../../../node_modules/react/jsx-runtime.js",
+      "file": "react_jsx-runtime.js",
+      "fileHash": "0b479410",
+      "needsInterop": true
+    },
+    "@sentry/react": {
+      "src": "../../../node_modules/@sentry/react/build/esm/index.js",
+      "file": "@sentry_react.js",
+      "fileHash": "ab2b524b",
+      "needsInterop": false
+    },
+    "react-dom/client": {
+      "src": "../../../node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "91e740f4",
+      "needsInterop": true
+    },
+    "react-router": {
+      "src": "../../../node_modules/react-router/dist/development/index.mjs",
+      "file": "react-router.js",
+      "fileHash": "bdc7def1",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-EPBPA4JV": {
+      "file": "chunk-EPBPA4JV.js"
+    },
+    "chunk-7AQZWROK": {
+      "file": "chunk-7AQZWROK.js"
+    },
+    "chunk-VN6DB63A": {
+      "file": "chunk-VN6DB63A.js"
+    },
+    "chunk-G3PMV62Z": {
+      "file": "chunk-G3PMV62Z.js"
+    }
+  }
+}

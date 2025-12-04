@@ -38,11 +38,11 @@ const SecureAdminLogin: React.FC<SimpleAdminLoginProps> = ({ onLogin }) => {
               className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transition-all"
             >
               <Shield className="h-4 w-4 mr-2" />
-              🚀 Войти как Админ
+              🚀 Sign In as Admin
             </button>
 
             <p className="text-xs text-gray-500 mt-4">
-              Быстрый вход без пароля (режим разработки)
+              Quick login without password (development mode)
             </p>
           </div>
         </div>

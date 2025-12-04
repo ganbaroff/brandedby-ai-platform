@@ -109,21 +109,92 @@ export class CelebrityManager {
     }
   }
 
-  static async loadCelebrities(): Promise<Celebrity[]> {
+  static async loadCelebrities(region: 'international' | 'azerbaijan' = 'international'): Promise<Celebrity[]> {
+    console.log(`[CelebrityManager] Loading celebrities for region: ${region}`);
+    
     try {
-      return await ApiService.get<Celebrity[]>('/celebrities');
+      // In development, load from local JSON file
+      if (import.meta.env.DEV) {
+        console.log('[CelebrityManager] DEV mode - loading from JSON files');
+        
+        // Import JSON files directly for proper Vite handling
+        if (region === 'azerbaijan') {
+          console.log('[CelebrityManager] Importing azerbaijan-celebrities.json');
+          const module = await import('./azerbaijan-celebrities.json');
+          const data = module.default || module;
+          console.log(`[CelebrityManager] Loaded ${data.length} Azerbaijan celebrities`);
+          return data;
+        } else {
+          console.log('[CelebrityManager] Importing celebrities.json');
+          const module = await import('./celebrities.json');
+          const data = module.default || module;
+          console.log(`[CelebrityManager] Loaded ${data.length} International celebrities`);
+          return data;
+        }
+      }
+      
+      // In production, use API with region parameter
+      console.log('[CelebrityManager] PROD mode - using API');
+      const endpoint = region === 'azerbaijan' 
+        ? '/celebrities?region=azerbaijan'
+        : '/celebrities';
+      return await ApiService.get<Celebrity[]>(endpoint);
     } catch (error) {
-      console.error("Failed to load celebrities", error);
+      console.error(`[CelebrityManager] Failed to load ${region} celebrities:`, error);
+      
+      // Fallback: try to import JSON directly
+      try {
+        console.log('[CelebrityManager] Attempting fallback import');
+        if (region === 'azerbaijan') {
+          const module = await import('./azerbaijan-celebrities.json');
+          const data = module.default || module;
+          console.log(`[CelebrityManager] Fallback loaded ${data.length} Azerbaijan celebrities`);
+          return data;
+        } else {
+          const module = await import('./celebrities.json');
+          const data = module.default || module;
+          console.log(`[CelebrityManager] Fallback loaded ${data.length} International celebrities`);
+          return data;
+        }
+      } catch (fallbackError) {
+        console.error("[CelebrityManager] Fallback also failed:", fallbackError);
+      }
+      
+      console.error('[CelebrityManager] Returning empty array');
       return [];
     }
   }
 
-  static async getCelebrityById(id: number): Promise<Celebrity | null> {
+  static async getCelebrityById(id: number, region?: 'international' | 'azerbaijan'): Promise<Celebrity | null> {
     try {
+      // In development, load from local JSON file
+      if (import.meta.env.DEV) {
+        // If region not specified, try to determine from ID (1-99 = Azerbaijan, 100+ = International)
+        const detectedRegion = region || (id < 100 ? 'azerbaijan' : 'international');
+        const celebrities = await this.loadCelebrities(detectedRegion);
+        return celebrities.find(c => c.id === id) || null;
+      }
+      // In production, use API
       return await ApiService.get<Celebrity>(`/celebrities/${id}`);
     } catch (error) {
       console.error(`Failed to load celebrity ${id}`, error);
-      return null;
+      // Fallback to JSON even in production
+      try {
+        // Try both regions if region not specified
+        if (!region) {
+          const azCelebrities = await this.loadCelebrities('azerbaijan');
+          const found = azCelebrities.find(c => c.id === id);
+          if (found) return found;
+          
+          const intlCelebrities = await this.loadCelebrities('international');
+          return intlCelebrities.find(c => c.id === id) || null;
+        }
+        
+        const celebrities = await this.loadCelebrities(region);
+        return celebrities.find(c => c.id === id) || null;
+      } catch (fallbackError) {
+        return null;
+      }
     }
   }
 

@@ -29,6 +29,31 @@ export const useServiceWorker = () => {
 
   // Register service worker
   useEffect(() => {
+    // Don't register Service Worker in development
+    if (import.meta.env.DEV) {
+      console.log('[SW] Service Worker disabled in development mode');
+      
+      // Unregister any existing service workers in dev
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then((registrations) => {
+          registrations.forEach((registration) => {
+            registration.unregister().then(() => {
+              console.log('[SW] Unregistered existing service worker');
+            });
+          });
+        });
+        
+        // Clear all caches
+        caches.keys().then((names) => {
+          names.forEach((name) => {
+            caches.delete(name);
+          });
+          console.log('[SW] Cleared all caches');
+        });
+      }
+      return;
+    }
+
     if (!state.isSupported) {
       console.log('Service Worker not supported');
       return;

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Удаление Service Worker</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    .container {
+      background: white;
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      max-width: 500px;
+      width: 90%;
+      text-align: center;
+    }
+    h1 {
+      color: #333;
+      margin-bottom: 10px;
+      font-size: 28px;
+    }
+    .subtitle {
+      color: #666;
+      margin-bottom: 30px;
+      font-size: 16px;
+    }
+    .button {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      border: none;
+      padding: 16px 40px;
+      border-radius: 50px;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    }
+    .button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+    }
+    .button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .status {
+      margin-top: 30px;
+      padding: 20px;
+      background: #f8f9fa;
+      border-radius: 12px;
+      text-align: left;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      max-height: 250px;
+      overflow-y: auto;
+      display: none;
+    }
+    .status.show { display: block; }
+    .log { margin: 8px 0; padding: 8px; border-radius: 6px; }
+    .log.info { background: #e3f2fd; color: #1976d2; }
+    .log.success { background: #e8f5e9; color: #2e7d32; }
+    .log.error { background: #ffebee; color: #c62828; }
+    .icon { font-size: 60px; margin-bottom: 20px; }
+    .countdown {
+      margin-top: 20px;
+      font-size: 16px;
+      color: #666;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="icon">🛠️</div>
+    <h1>Service Worker Cleanup</h1>
+    <p class="subtitle">Нажми кнопку для удаления Service Worker</p>
+    
+    <button class="button" id="cleanupBtn" onclick="startCleanup()">
+      Удалить Service Worker
+    </button>
+    
+    <div class="countdown" id="countdown"></div>
+    <div class="status" id="status"></div>
+  </div>
+
+  <script>
+    const statusDiv = document.getElementById('status');
+    const countdownDiv = document.getElementById('countdown');
+    const btn = document.getElementById('cleanupBtn');
+
+    function log(message, type = 'info') {
+      statusDiv.classList.add('show');
+      const div = document.createElement('div');
+      div.className = `log ${type}`;
+      div.textContent = message;
+      statusDiv.appendChild(div);
+      statusDiv.scrollTop = statusDiv.scrollHeight;
+    }
+
+    async function startCleanup() {
+      btn.disabled = true;
+      btn.textContent = 'Удаление...';
+      
+      log('🔍 Поиск Service Workers...', 'info');
+
+      if (!('serviceWorker' in navigator)) {
+        log('❌ Service Worker не поддерживается', 'error');
+        btn.textContent = 'Готово';
+        return;
+      }
+
+      try {
+        // Удаление Service Workers
+        const registrations = await navigator.serviceWorker.getRegistrations();
+        log(`📋 Найдено: ${registrations.length} worker(s)`, 'info');
+
+        for (const reg of registrations) {
+          await reg.unregister();
+          log(`✅ Удалён: ${reg.scope}`, 'success');
+        }
+
+        // Очистка кешей
+        if ('caches' in window) {
+          const cacheNames = await caches.keys();
+          log(`📋 Найдено: ${cacheNames.length} cache(s)`, 'info');
+          
+          for (const name of cacheNames) {
+            await caches.delete(name);
+            log(`✅ Очищен: ${name}`, 'success');
+          }
+        }
+
+        log('', 'info');
+        log('🎉 ВСЁ ГОТОВО!', 'success');
+        log('Service Worker удалён', 'success');
+        log('Кеши очищены', 'success');
+        
+        btn.textContent = '✓ Готово';
+        btn.style.background = '#2e7d32';
+
+        // Обратный отсчёт
+        let seconds = 5;
+        countdownDiv.textContent = `Перенаправление через ${seconds} сек...`;
+        
+        const interval = setInterval(() => {
+          seconds--;
+          if (seconds > 0) {
+            countdownDiv.textContent = `Перенаправление через ${seconds} сек...`;
+          } else {
+            clearInterval(interval);
+            window.location.href = '/';
+          }
+        }, 1000);
+
+      } catch (error) {
+        log(`❌ Ошибка: ${error.message}`, 'error');
+        btn.disabled = false;
+        btn.textContent = 'Попробовать снова';
+      }
+    }
+  </script>
+</body>
+</html>

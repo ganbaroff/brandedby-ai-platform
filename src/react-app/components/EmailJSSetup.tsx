@@ -147,8 +147,8 @@ const EmailJSSetup = () => {
   const setupInstructions = [
     {
       step: 1,
-      title: 'Регистрация на EmailJS',
-      description: 'Перейдите на https://www.emailjs.com/ и создайте бесплатный аккаунт'
+      title: 'Register on EmailJS',
+      description: 'Go to https://www.emailjs.com/ and create a free account'
     },
     {
       step: 2, 

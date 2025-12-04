@@ -1,381 +1,546 @@
 ﻿[
   {
-    "id": 1,
-    "name": "Полад Бюльбюльоглу",
-    "role": "Певец, композитор, политик",
-    "description": "Легендарный азербайджанский певец, композитор и государственный деятель, народный артист СССР.",
-    "image_url": "/images/celebrities/celebrity-1.png",
-    "niches": "[\"Музыка\", \"Культура\", \"Политика\"]",
+    "id": 101,
+    "name": "Taylor Swift",
+    "role": "Singer, Songwriter",
+    "description": "Multi-Grammy winner and global pop icon known for storytelling through music.",
+    "image_url": "https://images.unsplash.com/photo-1516280440614-37939bbacd81?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
+    "niches": "[\"Music\", \"Entertainment\", \"Fashion\"]",
+    "rating": 9.9,
+    "popularity": 99,
+    "biography_ru": "Taylor Swift is one of the most influential artists of our time, known for her narrative songwriting and multiple genre-spanning albums. She has won numerous Grammy Awards and broken countless records throughout her career.",
+    "achievements": [
+      "12x Grammy Winner",
+      "Billboard Artist of the Decade",
+      "100+ Million Albums Sold",
+      "Eras Tour Record Breaking"
+    ],
+    "career_milestones": [
+      {
+        "year": 2006,
+        "title": "Debut Album",
+        "description": "Released self-titled debut album",
+        "category": "Music"
+      },
+      {
+        "year": 2014,
+        "title": "1989 Album",
+        "description": "Transitioned to pop music",
+        "category": "Music"
+      },
+      {
+        "year": 2023,
+        "title": "Eras Tour",
+        "description": "Record-breaking world tour",
+        "category": "Music"
+      }
+    ],
+    "created_at": "2025-11-25T00:00:00Z",
+    "updated_at": "2025-11-25T00:00:00Z"
+  },
+  {
+    "id": 102,
+    "name": "Dwayne Johnson",
+    "role": "Actor, Producer",
+    "description": "Hollywood superstar and former WWE champion, known as 'The Rock'.",
+    "image_url": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
+    "niches": "[\"Film\", \"Entertainment\", \"Fitness\"]",
+    "rating": 9.7,
+    "popularity": 98,
+    "biography_ru": "Dwayne 'The Rock' Johnson is one of Hollywood's highest-paid actors, transitioning from professional wrestling to become a global entertainment icon. Known for his charisma and work ethic.",
+    "achievements": [
+      "Highest Paid Actor 2020",
+      "WWE Champion",
+      "Forbes Celebrity 100",
+      "Blockbuster Film Star"
+    ],
+    "career_milestones": [
+      {
+        "year": 2001,
+        "title": "First Film Role",
+        "description": "Debuted in The Mummy Returns",
+        "category": "Film"
+      },
+      {
+        "year": 2013,
+        "title": "Fast & Furious",
+        "description": "Joined major franchise",
+        "category": "Film"
+      },
+      {
+        "year": 2022,
+        "title": "Black Adam",
+        "description": "Superhero lead role",
+        "category": "Film"
+      }
+    ],
+    "created_at": "2025-11-25T00:00:00Z",
+    "updated_at": "2025-11-25T00:00:00Z"
+  },
+  {
+    "id": 103,
+    "name": "Beyoncé",
+    "role": "Singer, Actress, Producer",
+    "description": "Queen of pop and R&B, cultural icon and entertainment mogul.",
+    "image_url": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
+    "niches": "[\"Music\", \"Fashion\", \"Business\"]",
+    "rating": 9.9,
+    "popularity": 99,
+    "biography_ru": "Beyoncé is a global superstar who has shaped modern pop culture through her music, performances, and advocacy. She's won a record-breaking number of Grammy Awards and continues to push creative boundaries.",
+    "achievements": [
+      "32x Grammy Winner",
+      "Renaissance World Tour",
+      "Cultural Icon",
+      "Business Mogul"
+    ],
+    "career_milestones": [
+      {
+        "year": 1997,
+        "title": "Destiny's Child",
+        "description": "Rose to fame with girl group",
+        "category": "Music"
+      },
+      {
+        "year": 2003,
+        "title": "Solo Debut",
+        "description": "Launched solo career",
+        "category": "Music"
+      },
+      {
+        "year": 2016,
+        "title": "Lemonade",
+        "description": "Released visual album masterpiece",
+        "category": "Music"
+      }
+    ],
+    "created_at": "2025-11-25T00:00:00Z",
+    "updated_at": "2025-11-25T00:00:00Z"
+  },
+  {
+    "id": 104,
+    "name": "Cristiano Ronaldo",
+    "role": "Footballer, Athlete",
+    "description": "Five-time Ballon d'Or winner and one of the greatest footballers of all time.",
+    "image_url": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
+    "niches": "[\"Sports\", \"Fitness\", \"Business\"]",
+    "rating": 9.8,
+    "popularity": 99,
+    "biography_ru": "Cristiano Ronaldo is widely regarded as one of the greatest footballers in history, known for his incredible athleticism, work ethic, and goal-scoring ability across multiple top clubs.",
+    "achievements": [
+      "5x Ballon d'Or",
+      "UEFA Champions League Winner",
+      "500+ Career Goals",
+      "Most Followed on Instagram"
+    ],
+    "career_milestones": [
+      {
+        "year": 2009,
+        "title": "Real Madrid",
+        "description": "Record transfer to Real Madrid",
+        "category": "Sports"
+      },
+      {
+        "year": 2016,
+        "title": "Euro Champion",
+        "description": "Led Portugal to victory",
+        "category": "Sports"
+      },
+      {
+        "year": 2023,
+        "title": "Global Icon",
+        "description": "Most followed athlete",
+        "category": "Social Media"
+      }
+    ],
+    "created_at": "2025-11-25T00:00:00Z",
+    "updated_at": "2025-11-25T00:00:00Z"
+  },
+  {
+    "id": 105,
+    "name": "Elon Musk",
+    "role": "Entrepreneur, Engineer",
+    "description": "Tech visionary behind Tesla, SpaceX, and revolutionary innovations.",
+    "image_url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
+    "niches": "[\"Technology\", \"Business\", \"Innovation\"]",
+    "rating": 9.6,
+    "popularity": 97,
+    "biography_ru": "Elon Musk is a pioneering entrepreneur who has revolutionized multiple industries including electric vehicles, space exploration, and social media. Known for his ambitious vision for humanity's future.",
+    "achievements": [
+      "CEO of Tesla & SpaceX",
+      "World's Richest Person",
+      "Revolutionary Innovation",
+      "Mars Colonization Vision"
+    ],
+    "career_milestones": [
+      {
+        "year": 2002,
+        "title": "SpaceX Founded",
+        "description": "Started private space company",
+        "category": "Technology"
+      },
+      {
+        "year": 2008,
+        "title": "Tesla CEO",
+        "description": "Took over electric car company",
+        "category": "Business"
+      },
+      {
+        "year": 2022,
+        "title": "Twitter/X Acquisition",
+        "description": "Acquired social media platform",
+        "category": "Business"
+      }
+    ],
+    "created_at": "2025-11-25T00:00:00Z",
+    "updated_at": "2025-11-25T00:00:00Z"
+  },
+  {
+    "id": 107,
+    "name": "Ariana Grande",
+    "role": "Singer, Actress",
+    "description": "Pop superstar with powerful vocals and chart-topping hits.",
+    "image_url": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
+    "niches": "[\"Music\", \"Fashion\", \"Entertainment\"]",
+    "rating": 9.6,
+    "popularity": 97,
+    "biography_ru": "Ariana Grande rose to fame through television and became one of pop music's biggest stars, known for her incredible vocal range and emotional performances.",
+    "achievements": [
+      "Grammy Winner",
+      "100+ Billion Streams",
+      "Multiple #1 Albums",
+      "Global Icon"
+    ],
+    "career_milestones": [
+      {
+        "year": 2013,
+        "title": "Yours Truly",
+        "description": "Debut album release",
+        "category": "Music"
+      },
+      {
+        "year": 2018,
+        "title": "Sweetener",
+        "description": "Grammy-winning album",
+        "category": "Music"
+      },
+      {
+        "year": 2024,
+        "title": "Wicked Film",
+        "description": "Major movie role",
+        "category": "Film"
+      }
+    ],
+    "created_at": "2025-11-25T00:00:00Z",
+    "updated_at": "2025-11-25T00:00:00Z"
+  },
+  {
+    "id": 108,
+    "name": "LeBron James",
+    "role": "Basketball Player, Entrepreneur",
+    "description": "NBA legend and one of the greatest basketball players of all time.",
+    "image_url": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
+    "niches": "[\"Sports\", \"Business\", \"Philanthropy\"]",
     "rating": 9.8,
     "popularity": 98,
-    "biography_ru": "Полад Бюльбюльоглу - один из самых известных и уважаемых деятелей культуры Азербайджана. Родился в музыкальной семье, его отец - легендарный оперный певец Бюльбюль. С детства проявлял выдающиеся музыкальные способности. Окончил Азербайджанскую государственную консерваторию по классу композиции и фортепиано. Его песни стали настоящими хитами не только в Азербайджане, но и во всем СССР. Представлял Азербайджан на конкурсе Евровидение в 2012 году. Помимо музыкальной карьеры, активно занимается политической деятельностью, был министром культуры и туризма Азербайджана, послом в России. Автор более 600 песен и музыкальных произведений.",
-    "achievements": ["Народный артист СССР", "Представитель Азербайджана на Евровидении 2012", "Министр культуры и туризма", "Посол Азербайджана в России", "Автор более 600 песен"],
+    "biography_ru": "LeBron James is a four-time NBA champion and considered one of basketball's all-time greats, also known for his business ventures and social activism.",
+    "achievements": [
+      "4x NBA Champion",
+      "4x NBA MVP",
+      "All-Time Leading Scorer",
+      "Business Mogul"
+    ],
     "career_milestones": [
-      {"year": 1972, "title": "Первый альбом", "description": "Выпуск первого сольного альбома", "category": "Музыка"},
-      {"year": 1989, "title": "Народный артист СССР", "description": "Присвоение звания народного артиста СССР", "category": "Награды"},
-      {"year": 2001, "title": "Министр культуры", "description": "Назначение министром культуры и туризма", "category": "Политика"},
-      {"year": 2012, "title": "Евровидение", "description": "Представление Азербайджана на Евровидении", "category": "Музыка"}
+      {
+        "year": 2003,
+        "title": "NBA Draft",
+        "description": "First overall pick",
+        "category": "Sports"
+      },
+      {
+        "year": 2016,
+        "title": "Cleveland Title",
+        "description": "Championship for hometown",
+        "category": "Sports"
+      },
+      {
+        "year": 2020,
+        "title": "Lakers Championship",
+        "description": "4th NBA title",
+        "category": "Sports"
+      }
     ],
     "created_at": "2025-11-25T00:00:00Z",
     "updated_at": "2025-11-25T00:00:00Z"
   },
   {
-    "id": 2,
-    "name": "Алим Гасимов",
-    "role": "Мастер мугама",
-    "description": "Всемирно известный мастер азербайджанского мугама, лауреат премии UNESCO.",
-    "image_url": "/images/celebrities/celebrity-2.png",
-    "niches": "[\"Музыка\", \"Культура\", \"Традиции\"]",
-    "rating": 9.9,
-    "popularity": 95,
-    "biography_ru": "Алим Гасимов - выдающийся исполнитель азербайджанского мугама, признанный одним из величайших мастеров этого древнего искусства. Родился в семье музыкантов, с детства изучал традиционную азербайджанскую музыку. В 1999 году стал лауреатом престижной премии UNESCO за вклад в развитие и популяризацию мугама. Его уникальный голос и виртуозное исполнение покорили аудиторию по всему миру. Выступал на крупнейших концертных площадках мира, включая Карнеги-холл в Нью-Йорке. Активно занимается преподавательской деятельностью, передавая традиции мугама новому поколению. Его дочь Фаргана Гасимова также стала известной исполнительницей мугама.",
-    "achievements": ["Лауреат премии UNESCO 1999", "Народный артист Азербайджана", "Концерты в Карнеги-холл", "Мастер традиционного мугама"],
-    "career_milestones": [
-      {"year": 1978, "title": "Профессиональный дебют", "description": "Начало профессиональной карьеры", "category": "Музыка"},
-      {"year": 1999, "title": "Премия UNESCO", "description": "Получение международной премии UNESCO", "category": "Награды"},
-      {"year": 2008, "title": "Мировое признание", "description": "Концертные туры по всему миру", "category": "Музыка"}
-    ],
-    "created_at": "2025-11-25T00:00:00Z",
-    "updated_at": "2025-11-25T00:00:00Z"
-  },
-  {
-    "id": 3,
-    "name": "Айгюн Кязымова",
-    "role": "Певица, актриса",
-    "description": "Популярная азербайджанская поп-звезда, актриса и общественный деятель.",
-    "image_url": "/images/celebrities/celebrity-3.png",
-    "niches": "[\"Музыка\", \"Развлечения\", \"Мода\"]",
+    "id": 109,
+    "name": "Zendaya",
+    "role": "Actress, Singer, Model",
+    "description": "Emmy-winning actress and fashion icon starring in major films and series.",
+    "image_url": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
+    "niches": "[\"Film\", \"Fashion\", \"Entertainment\"]",
     "rating": 9.5,
-    "popularity": 97,
-    "biography_ru": "Айгюн Кязымова - одна из самых ярких звезд азербайджанской эстрады. Начала карьеру в 1980-х годах и быстро завоевала любовь публики благодаря своему уникальному голосу и харизме. Её песни 'Parol' и 'Bilmək Olmaz' стали настоящими хитами 2024 года. Помимо музыкальной карьеры, снималась в кино и на телевидении. Активно занимается благотворительностью, поддерживает молодых артистов. Её стиль и образы часто становятся предметом обсуждения в модных кругах. Обладательница множества музыкальных наград и премий. Продолжает активно выступать и записывать новую музыку.",
-    "achievements": ["Народная артистка Азербайджана", "Хиты 2024 года", "Актриса кино и ТВ", "Икона стиля"],
-    "career_milestones": [
-      {"year": 1985, "title": "Начало карьеры", "description": "Первые выступления на сцене", "category": "Музыка"},
-      {"year": 1995, "title": "Первый хит", "description": "Выпуск первой хитовой песни", "category": "Музыка"},
-      {"year": 2024, "title": "Новые хиты", "description": "Песни Parol и Bilmək Olmaz в топ-чартах", "category": "Музыка"}
-    ],
-    "created_at": "2025-11-25T00:00:00Z",
-    "updated_at": "2025-11-25T00:00:00Z"
-  },
-  {
-    "id": 4,
-    "name": "Рёя",
-    "role": "Певица",
-    "description": "Популярная современная певица, одна из самых узнаваемых артисток Азербайджана.",
-    "image_url": "/images/celebrities/celebrity-4.png",
-    "niches": "[\"Музыка\", \"Развлечения\", \"Социальные медиа\"]",
-    "rating": 9.4,
     "popularity": 96,
-    "biography_ru": "Рёя - современная азербайджанская поп-певица, завоевавшая огромную популярность благодаря своему яркому вокалу и энергичным выступлениям. Начала карьеру в начале 2000-х годов и быстро стала одной из самых востребованных артисток. Её песни регулярно возглавляют музыкальные чарты Азербайджана. Активно использует социальные сети для общения с поклонниками, имеет миллионы подписчиков. Участвовала в многочисленных музыкальных фестивалях и конкурсах. Известна своими яркими концертными шоу и профессиональным подходом к творчеству. Продолжает развиваться как артист, экспериментируя с различными музыкальными стилями.",
-    "achievements": ["Множество музыкальных наград", "Миллионы подписчиков в соцсетях", "Хиты в топ-чартах", "Яркие концертные шоу"],
+    "biography_ru": "Zendaya has become one of Hollywood's most sought-after talents, winning critical acclaim for her performances and becoming a fashion icon.",
+    "achievements": [
+      "2x Emmy Winner",
+      "Spider-Man Franchise",
+      "Fashion Icon",
+      "Euphoria Star"
+    ],
     "career_milestones": [
-      {"year": 2003, "title": "Дебют", "description": "Начало профессиональной карьеры", "category": "Музыка"},
-      {"year": 2010, "title": "Прорыв", "description": "Первый большой хит", "category": "Музыка"},
-      {"year": 2020, "title": "Цифровая эра", "description": "Активное развитие в социальных сетях", "category": "Медиа"}
+      {
+        "year": 2017,
+        "title": "Spider-Man Debut",
+        "description": "Joined Marvel universe",
+        "category": "Film"
+      },
+      {
+        "year": 2019,
+        "title": "Euphoria",
+        "description": "Breakout dramatic role",
+        "category": "TV"
+      },
+      {
+        "year": 2020,
+        "title": "Emmy Win",
+        "description": "Youngest Lead Actress Emmy",
+        "category": "Awards"
+      }
     ],
     "created_at": "2025-11-25T00:00:00Z",
     "updated_at": "2025-11-25T00:00:00Z"
   },
   {
-    "id": 5,
-    "name": "Эмин Агаларов",
-    "role": "Певец, бизнесмен",
-    "description": "Успешный певец и предприниматель, известный своими романтическими балладами.",
-    "image_url": "/images/celebrities/celebrity-5.png",
-    "niches": "[\"Музыка\", \"Бизнес\", \"Развлечения\"]",
+    "id": 110,
+    "name": "Drake",
+    "role": "Rapper, Singer, Producer",
+    "description": "Chart-dominating hip-hop artist and global music phenomenon.",
+    "image_url": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
+    "niches": "[\"Music\", \"Business\", \"Entertainment\"]",
+    "rating": 9.4,
+    "popularity": 97,
+    "biography_ru": "Drake is one of the best-selling music artists worldwide, known for blending rap and R&B and dominating music charts for over a decade.",
+    "achievements": [
+      "5x Grammy Winner",
+      "Most Streamed Artist",
+      "OVO Sound Founder",
+      "Billboard Record Holder"
+    ],
+    "career_milestones": [
+      {
+        "year": 2009,
+        "title": "So Far Gone",
+        "description": "Breakthrough mixtape",
+        "category": "Music"
+      },
+      {
+        "year": 2016,
+        "title": "Views",
+        "description": "Chart-topping album",
+        "category": "Music"
+      },
+      {
+        "year": 2023,
+        "title": "For All The Dogs",
+        "description": "Continued dominance",
+        "category": "Music"
+      }
+    ],
+    "created_at": "2025-11-25T00:00:00Z",
+    "updated_at": "2025-11-25T00:00:00Z"
+  },
+  {
+    "id": 111,
+    "name": "Emma Watson",
+    "role": "Actress, Activist",
+    "description": "Harry Potter star turned UN Women Goodwill Ambassador and activist.",
+    "image_url": "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
+    "niches": "[\"Film\", \"Activism\", \"Education\"]",
     "rating": 9.3,
     "popularity": 94,
-    "biography_ru": "Эмин Агаларов - многогранная личность, успешно сочетающая музыкальную карьеру и бизнес. Родился в семье известного бизнесмена Араза Агаларова. Получил образование в престижных учебных заведениях, включая Швейцарскую школу гостиничного менеджмента. Начал музыкальную карьеру в 2006 году и быстро завоевал популярность благодаря своим романтическим балладам. Его песни звучат на радиостанциях по всему миру. Помимо музыки, активно занимается бизнесом, является вице-президентом Crocus Group. Выступал на одной сцене с мировыми звездами. Известен своим утонченным стилем и профессионализмом.",
-    "achievements": ["Международная музыкальная карьера", "Вице-президент Crocus Group", "Концерты по всему миру", "Сотрудничество с мировыми звездами"],
+    "biography_ru": "Emma Watson gained worldwide fame as Hermione in Harry Potter and has since become a prominent advocate for gender equality and sustainable fashion.",
+    "achievements": [
+      "Harry Potter Franchise",
+      "UN Women Ambassador",
+      "HeForShe Campaign",
+      "Sustainable Fashion Advocate"
+    ],
     "career_milestones": [
-      {"year": 2006, "title": "Музыкальный дебют", "description": "Начало музыкальной карьеры", "category": "Музыка"},
-      {"year": 2010, "title": "Международное признание", "description": "Выход на международную арену", "category": "Музыка"},
-      {"year": 2015, "title": "Бизнес-успех", "description": "Развитие бизнес-карьеры", "category": "Бизнес"}
+      {
+        "year": 2001,
+        "title": "Harry Potter Debut",
+        "description": "Hermione Granger role",
+        "category": "Film"
+      },
+      {
+        "year": 2014,
+        "title": "UN Speech",
+        "description": "HeForShe campaign launch",
+        "category": "Activism"
+      },
+      {
+        "year": 2017,
+        "title": "Beauty and the Beast",
+        "description": "Disney live-action lead",
+        "category": "Film"
+      }
     ],
     "created_at": "2025-11-25T00:00:00Z",
     "updated_at": "2025-11-25T00:00:00Z"
   },
   {
-    "id": 6,
-    "name": "Дамла",
-    "role": "Певица",
-    "description": "Молодая и талантливая поп-певица, покорившая сердца молодежи.",
-    "image_url": "/images/celebrities/celebrity-6.png",
-    "niches": "[\"Музыка\", \"Молодежь\", \"Социальные медиа\"]",
-    "rating": 9.2,
-    "popularity": 93,
-    "biography_ru": "Дамла - яркая представительница нового поколения азербайджанских поп-исполнителей. Начала карьеру в юном возрасте и быстро завоевала популярность среди молодежной аудитории. Её энергичные песни и современный подход к музыке привлекли внимание миллионов слушателей. Активно использует социальные сети для продвижения своего творчества, имеет огромную базу подписчиков. Её клипы набирают миллионы просмотров на YouTube. Известна своим ярким сценическим образом и профессиональными танцевальными номерами. Представляет современное лицо азербайджанской поп-музыки. Продолжает активно развиваться и экспериментировать с новыми музыкальными направлениями.",
-    "achievements": ["Миллионы просмотров на YouTube", "Кумир молодежи", "Современный поп-стиль", "Активное присутствие в соцсетях"],
-    "career_milestones": [
-      {"year": 2018, "title": "Первый сингл", "description": "Выпуск дебютного сингла", "category": "Музыка"},
-      {"year": 2020, "title": "Вирусный хит", "description": "Песня набрала миллионы просмотров", "category": "Музыка"},
-      {"year": 2024, "title": "Признание", "description": "Получение музыкальных наград", "category": "Награды"}
-    ],
-    "created_at": "2025-11-25T00:00:00Z",
-    "updated_at": "2025-11-25T00:00:00Z"
-  },
-  {
-    "id": 7,
-    "name": "Шабнем Товузлу",
-    "role": "Певица, блогер",
-    "description": "Популярная певица и влиятельный блогер, сочетающая музыку и социальные медиа.",
-    "image_url": "/images/celebrities/celebrity-7.png",
-    "niches": "[\"Музыка\", \"Социальные медиа\", \"Влияние\"]",
-    "rating": 9.1,
-    "popularity": 92,
-    "biography_ru": "Шабнем Товузлу - современная артистка, успешно сочетающая музыкальную карьеру с активностью в социальных сетях. Начала как певица, исполняющая традиционные и современные азербайджанские песни. Со временем стала одним из самых влиятельных блогеров Азербайджана, делясь с подписчиками не только музыкальным контентом, но и личными размышлениями, моментами из жизни. Её искренность и открытость привлекли миллионы поклонников. Активно использует Instagram для общения с аудиторией. Известна своим уникальным стилем и способностью находить баланс между традициями и современностью. Продолжает развиваться как многогранная медиа-личность.",
-    "achievements": ["Популярный блогер", "Успешная певица", "Миллионы подписчиков", "Влиятельная медиа-личность"],
-    "career_milestones": [
-      {"year": 2015, "title": "Музыкальный старт", "description": "Начало музыкальной карьеры", "category": "Музыка"},
-      {"year": 2019, "title": "Социальные сети", "description": "Активное развитие в Instagram", "category": "Медиа"},
-      {"year": 2023, "title": "Медиа-звезда", "description": "Признание как влиятельного блогера", "category": "Влияние"}
-    ],
-    "created_at": "2025-11-25T00:00:00Z",
-    "updated_at": "2025-11-25T00:00:00Z"
-  },
-  {
-    "id": 8,
-    "name": "Бриллиант Дадашова",
-    "role": "Народная артистка",
-    "description": "Легендарная азербайджанская певица, народная артистка с многолетней карьерой.",
-    "image_url": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
-    "niches": "[\"Музыка\", \"Культура\", \"Традиции\"]",
-    "rating": 9.6,
-    "popularity": 91,
-    "biography_ru": "Бриллиант Дадашова - одна из самых уважаемых и любимых певиц Азербайджана. Её карьера насчитывает несколько десятилетий, в течение которых она покорила сердца миллионов слушателей. Обладательница уникального голоса, способного передать всю глубину азербайджанской музыкальной традиции. Исполняет как народные песни, так и современные композиции. Удостоена звания народной артистки Азербайджана. Её концерты всегда собирают полные залы. Известна своей преданностью искусству и профессионализмом. Продолжает активно выступать и вдохновлять новые поколения артистов своим примером и талантом.",
-    "achievements": ["Народная артистка Азербайджана", "Многолетняя карьера", "Тысячи концертов", "Легенда азербайджанской музыки"],
-    "career_milestones": [
-      {"year": 1975, "title": "Профессиональный дебют", "description": "Начало карьеры", "category": "Музыка"},
-      {"year": 1990, "title": "Народная артистка", "description": "Присвоение почетного звания", "category": "Награды"},
-      {"year": 2020, "title": "Юбилейные концерты", "description": "Празднование творческого юбилея", "category": "Музыка"}
-    ],
-    "created_at": "2025-11-25T00:00:00Z",
-    "updated_at": "2025-11-25T00:00:00Z"
-  },
-  {
-    "id": 9,
-    "name": "Фарид Мансуров",
-    "role": "Олимпийский чемпион по борьбе",
-    "description": "Золотой медалист Олимпийских игр 2004 года по греко-римской борьбе.",
-    "image_url": "https://images.unsplash.com/photo-1566492031773-4f4e44671d66?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
-    "niches": "[\"Спорт\", \"Борьба\", \"Тренерство\"]",
-    "rating": 9.7,
-    "popularity": 89,
-    "biography_ru": "Фарид Мансуров - выдающийся азербайджанский борец, олимпийский чемпион 2004 года в категории до 66 кг по греко-римской борьбе. Его победа на Олимпиаде в Афинах стала одним из самых ярких моментов в истории азербайджанского спорта. Начал заниматься борьбой в детстве, проявив исключительные способности и целеустремленность. После завершения спортивной карьеры в 2010 году стал тренером национальной сборной Азербайджана по борьбе. В настоящее время возглавляет спортивный департамент в Министерстве молодежи и спорта. Его опыт и знания помогают воспитывать новое поколение чемпионов. Является примером для молодых спортсменов.",
-    "achievements": ["Олимпийский чемпион 2004", "Тренер национальной сборной", "Руководитель спортивного департамента", "Многократный чемпион мира"],
-    "career_milestones": [
-      {"year": 1998, "title": "Первые успехи", "description": "Победы на юниорских соревнованиях", "category": "Спорт"},
-      {"year": 2004, "title": "Олимпийское золото", "description": "Победа на Олимпиаде в Афинах", "category": "Спорт"},
-      {"year": 2010, "title": "Тренерская карьера", "description": "Начало работы тренером", "category": "Тренерство"}
-    ],
-    "created_at": "2025-11-25T00:00:00Z",
-    "updated_at": "2025-11-25T00:00:00Z"
-  },
-  {
-    "id": 10,
-    "name": "Эльнур Мамедли",
-    "role": "Олимпийский чемпион по дзюдо",
-    "description": "Золотой медалист Олимпийских игр 2008 года по дзюдо в категории до 73 кг.",
-    "image_url": "https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
-    "niches": "[\"Спорт\", \"Дзюдо\", \"Олимпиада\"]",
-    "rating": 9.6,
-    "popularity": 88,
-    "biography_ru": "Эльнур Мамедли - легендарный азербайджанский дзюдоист, олимпийский чемпион 2008 года в Пекине. Его победа стала историческим достижением для азербайджанского дзюдо. Начал заниматься дзюдо в раннем возрасте, демонстрируя выдающиеся технические навыки и тактическое мышление. Его стиль борьбы отличался агрессивностью и точностью. Помимо олимпийского золота, является многократным чемпионом Европы и призером чемпионатов мира. После завершения спортивной карьеры активно занимается развитием дзюдо в Азербайджане. Его достижения вдохновляют молодых спортсменов на новые победы.",
-    "achievements": ["Олимпийский чемпион 2008", "Чемпион Европы", "Призер чемпионатов мира", "Мастер дзюдо"],
-    "career_milestones": [
-      {"year": 2000, "title": "Начало карьеры", "description": "Первые международные соревнования", "category": "Спорт"},
-      {"year": 2008, "title": "Олимпийское золото", "description": "Победа в Пекине", "category": "Спорт"},
-      {"year": 2015, "title": "Завершение карьеры", "description": "Последние соревнования", "category": "Спорт"}
-    ],
-    "created_at": "2025-11-25T00:00:00Z",
-    "updated_at": "2025-11-25T00:00:00Z"
-  },
-  {
-    "id": 11,
-    "name": "Мария Стадник",
-    "role": "Чемпионка по вольной борьбе",
-    "description": "Многократная олимпийская медалистка и чемпионка мира по вольной борьбе.",
-    "image_url": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
-    "niches": "[\"Спорт\", \"Борьба\", \"Олимпиада\"]",
-    "rating": 9.8,
-    "popularity": 90,
-    "biography_ru": "Мария Стадник - одна из самых титулованных спортсменок в истории азербайджанского спорта. Обладательница четырех олимпийских медалей: серебро в 2012 и 2016 годах, бронза в 2008 и 2020 годах. Девятикратная чемпионка Европы и двукратная чемпионка мира по вольной борьбе. Её карьера является примером невероятной целеустремленности и профессионализма. Начала заниматься борьбой в детстве и быстро показала выдающиеся результаты. Известна своей техничностью и тактическим мастерством на ковре. Продолжает выступать на высшем уровне, вдохновляя молодых спортсменок своим примером.",
-    "achievements": ["4 олимпийские медали", "9-кратная чемпионка Европы", "2-кратная чемпионка мира", "Легенда вольной борьбы"],
-    "career_milestones": [
-      {"year": 2008, "title": "Первая олимпийская медаль", "description": "Бронза в Пекине", "category": "Спорт"},
-      {"year": 2012, "title": "Серебро Лондона", "description": "Серебряная медаль Олимпиады", "category": "Спорт"},
-      {"year": 2020, "title": "Четвертая Олимпиада", "description": "Бронза в Токио", "category": "Спорт"}
-    ],
-    "created_at": "2025-11-25T00:00:00Z",
-    "updated_at": "2025-11-25T00:00:00Z"
-  },
-  {
-    "id": 12,
-    "name": "Радик Исаев",
-    "role": "Олимпийский чемпион по тхэквондо",
-    "description": "Первый азербайджанский олимпийский чемпион по тхэквондо, золото Рио-2016.",
-    "image_url": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
-    "niches": "[\"Спорт\", \"Тхэквондо\", \"Олимпиада\"]",
-    "rating": 9.5,
-    "popularity": 87,
-    "biography_ru": "Радик Исаев вошел в историю азербайджанского спорта как первый олимпийский чемпион по тхэквондо. На Олимпийских играх 2016 года в Рио-де-Жанейро он завоевал золотую медаль в категории свыше 80 кг. Его победа стала сенсацией и открыла новую страницу в развитии тхэквондо в Азербайджане. Начал заниматься боевыми искусствами в юном возрасте, проявив выдающиеся физические данные и боевой дух. Его техника и скорость поражали соперников. Помимо олимпийского золота, является чемпионом Европы и призером чемпионатов мира. После Олимпиады стал национальным героем и источником вдохновения для молодежи.",
-    "achievements": ["Олимпийский чемпион 2016", "Первое золото Азербайджана в тхэквондо", "Чемпион Европы", "Национальный герой"],
-    "career_milestones": [
-      {"year": 2010, "title": "Международный дебют", "description": "Первые международные соревнования", "category": "Спорт"},
-      {"year": 2016, "title": "Олимпийское золото", "description": "Историческая победа в Рио", "category": "Спорт"},
-      {"year": 2018, "title": "Продолжение карьеры", "description": "Участие в чемпионатах мира", "category": "Спорт"}
-    ],
-    "created_at": "2025-11-25T00:00:00Z",
-    "updated_at": "2025-11-25T00:00:00Z"
-  },
-  {
-    "id": 13,
-    "name": "Земфира Мефтахатдинова",
-    "role": "Олимпийская чемпионка по стрельбе",
-    "description": "Двукратная олимпийская медалистка по стендовой стрельбе, офицер полиции.",
-    "image_url": "https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
-    "niches": "[\"Спорт\", \"Стрельба\", \"Служба\"]",
-    "rating": 9.4,
-    "popularity": 85,
-    "biography_ru": "Земфира Мефтахатдинова - выдающаяся азербайджанская спортсменка, двукратная олимпийская медалистка по стендовой стрельбе (скит). Её достижения в спорте сочетаются с успешной карьерой офицера полиции и преподавателя спорта. Начала заниматься стрельбой в юности и быстро показала выдающиеся результаты. Её точность и хладнокровие на соревнованиях стали легендарными. Представляла Азербайджан на множестве международных турниров, неизменно показывая высокие результаты. Является примером того, как можно успешно сочетать спортивную карьеру с государственной службой. Продолжает работать в полиции и тренировать молодых стрелков.",
-    "achievements": ["2 олимпийские медали", "Офицер полиции", "Преподаватель спорта", "Мастер стендовой стрельбы"],
-    "career_milestones": [
-      {"year": 2000, "title": "Первая Олимпиада", "description": "Дебют на Олимпийских играх", "category": "Спорт"},
-      {"year": 2008, "title": "Олимпийская медаль", "description": "Завоевание олимпийской медали", "category": "Спорт"},
-      {"year": 2015, "title": "Служба и спорт", "description": "Сочетание карьеры в полиции и спорте", "category": "Служба"}
-    ],
-    "created_at": "2025-11-25T00:00:00Z",
-    "updated_at": "2025-11-25T00:00:00Z"
-  },
-  {
-    "id": 14,
-    "name": "Вагит Алекперов",
-    "role": "Бизнесмен, президент Лукойл",
-    "description": "Один из богатейших людей России, президент нефтяной компании Лукойл.",
-    "image_url": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
-    "niches": "[\"Бизнес\", \"Нефть\", \"Предпринимательство\"]",
+    "id": 106,
+    "name": "Lionel Messi",
+    "role": "Footballer, Athlete",
+    "description": "Eight-time Ballon d'Or winner and World Cup champion.",
+    "image_url": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
+    "niches": "[\"Sports\", \"Football\", \"Global Icon\"]",
     "rating": 9.9,
-    "popularity": 96,
-    "biography_ru": "Вагит Алекперов - выдающийся бизнесмен азербайджанского происхождения, один из богатейших людей России. С 1993 по 2022 год занимал пост президента нефтяной компании Лукойл, одной из крупнейших нефтяных компаний мира. Родился в Баку, начал карьеру в нефтяной промышленности с низших должностей, постепенно поднимаясь по карьерной лестнице благодаря профессионализму и деловой хватке. Под его руководством Лукойл превратился в международную корпорацию с операциями по всему миру. Известен своим стратегическим мышлением и способностью принимать сложные бизнес-решения. Активно занимается благотворительностью, поддерживает образовательные и культурные проекты.",
-    "achievements": ["Президент Лукойл (1993-2022)", "Один из богатейших людей России", "Международный бизнес-лидер", "Благотворитель"],
+    "popularity": 99,
+    "biography_ru": "Lionel Messi is widely considered the greatest footballer of all time, having won every major trophy including the World Cup with Argentina.",
+    "achievements": [
+      "8x Ballon d'Or",
+      "World Cup Winner 2022",
+      "Barcelona Legend",
+      "Inter Miami Star"
+    ],
     "career_milestones": [
-      {"year": 1979, "title": "Начало в нефтянке", "description": "Первые шаги в нефтяной промышленности", "category": "Бизнес"},
-      {"year": 1993, "title": "Президент Лукойл", "description": "Назначение президентом компании", "category": "Бизнес"},
-      {"year": 2010, "title": "Международная экспансия", "description": "Расширение бизнеса по всему миру", "category": "Бизнес"}
+      {
+        "year": 2009,
+        "title": "First Ballon d'Or",
+        "description": "First of eight awards",
+        "category": "Sports"
+      },
+      {
+        "year": 2022,
+        "title": "World Cup Victory",
+        "description": "Led Argentina to glory",
+        "category": "Sports"
+      },
+      {
+        "year": 2023,
+        "title": "Inter Miami",
+        "description": "MLS move",
+        "category": "Sports"
+      }
     ],
     "created_at": "2025-11-25T00:00:00Z",
     "updated_at": "2025-11-25T00:00:00Z"
   },
   {
-    "id": 15,
-    "name": "Мубариз Мансимов",
-    "role": "Предприниматель, основатель Palmali",
-    "description": "Успешный предприниматель, основатель судоходной компании Palmali Group.",
-    "image_url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
-    "niches": "[\"Бизнес\", \"Судоходство\", \"Спорт\"]",
-    "rating": 9.3,
-    "popularity": 88,
-    "biography_ru": "Мубариз Мансимов - известный азербайджанский предприниматель, основатель и владелец Palmali Group of Companies, одной из крупнейших судоходных компаний региона. Начал свой бизнес с небольшой транспортной компании и превратил её в международную корпорацию с флотом из сотен судов. Его предпринимательский талант и стратегическое видение позволили создать успешный бизнес в высококонкурентной отрасли. Помимо судоходства, активно инвестирует в спорт - основал футбольный клуб Хазар Ленкорань. Известен своей поддержкой молодых предпринимателей и инвестициями в развитие Азербайджана. Является примером успешного самостоятельного бизнесмена.",
-    "achievements": ["Основатель Palmali Group", "Владелец ФК Хазар Ленкорань", "Международный предприниматель", "Инвестор в спорт"],
-    "career_milestones": [
-      {"year": 1990, "title": "Начало бизнеса", "description": "Создание первой компании", "category": "Бизнес"},
-      {"year": 2000, "title": "Palmali Group", "description": "Основание судоходной компании", "category": "Бизнес"},
-      {"year": 2008, "title": "Футбольный клуб", "description": "Создание ФК Хазар Ленкорань", "category": "Спорт"}
-    ],
-    "created_at": "2025-11-25T00:00:00Z",
-    "updated_at": "2025-11-25T00:00:00Z"
-  },
-  {
-    "id": 16,
-    "name": "Хафиз Мамедов",
-    "role": "Бизнесмен, владелец Baghlan Group",
-    "description": "Успешный предприниматель, основатель Baghlan Group, владелец футбольных клубов.",
-    "image_url": "https://images.unsplash.com/photo-1463453091185-61582044d556?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
-    "niches": "[\"Бизнес\", \"Спорт\", \"Инвестиции\"]",
-    "rating": 9.2,
-    "popularity": 86,
-    "biography_ru": "Хафиз Мамедов - влиятельный азербайджанский бизнесмен, основатель и владелец Baghlan Group, диверсифицированного холдинга с интересами в различных отраслях экономики. Его бизнес-империя включает строительство, недвижимость, торговлю и другие сектора. Особую известность получил благодаря инвестициям в футбол - владеет азербайджанским клубом ФК Баку и французским клубом РК Ланс. Его вложения в спорт помогли развитию футбола как в Азербайджане, так и за рубежом. Известен своим стратегическим подходом к бизнесу и способностью видеть перспективные направления для инвестиций. Активно поддерживает развитие предпринимательства в Азербайджане.",
-    "achievements": ["Основатель Baghlan Group", "Владелец ФК Баку", "Владелец РК Ланс (Франция)", "Инвестор в спорт"],
-    "career_milestones": [
-      {"year": 1995, "title": "Создание Baghlan Group", "description": "Основание бизнес-группы", "category": "Бизнес"},
-      {"year": 2008, "title": "ФК Баку", "description": "Приобретение футбольного клуба", "category": "Спорт"},
-      {"year": 2017, "title": "РК Ланс", "description": "Покупка французского клуба", "category": "Спорт"}
-    ],
-    "created_at": "2025-11-25T00:00:00Z",
-    "updated_at": "2025-11-25T00:00:00Z"
-  },
-  {
-    "id": 17,
-    "name": "Расим Балаев",
-    "role": "Актёр, народный артист",
-    "description": "Легендарный азербайджанский актёр театра и кино, народный артист.",
-    "image_url": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
-    "niches": "[\"Кино\", \"Театр\", \"Культура\"]",
+    "id": 115,
+    "name": "Rihanna",
+    "role": "Singer, Entrepreneur, Fashion Designer",
+    "description": "Multi-platinum artist and Fenty Beauty founder, global business mogul.",
+    "image_url": "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
+    "niches": "[\"Music\", \"Business\", \"Fashion\"]",
     "rating": 9.7,
-    "popularity": 90,
-    "biography_ru": "Расим Балаев - один из самых известных и уважаемых актёров Азербайджана, народный артист с многолетней карьерой в театре и кино. Его актёрское мастерство и харизма покорили сердца миллионов зрителей. Снялся в десятках фильмов, сыграл множество ярких ролей на театральной сцене. Его работы отличаются глубиной проникновения в образ и эмоциональной выразительностью. Получил признание не только в Азербайджане, но и за его пределами. Обладатель многочисленных наград и премий за вклад в развитие киноискусства. Продолжает активно сниматься и играть в театре, оставаясь одним из самых востребованных актёров. Является примером профессионализма и преданности искусству.",
-    "achievements": ["Народный артист Азербайджана", "Десятки ролей в кино", "Театральная легенда", "Многочисленные награды"],
+    "popularity": 98,
+    "biography_ru": "Rihanna transformed from pop superstar to billionaire entrepreneur, revolutionizing the beauty industry with Fenty Beauty and becoming a fashion icon.",
+    "achievements": [
+      "9x Grammy Winner",
+      "Billionaire Status",
+      "Fenty Beauty Founder",
+      "Super Bowl Halftime 2023"
+    ],
     "career_milestones": [
-      {"year": 1975, "title": "Театральный дебют", "description": "Первая роль в театре", "category": "Театр"},
-      {"year": 1985, "title": "Кинопрорыв", "description": "Главная роль в популярном фильме", "category": "Кино"},
-      {"year": 2000, "title": "Народный артист", "description": "Присвоение звания", "category": "Награды"}
+      {
+        "year": 2005,
+        "title": "Music Debut",
+        "description": "Pon de Replay release",
+        "category": "Music"
+      },
+      {
+        "year": 2017,
+        "title": "Fenty Beauty Launch",
+        "description": "Revolutionary beauty brand",
+        "category": "Business"
+      },
+      {
+        "year": 2023,
+        "title": "Super Bowl",
+        "description": "Iconic halftime show",
+        "category": "Entertainment"
+      }
     ],
     "created_at": "2025-11-25T00:00:00Z",
     "updated_at": "2025-11-25T00:00:00Z"
   },
   {
-    "id": 18,
-    "name": "Бахрам Багирзаде",
-    "role": "Актёр, режиссёр, комик",
-    "description": "Талантливый актёр, режиссёр и комик, известный своими яркими работами.",
-    "image_url": "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
-    "niches": "[\"Кино\", \"Комедия\", \"Развлечения\"]",
-    "rating": 9.1,
-    "popularity": 84,
-    "biography_ru": "Бахрам Багирзаде - многогранный талант азербайджанского кинематографа, успешно сочетающий актёрскую работу, режиссуру и комедийное искусство. Известен своими яркими комедийными ролями, которые принесли ему широкую популярность. Его чувство юмора и актёрское мастерство делают каждую его работу запоминающейся. Помимо актёрской деятельности, занимается режиссурой, создавая развлекательные проекты для телевидения и кино. Его работы отличаются оригинальностью и способностью находить смешное в повседневных ситуациях. Активно участвует в телевизионных шоу и развлекательных программах. Продолжает развиваться как многогранный артист, радуя зрителей новыми проектами.",
-    "achievements": ["Актёр кино и ТВ", "Режиссёр", "Популярный комик", "Телевизионная звезда"],
-    "career_milestones": [
-      {"year": 2005, "title": "Актёрский дебют", "description": "Первая роль в кино", "category": "Кино"},
-      {"year": 2012, "title": "Комедийный прорыв", "description": "Популярность как комика", "category": "Комедия"},
-      {"year": 2018, "title": "Режиссура", "description": "Первый режиссёрский проект", "category": "Режиссура"}
-    ],
-    "created_at": "2025-11-25T00:00:00Z",
-    "updated_at": "2025-11-25T00:00:00Z"
-  },
-  {
-    "id": 19,
-    "name": "Бахар Набиева",
-    "role": "Фитнес-инфлюенсер",
-    "description": "Международная фитнес-звезда Instagram, вдохновляющая миллионы людей.",
-    "image_url": "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
-    "niches": "[\"Фитнес\", \"Социальные медиа\", \"Здоровье\"]",
+    "id": 116,
+    "name": "Tom Holland",
+    "role": "Actor",
+    "description": "Marvel's Spider-Man and rising Hollywood star.",
+    "image_url": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
+    "niches": "[\"Film\", \"Entertainment\", \"Action\"]",
     "rating": 9.4,
     "popularity": 95,
-    "biography_ru": "Бахар Набиева - одна из самых известных фитнес-инфлюенсеров в мире, родом из Азербайджана. Её аккаунт в Instagram имеет миллионы подписчиков со всего мира. Известна своими впечатляющими тренировками и мотивационным контентом. Начала свой путь в фитнесе как способ улучшить здоровье и со временем превратила это в успешную карьеру. Её уникальный подход к тренировкам и искренность в общении с подписчиками принесли ей мировую известность. Регулярно делится тренировочными программами, советами по питанию и мотивационными постами. Является примером того, как страсть к фитнесу может изменить жизнь и вдохновить миллионы людей на здоровый образ жизни.",
-    "achievements": ["Миллионы подписчиков в Instagram", "Международная фитнес-звезда", "Мотивационный спикер", "Икона фитнеса"],
+    "biography_ru": "Tom Holland brought a fresh take to Spider-Man and has become one of Hollywood's most bankable young stars, known for his charm and dedication to stunts.",
+    "achievements": [
+      "Spider-Man MCU",
+      "BAFTA Rising Star",
+      "Box Office Success",
+      "Action Star"
+    ],
     "career_milestones": [
-      {"year": 2015, "title": "Начало в Instagram", "description": "Первые фитнес-посты", "category": "Социальные медиа"},
-      {"year": 2018, "title": "Вирусная популярность", "description": "Миллион подписчиков", "category": "Влияние"},
-      {"year": 2022, "title": "Мировая известность", "description": "Международное признание", "category": "Фитнес"}
+      {
+        "year": 2016,
+        "title": "Spider-Man Debut",
+        "description": "Civil War introduction",
+        "category": "Film"
+      },
+      {
+        "year": 2021,
+        "title": "No Way Home",
+        "description": "Biggest Spider-Man film",
+        "category": "Film"
+      },
+      {
+        "year": 2024,
+        "title": "Uncharted Success",
+        "description": "Video game adaptation",
+        "category": "Film"
+      }
     ],
     "created_at": "2025-11-25T00:00:00Z",
     "updated_at": "2025-11-25T00:00:00Z"
   },
   {
-    "id": 20,
-    "name": "Анар Агакишиев",
-    "role": "Визажист, стилист",
-    "description": "Знаменитый визажист и стилист, работающий со звёздами и влиятельными личностями.",
+    "id": 117,
+    "name": "Selena Gomez",
+    "role": "Singer, Actress, Producer",
+    "description": "Multi-talented entertainer and mental health advocate.",
     "image_url": "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
-    "niches": "[\"Красота\", \"Мода\", \"Социальные медиа\"]",
-    "rating": 9.0,
-    "popularity": 89,
-    "biography_ru": "Анар Агакишиев - один из самых востребованных визажистов и стилистов Азербайджана, чьи работы известны далеко за пределами страны. Его талант в создании уникальных образов и трансформации внешности принёс ему широкую известность. Работает со знаменитостями, моделями и влиятельными личностями, создавая образы для фотосессий, мероприятий и телевидения. Активно использует социальные сети для демонстрации своих работ, его видео-трансформации набирают миллионы просмотров. Известен своим профессионализмом, креативностью и способностью подчеркнуть индивидуальность каждого клиента. Проводит мастер-классы и консультации, делясь своими знаниями с начинающими визажистами. Является иконой стиля в индустрии красоты.",
-    "achievements": ["Знаменитый визажист", "Работа со звёздами", "Миллионы просмотров видео", "Мастер трансформации"],
+    "niches": "[\"Music\", \"Film\", \"Mental Health\"]",
+    "rating": 9.3,
+    "popularity": 96,
+    "biography_ru": "Selena Gomez has evolved from Disney star to accomplished singer, actress, and producer while being an influential voice for mental health awareness.",
+    "achievements": [
+      "Billboard Chart Success",
+      "Only Murders Star",
+      "Rare Beauty Founder",
+      "Mental Health Advocate"
+    ],
     "career_milestones": [
-      {"year": 2010, "title": "Начало карьеры", "description": "Первые работы визажистом", "category": "Красота"},
-      {"year": 2016, "title": "Работа со звёздами", "description": "Сотрудничество с известными личностями", "category": "Мода"},
-      {"year": 2020, "title": "Социальные сети", "description": "Вирусная популярность в Instagram", "category": "Влияние"}
+      {
+        "year": 2013,
+        "title": "Stars Dance",
+        "description": "First #1 album",
+        "category": "Music"
+      },
+      {
+        "year": 2020,
+        "title": "Rare Album",
+        "description": "Critical and commercial success",
+        "category": "Music"
+      },
+      {
+        "year": 2021,
+        "title": "Only Murders",
+        "description": "Acclaimed TV series",
+        "category": "TV"
+      }
     ],
     "created_at": "2025-11-25T00:00:00Z",
     "updated_at": "2025-11-25T00:00:00Z"

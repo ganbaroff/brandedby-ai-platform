@@ -1,6 +1,8 @@
+import BackButton from "@/react-app/components/BackButton";
 import Footer from "@/react-app/components/Footer";
 import Header from "@/react-app/components/Header";
-import { useAuth } from "@getmocha/users-service/react";
+import ScrollProgressIndicator from "@/react-app/components/ScrollProgressIndicator";
+import { useAuth } from "@/react-app/contexts/AuthContext";
 import {
     CheckCircle,
     Clock,
@@ -109,6 +111,8 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen bg-white">
       <Header />
+      <BackButton variant="floating" />
+      <ScrollProgressIndicator position="right" showPercentage={false} />
       
       {/* Hero Section */}
       <section className="pt-24 pb-16 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">

@@ -1,9 +1,10 @@
 import z from "zod";
 
-// Celebrity Schema
+// Celebrity Schema (Unified)
 export const CelebritySchema = z.object({
   id: z.number(),
   name: z.string(),
+  region: z.enum(['international', 'azerbaijan']),
   role: z.string(),
   description: z.string().nullable(),
   image_url: z.string().nullable(),
@@ -20,6 +21,17 @@ export const CelebritySchema = z.object({
     description: z.string(),
     category: z.string(),
   })).optional(),
+  // Azerbaijan-specific fields
+  name_az: z.string().optional(),
+  birth_year: z.number().optional(),
+  biography: z.string().optional(),
+  career_highlights: z.array(z.string()).optional(),
+  social_media: z.object({
+    instagram: z.string().optional(),
+    youtube: z.string().optional(),
+    tiktok: z.string().optional(),
+  }).optional(),
+  video_templates: z.array(z.string()).optional(),
 });
 
 export type Celebrity = z.infer<typeof CelebritySchema>;

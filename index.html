@@ -65,6 +65,33 @@
   <body>
 
     <div id="root"></div>
+    
+    <!-- Dev Mode: Auto-cleanup Service Worker -->
+    <script>
+      // Remove service worker in development mode to prevent caching issues
+      if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.getRegistrations().then(function(registrations) {
+            for (let registration of registrations) {
+              registration.unregister().then(function(success) {
+                if (success) console.log('[DEV] Service Worker unregistered:', registration.scope);
+              });
+            }
+          });
+          
+          // Clear all caches
+          if ('caches' in window) {
+            caches.keys().then(function(names) {
+              for (let name of names) {
+                caches.delete(name);
+              }
+              if (names.length > 0) console.log('[DEV] Cleared', names.length, 'cache(s)');
+            });
+          }
+        }
+      }
+    </script>
+    
     <script type="module" src="/src/react-app/main.tsx"></script>
   </body>
 </html>

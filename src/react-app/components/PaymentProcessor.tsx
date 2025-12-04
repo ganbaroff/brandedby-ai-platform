@@ -5,13 +5,20 @@ import { analytics } from '../../shared/advanced-analytics';
 interface ProjectData {
   celebrity_id?: number;
   template_id?: number;
-  package_type: 'Standard' | 'Pro' | 'Premium';
+  // Optional for token purchases
+  package_type?: string;
   video_format: string;
   niche: string;
   description: string;
   custom_location_url?: string;
   additional_character_url?: string;
   selfie_url?: string;
+  // Token purchase metadata (optional)
+  tokenPackage?: {
+    name: 'Silver' | 'Gold' | 'Platinum';
+    tokens: number;
+    priceUSD: number;
+  }
 }
 
 interface PaymentProcessorProps {
@@ -147,7 +154,7 @@ export default function PaymentProcessor({
     e.preventDefault();
     
     // Track payment initiation
-    analytics.trackEvent('payment', 'payment_initiated', projectData.package_type, { amount });
+    analytics.trackEvent('payment', 'payment_initiated', projectData.package_type ?? 'TokenPackage', { amount });
     
     const validationError = validateForm();
     if (validationError) {
@@ -165,7 +172,7 @@ export default function PaymentProcessor({
       const result = await processPayment();
       
       setPaymentStatus('success');
-      analytics.trackEvent('conversion', 'payment_success', projectData.package_type, { amount });
+      analytics.trackEvent('conversion', 'payment_success', projectData.package_type ?? 'TokenPackage', { amount });
       onPaymentSuccess?.(result.projectId);
       
     } catch (error) {

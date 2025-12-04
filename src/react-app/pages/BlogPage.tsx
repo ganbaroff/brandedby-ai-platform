@@ -3,8 +3,10 @@ import { analytics } from '@/shared/advanced-analytics';
 import { ArrowLeft, Calendar, Eye, Filter, Search, User } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import { createSafeHtml } from '../../shared/htmlSanitizer';
+import BackButton from '../components/BackButton';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
+import ScrollProgressIndicator from '../components/ScrollProgressIndicator';
 
 const BlogPage: React.FC = () => {
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
@@ -122,8 +124,10 @@ const BlogPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
+      <BackButton variant="floating" />
+      <ScrollProgressIndicator position="right" showPercentage={false} />
       
-      <main className="pt-20 pb-12">
+      <main className="pt-24 pb-12">
         <div className="container mx-auto px-4 max-w-7xl">
           {/* Page Header */}
           <div className="text-center mb-12">

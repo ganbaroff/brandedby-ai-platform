@@ -3,7 +3,9 @@ import { BlogManager, CelebrityManager, type BlogPost, type Celebrity } from '@/
 import { SecureAuth } from '@/shared/secure-auth';
 import { Database, Edit, FileText, LogOut, Plus, Save, Shield, Trash2, User, Users, X } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
+import BackButton from '../components/BackButton';
 import EnhancedImage from '../components/EnhancedImage';
+import ScrollProgressIndicator from '../components/ScrollProgressIndicator';
 import SecureAdminLogin from '../components/SecureAdminLogin';
 
 const AdminPanel: React.FC = () => {
@@ -140,6 +142,8 @@ const AdminPanel: React.FC = () => {
   }
   return (
     <div className="min-h-screen bg-gray-50">
+      <BackButton variant="floating" fallbackRoute="/" />
+      <ScrollProgressIndicator position="right" showPercentage={false} />
       {/* Header */}
       <div className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

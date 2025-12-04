@@ -1,10 +1,13 @@
 import AIAssistant from "@/react-app/components/AIAssistant";
+import BackButton from "@/react-app/components/BackButton";
 import CelebrityBiography from "@/react-app/components/CelebrityBiography";
 import Footer from "@/react-app/components/Footer";
 import Header from "@/react-app/components/Header";
+import ScrollProgressIndicator from "@/react-app/components/ScrollProgressIndicator";
+import VideoFormatSelectorCompact from "@/react-app/components/VideoFormatSelectorCompact";
+import { useAuth } from "@/react-app/contexts/AuthContext";
 import { CelebrityManager } from "@/shared/admin-data-utils";
 import { Celebrity } from "@/shared/types";
-import { useAuth } from "@getmocha/users-service/react";
 import { ArrowLeft, BookOpen, Briefcase, Sparkles, Star } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
@@ -16,9 +19,7 @@ export default function CelebrityDetail() {
   const [celebrity, setCelebrity] = useState<Celebrity | null>(null);
   const [loading, setLoading] = useState(true);
   const [selectedNiche, setSelectedNiche] = useState('');
-  const [selectedFormat, setSelectedFormat] = useState('');
-  const [customFormat, setCustomFormat] = useState('');
-  const [showCustomFormat, setShowCustomFormat] = useState(false);
+  const [selectedFormat, setSelectedFormat] = useState('instagram-story');
   const [description, setDescription] = useState('');
   const [activeTab, setActiveTab] = useState<'overview' | 'biography'>('overview');
 
@@ -53,7 +54,7 @@ export default function CelebrityDetail() {
         type: 'celebrity',
         celebrity_id: id || '',
         niche: selectedNiche,
-        video_format: selectedFormat === 'custom' ? customFormat : selectedFormat,
+        video_format: selectedFormat,
         description,
       }));
       navigate('/');
@@ -64,7 +65,7 @@ export default function CelebrityDetail() {
     sessionStorage.setItem('projectData', JSON.stringify({
       celebrity_id: id || '',
       niche: selectedNiche,
-      video_format: selectedFormat === 'custom' ? customFormat : selectedFormat,
+      video_format: selectedFormat,
       description,
     }));
 
@@ -111,18 +112,11 @@ export default function CelebrityDetail() {
     }
   };
 
-  const videoFormats = [
-    { id: 'greeting', name: 'Personal Greeting', icon: '👋', description: 'Warm personal message for special occasions' },
-    { id: 'advertisement', name: 'Advertisement', icon: '📺', description: 'Promote your product or service professionally' },
-    { id: 'announcement', name: 'Announcement', icon: '📢', description: 'Share important news or updates' },
-    { id: 'educational', name: 'Educational', icon: '🎓', description: 'Informative content for learning' },
-    { id: 'entertainment', name: 'Entertainment', icon: '🎬', description: 'Fun and engaging content' },
-    { id: 'custom', name: 'Custom Format', icon: '✏️', description: 'Create your own video format' }
-  ];
-
   return (
     <div className="min-h-screen bg-white">
       <Header />
+      <BackButton variant="floating" fallbackRoute="/celebrities" />
+      <ScrollProgressIndicator position="right" showPercentage={false} />
       
       <div className="pt-24 pb-16">
         <div className="container mx-auto px-4 max-w-7xl">
@@ -222,69 +216,10 @@ export default function CelebrityDetail() {
               </div>
 
               {/* Video Format Selection */}
-              <div>
-                <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-4">Video Format</h3>
-                
-                {/* Dropdown for format selection */}
-                <div className="mb-4">
-                  <select
-                    value={selectedFormat}
-                    onChange={(e) => {
-                      setSelectedFormat(e.target.value);
-                      if (e.target.value === 'custom') {
-                        setShowCustomFormat(true);
-                      } else {
-                        setShowCustomFormat(false);
-                        setCustomFormat('');
-                      }
-                    }}
-                    className="w-full p-3 sm:p-4 text-sm sm:text-base border-2 border-gray-200 rounded-lg sm:rounded-xl focus:border-purple-500 focus:outline-none bg-white"
-                    title="Select Video Format"
-                    aria-label="Select Video Format"
-                  >
-                    <option value="">Select video format...</option>
-                    {videoFormats.map((format) => (
-                      <option key={format.id} value={format.id}>
-                        {format.icon} {format.name} - {format.description}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                {/* Custom format input */}
-                {showCustomFormat && (
-                  <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Describe your custom video format:
-                    </label>
-                    <textarea
-                      value={customFormat}
-                      onChange={(e) => setCustomFormat(e.target.value)}
-                      placeholder="Example: Product showcase with testimonials and call-to-action..."
-                      className="w-full p-4 border-2 border-gray-200 rounded-xl focus:border-purple-500 focus:outline-none resize-none h-24"
-                    />
-                  </div>
-                )}
-
-                {/* Selected format preview */}
-                {selectedFormat && selectedFormat !== 'custom' && (
-                  <div className="p-4 bg-purple-50 rounded-xl border border-purple-200">
-                    <div className="flex items-center space-x-3">
-                      <span className="text-2xl">
-                        {videoFormats.find(f => f.id === selectedFormat)?.icon}
-                      </span>
-                      <div>
-                        <div className="font-semibold text-purple-900">
-                          {videoFormats.find(f => f.id === selectedFormat)?.name}
-                        </div>
-                        <div className="text-sm text-purple-700">
-                          {videoFormats.find(f => f.id === selectedFormat)?.description}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
+              <VideoFormatSelectorCompact
+                selectedFormat={selectedFormat}
+                onFormatChange={setSelectedFormat}
+              />
 
               {/* Project Description */}
               <div>

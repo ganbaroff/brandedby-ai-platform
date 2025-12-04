@@ -15,10 +15,11 @@
 
 import EnhancedErrorBoundary from "@/react-app/components/EnhancedErrorBoundary";
 import LoadingSpinner from "@/react-app/components/LoadingSpinner";
-import { PWAInstallPrompt, ServiceWorkerStatus } from "@/react-app/hooks/useServiceWorker";
+// Service Worker temporarily disabled for development
+// import { PWAInstallPrompt, ServiceWorkerStatus } from "@/react-app/hooks/useServiceWorker";
+import { AuthProvider } from "@/react-app/contexts/AuthContext";
 import HomePage from "@/react-app/pages/Home";
 import { LazyAdminPanel, LazyCelebrities } from "@/shared/performance-optimizer";
-import { AuthProvider } from "@getmocha/users-service/react";
 import { lazy, Suspense } from "react";
 import { Route, BrowserRouter as Router, Routes } from "react-router";
 
@@ -32,6 +33,7 @@ const DashboardPage = lazy(() => import("@/react-app/pages/Dashboard"));
 const EmailSetupPage = lazy(() => import("@/react-app/pages/EmailSetup"));
 const PaymentPage = lazy(() => import("@/react-app/pages/Payment"));
 const SelfieUploadPage = lazy(() => import("@/react-app/pages/SelfieUpload"));
+const PricingPage = lazy(() => import("@/react-app/pages/Pricing"));
 
 export default function App() {
   return (
@@ -45,6 +47,7 @@ export default function App() {
               <Route path="/celebrities" element={<LazyCelebrities />} />
               <Route path="/celebrity/:id" element={<CelebrityDetailPage />} />
               <Route path="/selfie-upload" element={<SelfieUploadPage />} />
+              <Route path="/pricing" element={<PricingPage />} />
               <Route path="/payment" element={<PaymentPage />} />
               <Route path="/auth/callback" element={<AuthCallbackPage />} />
               <Route path="/dashboard" element={<DashboardPage />} />
@@ -55,9 +58,9 @@ export default function App() {
             </Routes>
           </Suspense>
           
-          {/* PWA and Service Worker Components */}
-          <ServiceWorkerStatus />
-          <PWAInstallPrompt />
+          {/* PWA and Service Worker Components - Disabled in development */}
+          {/* <ServiceWorkerStatus /> */}
+          {/* <PWAInstallPrompt /> */}
         </Router>
       </AuthProvider>
     </EnhancedErrorBoundary>

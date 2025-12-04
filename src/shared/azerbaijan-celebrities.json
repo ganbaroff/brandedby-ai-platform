@@ -1,0 +1,662 @@
+[
+  {
+    "id": 1,
+    "name": "Aisel Teymurzadeh",
+    "name_az": "Aysel Teymurzadə",
+    "role": "Singer, Eurovision Participant",
+    "description": "Azerbaijani pop singer known for representing Azerbaijan at Eurovision 2009 with 'Always'. She blends pop, R&B, and traditional Azerbaijani elements in her music.",
+    "biography": "Aysel Teymurzadeh rose to fame after competing in the 2009 Eurovision Song Contest, where her powerful vocals captured international attention. Born in Baku, she started her career in the early 2000s, releasing hits that mix modern pop with Azerbaijani folk influences. Aysel has since become a staple in Azerbaijani music, performing at major festivals and collaborating with global artists.\n\nHer Eurovision participation marked a breakthrough, leading to albums and tours across Europe. She advocates for women's rights and cultural preservation through her music. Today, Aysel continues to inspire with her energetic performances and social media presence, maintaining a loyal fanbase in Azerbaijan and abroad.\n\nBeyond the stage, she mentors young singers and engages in philanthropy, focusing on education in rural areas.",
+    "image_url": "https://images.unsplash.com/photo-1516280440614-37939bbacd81?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
+    "niches": "[\"Music\", \"Television\", \"Social Media\"]",
+    "rating": 9.2,
+    "popularity": 92,
+    "birth_year": 1989,
+    "achievements": [
+      "Eurovision Song Contest 2009 participant",
+      "Multiple Golden Microphone awards",
+      "Over 1 million social media followers",
+      "International tour across 15 countries"
+    ],
+    "career_highlights": [
+      "2009: Eurovision debut with 'Always'",
+      "2012: Released platinum album 'Sən Olmasaydın'",
+      "2015: Collaboration with international producer RedOne",
+      "2020: Virtual concert with 500K viewers"
+    ],
+    "social_media": {
+      "instagram": "aysel_official",
+      "youtube": "ayselmusic",
+      "tiktok": "aysel_music"
+    },
+    "video_templates": ["greeting", "motivational", "advertisement"],
+    "created_at": "2025-12-03T00:00:00.000Z",
+    "updated_at": "2025-12-03T00:00:00.000Z"
+  },
+  {
+    "id": 2,
+    "name": "Roya",
+    "name_az": "Röya",
+    "role": "Pop Singer",
+    "description": "Prominent Azerbaijani pop singer known for her liberal style and collaborations with Turkish labels. Winner of the Altın Kelebek award.",
+    "biography": "Röya, born Roya Yagub gyzy Najafova in Baku, has captivated audiences with her bold pop anthems since the early 2000s. Her music often explores themes of love and empowerment, blending Azerbaijani melodies with contemporary beats. Röya's breakthrough came with hits like 'Sənə qurban', earning her widespread acclaim in Azerbaijan and Turkey.\n\nShe has released multiple albums and performed at international festivals, solidifying her status as a regional icon. Röya is also known for her advocacy in women's fashion and music education. Her engaging social media content keeps fans connected to her creative process.\n\nIn recent years, she has ventured into acting and producing, expanding her influence in the entertainment industry.",
+    "image_url": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
+    "niches": "[\"Music\", \"Fashion\", \"Social Media\"]",
+    "rating": 8.8,
+    "popularity": 88,
+    "birth_year": 1982,
+    "achievements": [
+      "Altın Kelebek award winner",
+      "Multiple top-charting singles in Azerbaijan",
+      "Collaboration with Turkish music giants",
+      "Over 500K Instagram followers"
+    ],
+    "career_highlights": [
+      "2005: Debut album release",
+      "2010: Hit single 'Sənə qurban'",
+      "2018: Altın Kelebek award",
+      "2023: International tour"
+    ],
+    "social_media": {
+      "instagram": "royaofficial",
+      "youtube": "royamusic",
+      "tiktok": "roya_official"
+    },
+    "video_templates": ["greeting", "entertainment", "advertisement"],
+    "created_at": "2025-12-03T00:00:00.000Z",
+    "updated_at": "2025-12-03T00:00:00.000Z"
+  },
+  {
+    "id": 3,
+    "name": "Aygun Kazimova",
+    "name_az": "Aygün Kazımova",
+    "role": "Singer, Actress",
+    "description": "Versatile Azerbaijani artist excelling in pop, mugam, and opera. Known for performances in Azerbaijan, Turkey, and Russia.",
+    "biography": "Aygün Kazimova, a Baku native, began her career as a child prodigy in traditional mugam singing before transitioning to pop stardom. Her powerful voice has graced stages worldwide, earning her the title of People's Artist of Azerbaijan. Aygün's discography includes hits that fuse classical Azerbaijani sounds with modern genres.\n\nShe has acted in films and TV shows, broadening her appeal. A passionate educator, she teaches vocal techniques to aspiring artists. Her resilience in the competitive music scene makes her a role model.\n\nIn 2025, Aygün continues to release music and collaborate, maintaining her relevance through innovative projects.",
+    "image_url": "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
+    "niches": "[\"Music\", \"Cinema\", \"Traditional Arts\"]",
+    "rating": 9.0,
+    "popularity": 90,
+    "birth_year": 1971,
+    "achievements": [
+      "People's Artist of Azerbaijan",
+      "World Mugam Competition winner",
+      "Multiple international tours",
+      "Film debut in 2000"
+    ],
+    "career_highlights": [
+      "1990s: Mugam prodigy",
+      "2005: Pop breakthrough album",
+      "2015: Acting debut",
+      "2022: Collaborative album"
+    ],
+    "social_media": {
+      "instagram": "aygunkazimova",
+      "youtube": "aygunkazimovaofficial",
+      "tiktok": "aygun_music"
+    },
+    "video_templates": ["motivational", "greeting", "traditional"],
+    "created_at": "2025-12-03T00:00:00.000Z",
+    "updated_at": "2025-12-03T00:00:00.000Z"
+  },
+  {
+    "id": 4,
+    "name": "Alim Qasimov",
+    "name_az": "Alim Qasımov",
+    "role": "Mugam Singer",
+    "description": "Legendary Azerbaijani mugam master, UNESCO-recognized intangible cultural heritage performer. Known for innovative fusions.",
+    "biography": "Alim Qasimov, born in Shamakhi, revolutionized traditional mugam singing with his emotive and improvisational style. Trained under masters, he gained global fame through collaborations with Western artists like Jeff Buckley. His performances preserve Azerbaijani heritage while pushing boundaries.\n\nA teacher at the Baku Music Academy, he has influenced generations. Awards include the IMC/UNESCO Music Prize. Alim's family, including daughter Fidan, continues the legacy.\n\nHis 2025 recordings blend mugam with jazz, attracting younger audiences worldwide.",
+    "image_url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
+    "niches": "[\"Music\", \"Traditional Arts\", \"Literature\"]",
+    "rating": 9.8,
+    "popularity": 95,
+    "birth_year": 1957,
+    "achievements": [
+      "IMC/UNESCO Music Prize",
+      "International Mugam Center founder",
+      "Collaborations with global artists",
+      "Family dynasty in mugam"
+    ],
+    "career_highlights": [
+      "1980s: National recognition",
+      "1999: World Mugam Festival",
+      "2008: Album with Fidan Alisade",
+      "2020: UNESCO heritage"
+    ],
+    "social_media": {
+      "instagram": "alimqasimov",
+      "youtube": "alimqasimov",
+      "tiktok": ""
+    },
+    "video_templates": ["traditional", "motivational", "cultural"],
+    "created_at": "2025-12-03T00:00:00.000Z",
+    "updated_at": "2025-12-03T00:00:00.000Z"
+  },
+  {
+    "id": 5,
+    "name": "Polad Bulbuloglu",
+    "name_az": "Polad Bülbül-oğlu",
+    "role": "Singer, Composer, Politician",
+    "description": "Iconic Azerbaijani singer blending jazz and folk, former Minister of Culture. Soviet-era superstar.",
+    "biography": "Polad Bulbuloglu, son of opera singer Bulbul, emerged in the 1960s with jazz-infused Azerbaijani songs that became Soviet hits. His compositions won three 'Song of the Year' awards. Transitioning to politics, he served as Deputy Minister of Culture.\n\nHis diplomatic roles include Ambassador to Russia. Polad's music library exceeds 300 songs, performed globally. He promotes cultural ties between nations.\n\nIn 2025, he mentors young composers, ensuring his legacy endures.",
+    "image_url": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
+    "niches": "[\"Music\", \"Politics\", \"Cinema\"]",
+    "rating": 9.5,
+    "popularity": 98,
+    "birth_year": 1945,
+    "achievements": [
+      "Three 'Song of the Year' awards",
+      "People's Artist of USSR",
+      "Ambassador to Russia",
+      "Over 300 compositions"
+    ],
+    "career_highlights": [
+      "1960s: Soviet fame",
+      "1970s: Film scores",
+      "2000s: Ministerial role",
+      "2010s: Diplomatic career"
+    ],
+    "social_media": {
+      "instagram": "poladbulbuloglu",
+      "youtube": "poladbulbuloghu",
+      "tiktok": ""
+    },
+    "video_templates": ["greeting", "advertisement", "cultural"],
+    "created_at": "2025-12-03T00:00:00.000Z",
+    "updated_at": "2025-12-03T00:00:00.000Z"
+  },
+  {
+    "id": 6,
+    "name": "Samira Efendi",
+    "name_az": "Səmirə Efəndi",
+    "role": "Singer, Eurovision Participant",
+    "description": "Rising Azerbaijani pop star who represented her country at Eurovision 2021 with 'Mata Hari'. Known for versatile genres.",
+    "biography": "Samira Efendi, from Baku, started as a child singer before hitting stardom with pop tracks incorporating traditional elements. Her Eurovision entry showcased dramatic vocals and storytelling. She has released albums blending pop and Azerbaijani folk.\n\nActive in philanthropy, she supports music education for underprivileged youth. Samira's dynamic stage presence has earned her international tours.\n\nBy 2025, she dominates charts and social media, collaborating with regional artists.",
+    "image_url": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
+    "niches": "[\"Music\", \"Social Media\", \"Television\"]",
+    "rating": 8.7,
+    "popularity": 85,
+    "birth_year": 1991,
+    "achievements": [
+      "Eurovision 2021 representative",
+      "Top 10 Azerbaijani charts multiple times",
+      "Over 800K followers",
+      "International collaborations"
+    ],
+    "career_highlights": [
+      "2010s: Child star",
+      "2021: Eurovision",
+      "2023: Debut album",
+      "2025: Tour success"
+    ],
+    "social_media": {
+      "instagram": "samiraefendi",
+      "youtube": "samiraefendiofficial",
+      "tiktok": "samira_efendi"
+    },
+    "video_templates": ["greeting", "motivational", "entertainment"],
+    "created_at": "2025-12-03T00:00:00.000Z",
+    "updated_at": "2025-12-03T00:00:00.000Z"
+  },
+  {
+    "id": 7,
+    "name": "Emin Agalarov",
+    "name_az": "Emin Ağalarov",
+    "role": "Singer, Businessman",
+    "description": "Azerbaijani-Russian pop singer and entrepreneur, People's Artist of Azerbaijan. Performs in multiple languages.",
+    "biography": "Emin Agalarov, son of billionaire Aras Agalarov, pursued music alongside business studies in Moscow. His debut album in 2006 launched a career with hits in English, Russian, and Azerbaijani. Named People's Artist in 2018.\n\nHe heads the Crocus Group while releasing music and touring. Emin supports cultural events like the Miss Universe pageant.\n\nIn 2025, his philanthropy focuses on youth arts programs.",
+    "image_url": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
+    "niches": "[\"Music\", \"Business\", \"Social Media\"]",
+    "rating": 8.9,
+    "popularity": 89,
+    "birth_year": 1979,
+    "achievements": [
+      "People's Artist of Azerbaijan 2018",
+      "Multiple platinum albums",
+      "International tours",
+      "Business leadership"
+    ],
+    "career_highlights": [
+      "2006: Debut album",
+      "2012: Hit 'Never Let You Go'",
+      "2018: Honorary title",
+      "2024: Business expansion"
+    ],
+    "social_media": {
+      "instagram": "eminmusic",
+      "youtube": "eminagalarov",
+      "tiktok": "emin_agalarov"
+    },
+    "video_templates": ["advertisement", "motivational", "greeting"],
+    "created_at": "2025-12-03T00:00:00.000Z",
+    "updated_at": "2025-12-03T00:00:00.000Z"
+  },
+  {
+    "id": 8,
+    "name": "Leyla Aliyeva",
+    "name_az": "Leyla Əliyeva",
+    "role": "Socialite, Influencer",
+    "description": "Daughter of the President, prominent Instagram influencer with 2.1M followers. Focuses on lifestyle and culture.",
+    "biography": "Leyla Aliyeva, vice-president of the Heydar Aliyev Foundation, uses her platform for philanthropy and cultural promotion. Her Instagram features fashion, travel, and Azerbaijani heritage. She supports arts and environmental causes.\n\nEducated in London and Switzerland, Leyla blends global sophistication with national pride. Her influence extends to media production.\n\nIn 2025, she launches eco-initiatives via social media.",
+    "image_url": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
+    "niches": "[\"Social Media\", \"Fashion\", \"Politics\"]",
+    "rating": 9.1,
+    "popularity": 96,
+    "birth_year": 1986,
+    "achievements": [
+      "2.1M Instagram followers",
+      "Heydar Aliyev Foundation VP",
+      "Cultural event organizer",
+      "Environmental advocate"
+    ],
+    "career_highlights": [
+      "2000s: Education abroad",
+      "2010s: Foundation role",
+      "2020: Media ventures",
+      "2025: Eco campaigns"
+    ],
+    "social_media": {
+      "instagram": "leyla999",
+      "youtube": "",
+      "tiktok": "leylaaliyeva"
+    },
+    "video_templates": ["lifestyle", "advertisement", "cultural"],
+    "created_at": "2025-12-03T00:00:00.000Z",
+    "updated_at": "2025-12-03T00:00:00.000Z"
+  },
+  {
+    "id": 9,
+    "name": "Anar Agakishiev",
+    "name_az": "Anar Ağakişiyev",
+    "role": "Makeup Artist, Influencer",
+    "description": "Celebrity makeup artist with 1.5M Instagram followers. Specializes in transformations and beauty tutorials.",
+    "biography": "Anar Agakishiev, based in Baku, built his career through viral before-and-after videos on Instagram and YouTube. Collaborating with models and influencers, he promotes Azerbaijani beauty standards globally. His tutorials blend traditional and modern techniques.\n\nAnar has worked on TV shows and events, earning a spot among top influencers. He advocates for self-confidence.\n\nBy 2025, he expands into beauty product lines.",
+    "image_url": "https://scontent.fgyd6-1.fna.fbcdn.net/v/t1.6435-9/119539337_3353354678084135_6273919284628475392_n.jpg",
+    "niches": "[\"Fashion\", \"Social Media\", \"Business\"]",
+    "rating": 8.6,
+    "popularity": 82,
+    "birth_year": 1990,
+    "achievements": [
+      "1.5M Instagram followers",
+      "TV collaborations",
+      "Beauty consulting expert",
+      "Viral transformation series"
+    ],
+    "career_highlights": [
+      "2015: Instagram rise",
+      "2019: First brand collab",
+      "2022: YouTube channel launch",
+      "2025: Product line"
+    ],
+    "social_media": {
+      "instagram": "anar_agakishiev",
+      "youtube": "anaragakishiev",
+      "tiktok": "anar_makeup"
+    },
+    "video_templates": ["tutorial", "advertisement", "entertainment"],
+    "created_at": "2025-12-03T00:00:00.000Z",
+    "updated_at": "2025-12-03T00:00:00.000Z"
+  },
+  {
+    "id": 10,
+    "name": "Nicat Azadli",
+    "name_az": "Nicat Azadlı",
+    "role": "Dancer, Event Manager",
+    "description": "Prominent dancer and event organizer with strong presence on Instagram, TikTok, and YouTube. Specializes in wedding performances.",
+    "biography": "Nicat Azadli, from Baku, turned his passion for dance into a career managing events and promoting courses. His energetic videos showcase Azerbaijani dance traditions at celebrations. With a multi-platform following, he books dancers for global events.\n\nNicat's content highlights cultural fusion dances. He mentors young talents.\n\nIn 2025, he produces dance festivals.",
+    "image_url": "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
+    "niches": "[\"Social Media\", \"Entertainment\", \"Traditional Arts\"]",
+    "rating": 8.4,
+    "popularity": 78,
+    "birth_year": 1985,
+    "achievements": [
+      "Multi-platform influencer",
+      "Event management success",
+      "Dance course promoter",
+      "Cultural performance bookings"
+    ],
+    "career_highlights": [
+      "2010s: Dance career start",
+      "2018: TikTok viral",
+      "2022: Event company",
+      "2025: Festival producer"
+    ],
+    "social_media": {
+      "instagram": "nicatazadli",
+      "youtube": "nicatazadli",
+      "tiktok": "nicat_azadli"
+    },
+    "video_templates": ["entertainment", "greeting", "cultural"],
+    "created_at": "2025-12-03T00:00:00.000Z",
+    "updated_at": "2025-12-03T00:00:00.000Z"
+  },
+  {
+    "id": 11,
+    "name": "Rashad Sadygov",
+    "name_az": "Rəşad Sədikov",
+    "role": "Footballer",
+    "description": "Azerbaijan's most capped player with 110 international appearances. Defender for national team and clubs.",
+    "biography": "Rashad Sadygov debuted for Azerbaijan in 2001, becoming the record holder for caps. He played for Neftchi Baku and international clubs, contributing to key matches. Post-retirement, he coaches youth teams.\n\nKnown for leadership, he captained the national side. Rashad promotes football development in Azerbaijan.\n\nIn 2025, he analyzes games for media.",
+    "image_url": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
+    "niches": "[\"Sports\", \"Television\"]",
+    "rating": 8.5,
+    "popularity": 80,
+    "birth_year": 1982,
+    "achievements": [
+      "110 international caps",
+      "National team captain",
+      "Club titles with Neftchi",
+      "Youth coaching"
+    ],
+    "career_highlights": [
+      "2001: Debut",
+      "2010: Captaincy",
+      "2017: Retirement",
+      "2025: Media role"
+    ],
+    "social_media": {
+      "instagram": "rashadsadygov",
+      "youtube": "",
+      "tiktok": ""
+    },
+    "video_templates": ["motivational", "sports", "greeting"],
+    "created_at": "2025-12-03T00:00:00.000Z",
+    "updated_at": "2025-12-03T00:00:00.000Z"
+  },
+  {
+    "id": 12,
+    "name": "Gurban Gurbanov",
+    "name_az": "Qurban Qurbanov",
+    "role": "Footballer, Coach",
+    "description": "Azerbaijan's all-time top scorer with 12 international goals. Now manager of Qarabag FK.",
+    "biography": "Gurban Gurbanov scored 12 goals in 66 caps for Azerbaijan, playing for top clubs like Hapoel Tel Aviv. His career highlights include European competitions. As coach, he led Qarabag to UEFA successes.\n\nHe develops young talents and promotes Azerbaijani football.\n\nIn 2025, his team contends for titles.",
+    "image_url": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
+    "niches": "[\"Sports\", \"Business\"]",
+    "rating": 8.7,
+    "popularity": 83,
+    "birth_year": 1972,
+    "achievements": [
+      "12 international goals",
+      "UEFA coaching successes",
+      "Club management",
+      "National hero"
+    ],
+    "career_highlights": [
+      "1990s: Club career",
+      "2000s: International peak",
+      "2010s: Coaching start",
+      "2024: League wins"
+    ],
+    "social_media": {
+      "instagram": "gurbangurbanov",
+      "youtube": "",
+      "tiktok": ""
+    },
+    "video_templates": ["motivational", "sports", "advertisement"],
+    "created_at": "2025-12-03T00:00:00.000Z",
+    "updated_at": "2025-12-03T00:00:00.000Z"
+  },
+  {
+    "id": 13,
+    "name": "Teimour Radjabov",
+    "name_az": "Teymur Rəcəbov",
+    "role": "Chess Grandmaster",
+    "description": "Former chess prodigy, world-ranked player. Known for victories over Kasparov.",
+    "biography": "Teimour Radjabov earned Grandmaster title at 14, the second-youngest ever. He defeated Kasparov in 2003 and competed in World Championships. Representing Azerbaijan, he won team golds.\n\nAn advocate for chess education, he participates in exhibitions.\n\nIn 2025, he remains top-ranked.",
+    "image_url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
+    "niches": "[\"Sports\", \"Literature\"]",
+    "rating": 9.3,
+    "popularity": 87,
+    "birth_year": 1987,
+    "achievements": [
+      "Grandmaster at 14",
+      "Defeated Kasparov",
+      "World Championship participant",
+      "Team Olympic golds"
+    ],
+    "career_highlights": [
+      "2001: GM title",
+      "2003: Kasparov win",
+      "2010s: Top rankings",
+      "2025: Active play"
+    ],
+    "social_media": {
+      "instagram": "teimourradjabov",
+      "youtube": "",
+      "tiktok": ""
+    },
+    "video_templates": ["motivational", "educational", "greeting"],
+    "created_at": "2025-12-03T00:00:00.000Z",
+    "updated_at": "2025-12-03T00:00:00.000Z"
+  },
+  {
+    "id": 14,
+    "name": "Shakhriyar Mamedyarov",
+    "name_az": "Şaxriyar Məmmədyarov",
+    "role": "Chess Grandmaster",
+    "description": "Two-time World Junior Champion, consistently top-10 worldwide. Azerbaijani chess star.",
+    "biography": "Shakhriyar Mamedyarov, from Sumqayit, won junior titles and reached Elo 2820. He excels in rapid and classical formats, contributing to team successes.\n\nHe promotes chess in schools and writes columns.\n\nIn 2025, he challenges for titles.",
+    "image_url": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
+    "niches": "[\"Sports\", \"Social Media\"]",
+    "rating": 9.4,
+    "popularity": 88,
+    "birth_year": 1985,
+    "achievements": [
+      "Two World Junior titles",
+      "Elo peak 2820",
+      "European Team Champion",
+      "Rapid format wins"
+    ],
+    "career_highlights": [
+      "2000s: Junior success",
+      "2010s: Top rankings",
+      "2020: Online events",
+      "2025: Tournaments"
+    ],
+    "social_media": {
+      "instagram": "mamedyarov",
+      "youtube": "",
+      "tiktok": ""
+    },
+    "video_templates": ["educational", "motivational", "sports"],
+    "created_at": "2025-12-03T00:00:00.000Z",
+    "updated_at": "2025-12-03T00:00:00.000Z"
+  },
+  {
+    "id": 15,
+    "name": "Farid Mansurov",
+    "name_az": "Fərid Mənsurov",
+    "role": "Wrestler",
+    "description": "Olympic gold medalist in freestyle wrestling at 2008 Beijing. Multiple world champion.",
+    "biography": "Farid Mansurov dominated the 60kg category, winning Olympic gold and world titles. From Baku, he trained rigorously to represent Azerbaijan internationally.\n\nPost-retirement, he coaches and runs wrestling academies.\n\nIn 2025, he mentors Olympians.",
+    "image_url": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
+    "niches": "[\"Sports\"]",
+    "rating": 9.0,
+    "popularity": 85,
+    "birth_year": 1986,
+    "achievements": [
+      "2008 Olympic gold",
+      "World Champion multiple times",
+      "European titles",
+      "Coaching awards"
+    ],
+    "career_highlights": [
+      "2000s: Rise to fame",
+      "2008: Olympic win",
+      "2010s: World golds",
+      "2020s: Coaching"
+    ],
+    "social_media": {
+      "instagram": "faridmansurov",
+      "youtube": "",
+      "tiktok": ""
+    },
+    "video_templates": ["motivational", "sports", "greeting"],
+    "created_at": "2025-12-03T00:00:00.000Z",
+    "updated_at": "2025-12-03T00:00:00.000Z"
+  },
+  {
+    "id": 16,
+    "name": "Mariya Stadnik",
+    "name_az": "Mariya Stadnik",
+    "role": "Wrestler",
+    "description": "Four-time Olympic medalist in women's freestyle wrestling. Azerbaijani-Ukrainian athlete.",
+    "biography": "Mariya Stadnik, born in Ukraine but representing Azerbaijan since 2004, won silvers and bronzes at Olympics. Her technical prowess defines the sport.\n\nShe advocates for women's wrestling and trains in Baku.\n\nIn 2025, she aims for Paris gold.",
+    "image_url": "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
+    "niches": "[\"Sports\", \"Television\"]",
+    "rating": 9.2,
+    "popularity": 86,
+    "birth_year": 1990,
+    "achievements": [
+      "Four Olympic medals",
+      "World Champion",
+      "European golds",
+      "Women's wrestling pioneer"
+    ],
+    "career_highlights": [
+      "2004: Azerbaijan debut",
+      "2012: Olympic silver",
+      "2020: Bronze",
+      "2025: Active competitor"
+    ],
+    "social_media": {
+      "instagram": "mariyastadnik",
+      "youtube": "",
+      "tiktok": ""
+    },
+    "video_templates": ["motivational", "sports", "inspirational"],
+    "created_at": "2025-12-03T00:00:00.000Z",
+    "updated_at": "2025-12-03T00:00:00.000Z"
+  },
+  {
+    "id": 17,
+    "name": "Ramil Guliyev",
+    "name_az": "Ramil Quliyev",
+    "role": "Sprinter",
+    "description": "World 200m champion representing Azerbaijan and Turkey. Azerbaijani-born track star.",
+    "biography": "Ramil Guliyev, born in Baku, won the 2018 World 200m gold for Turkey but holds Azerbaijani roots. He set national records and competed in Olympics.\n\nHis speed inspired Azerbaijani athletics.\n\nIn 2025, he coaches sprinters.",
+    "image_url": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
+    "niches": "[\"Sports\"]",
+    "rating": 8.8,
+    "popularity": 81,
+    "birth_year": 1990,
+    "achievements": [
+      "2018 World 200m gold",
+      "European junior records",
+      "Olympic participant",
+      "National records"
+    ],
+    "career_highlights": [
+      "2009: European junior win",
+      "2018: World gold",
+      "2020: Olympics",
+      "2025: Coaching"
+    ],
+    "social_media": {
+      "instagram": "ramilguliyev",
+      "youtube": "",
+      "tiktok": ""
+    },
+    "video_templates": ["sports", "motivational", "greeting"],
+    "created_at": "2025-12-03T00:00:00.000Z",
+    "updated_at": "2025-12-03T00:00:00.000Z"
+  },
+  {
+    "id": 18,
+    "name": "Aygun Babayeva",
+    "name_az": "Aygün Babayeva",
+    "role": "Dancer, Influencer",
+    "description": "Baku-based belly dancer with viral TikTok and Instagram content. Promotes cultural events.",
+    "biography": "Aygun Babayeva captivates with belly dance performances tied to Azerbaijani weddings and festivals. Her social media features tutorials and live shows, building a dedicated following.\n\nShe organizes dance workshops and collaborates on cultural projects.\n\nIn 2025, she expands online courses.",
+    "image_url": "https://scontent.fgyd6-1.fna.fbcdn.net/v/t31.17852-8/277480_10152749567300588_1749273478_o.jpg",
+    "niches": "[\"Social Media\", \"Traditional Arts\", \"Entertainment\"]",
+    "rating": 8.2,
+    "popularity": 76,
+    "birth_year": 1992,
+    "achievements": [
+      "Viral dance videos",
+      "Event promoter",
+      "Workshop leader",
+      "Cultural fusion"
+    ],
+    "career_highlights": [
+      "2018: TikTok start",
+      "2021: Festival organizer",
+      "2023: Collaborations",
+      "2025: Online academy"
+    ],
+    "social_media": {
+      "instagram": "aygunbabayeva",
+      "youtube": "aygun_dance",
+      "tiktok": "aygun_babayeva"
+    },
+    "video_templates": ["entertainment", "tutorial", "cultural"],
+    "created_at": "2025-12-03T00:00:00.000Z",
+    "updated_at": "2025-12-03T00:00:00.000Z"
+  },
+  {
+    "id": 19,
+    "name": "Naz Dej",
+    "name_az": "Naz Dej",
+    "role": "Singer, Social Media Personality",
+    "description": "TikTok and Instagram star sharing music and lifestyle content. Emerging Azerbaijani talent.",
+    "biography": "Naz Dej gained fame through catchy music clips on TikTok, amassing followers with relatable lyrics. From Baku, she blends pop with personal stories in her posts.\n\nShe releases singles and engages fans via live sessions.\n\nIn 2025, she signs major label deal.",
+    "image_url": "https://images.unsplash.com/photo-1516280440614-37939bbacd81?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
+    "niches": "[\"Music\", \"Social Media\"]",
+    "rating": 8.3,
+    "popularity": 77,
+    "birth_year": 1995,
+    "achievements": [
+      "TikTok music virals",
+      "Growing fanbase",
+      "Single releases",
+      "Live performances"
+    ],
+    "career_highlights": [
+      "2020: TikTok breakthrough",
+      "2022: First single",
+      "2024: Tours",
+      "2025: Label signing"
+    ],
+    "social_media": {
+      "instagram": "nazdej",
+      "youtube": "nazdejmusic",
+      "tiktok": "naz_dej"
+    },
+    "video_templates": ["greeting", "entertainment", "motivational"],
+    "created_at": "2025-12-03T00:00:00.000Z",
+    "updated_at": "2025-12-03T00:00:00.000Z"
+  },
+  {
+    "id": 20,
+    "name": "Nadjiba Ahmedi",
+    "name_az": "Nəcibə Əhmədi",
+    "role": "Content Creator, Beauty Influencer",
+    "description": "Vibrant lifestyle and beauty vlogger on Instagram, TikTok, and YouTube. Engages with fashion and daily life.",
+    "biography": "Nadjiba Ahmedi creates engaging videos on beauty routines and Azerbaijani lifestyle, drawing a young audience. Based in Baku, her content features collaborations and tips.\n\nShe promotes local brands and self-care.\n\nIn 2025, she launches a beauty line.",
+    "image_url": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop&crop=face&auto=format&q=80",
+    "niches": "[\"Social Media\", \"Fashion\", \"Beauty\"]",
+    "rating": 8.1,
+    "popularity": 75,
+    "birth_year": 1998,
+    "achievements": [
+      "Multi-platform creator",
+      "Brand partnerships",
+      "Beauty tutorials",
+      "Audience engagement"
+    ],
+    "career_highlights": [
+      "2019: Content start",
+      "2022: Viral series",
+      "2024: Collabs",
+      "2025: Product launch"
+    ],
+    "social_media": {
+      "instagram": "nadjibahahmedi",
+      "youtube": "nadjiba",
+      "tiktok": "nadjiba_ahmedi"
+    },
+    "video_templates": ["tutorial", "advertisement", "lifestyle"],
+    "created_at": "2025-12-03T00:00:00.000Z",
+    "updated_at": "2025-12-03T00:00:00.000Z"
+  }
+]

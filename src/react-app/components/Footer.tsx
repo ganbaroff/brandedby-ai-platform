@@ -38,7 +38,7 @@ const Footer = memo(function Footer() {
             </div>
             <p className="text-gray-400 text-sm leading-relaxed">
               Create personalized celebrity videos with cutting-edge AI technology. 
-              Choose from Azerbaijani celebrities or upload your selfie for professional results.
+              Choose from world-renowned celebrities or upload your selfie for professional results.
             </p>
           </div>
 
@@ -111,17 +111,17 @@ const Footer = memo(function Footer() {
             <p className="text-gray-400 text-sm">
               © 2024 BrandedBY. All rights reserved.
             </p>
-            {/* Яркая кнопка для входа в админ-панель */}
+            {/* Admin panel access button */}
             <button
               onClick={() => handleNavigation('/admin-panel')}
               className="ml-4 px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg text-xs font-semibold shadow hover:from-blue-600 hover:to-purple-600 transition-all"
-              title="Войти в админ-панель"
+              title="Access admin panel"
             >
-              🔐 Админ-панель
+              🔐 Admin Panel
             </button>
           </div>
           <p className="text-gray-400 text-sm mt-4 md:mt-0">
-            Made with ❤️ for the Azerbaijani community
+            Made with ❤️ for content creators worldwide
           </p>
         </div>
       </div>

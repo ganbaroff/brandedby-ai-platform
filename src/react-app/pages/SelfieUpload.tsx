@@ -1,13 +1,16 @@
-
+import BackButton from "@/react-app/components/BackButton";
 import EnhancedImage from "@/react-app/components/EnhancedImage";
 import Footer from "@/react-app/components/Footer";
 import Header from "@/react-app/components/Header";
 import ImageErrorBoundary from "@/react-app/components/ImageErrorBoundary";
+import ScrollProgressIndicator from "@/react-app/components/ScrollProgressIndicator";
 import TemplateModal from "@/react-app/components/TemplateModal";
+import VideoFormatSelector from "@/react-app/components/VideoFormatSelector";
+import VideoPreview from "@/react-app/components/VideoPreview";
+import { useAuth } from "@/react-app/contexts/AuthContext";
 import { useFileUpload } from "@/react-app/hooks/useFileUpload";
 import { TemplateManager } from "@/shared/admin-data-utils";
 import { Template as BaseTemplate } from "@/shared/types";
-import { useAuth } from "@getmocha/users-service/react";
 import { Image as ImageIcon, Loader, Sparkles, Upload } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router";
@@ -22,7 +25,7 @@ export default function SelfieUpload() {
   const [previewUrl, setPreviewUrl] = useState<string>('');
   const [uploadedFileUrl, setUploadedFileUrl] = useState<string>('');
   const [selectedTemplate, setSelectedTemplate] = useState('');
-  const [selectedFormat, setSelectedFormat] = useState('');
+  const [selectedFormat, setSelectedFormat] = useState('instagram-story'); // Default format
   const [description, setDescription] = useState('');
   const [selectedPackage, setSelectedPackage] = useState('Standard');
   const [showDowngradeWarning, setShowDowngradeWarning] = useState(false);
@@ -86,6 +89,7 @@ export default function SelfieUpload() {
       .join("\n");
     setDescription(desc);
   };
+  
   const handleFormatSelect = (id: string) => {
     setSelectedFormat(id);
     handlePackageLogic(selectedTemplate, id);
@@ -204,7 +208,9 @@ export default function SelfieUpload() {
   return (
     <div className="min-h-screen bg-white">
       <Header />
-      
+      <BackButton variant="floating" />
+      <ScrollProgressIndicator position="right" showPercentage={false} />
+
       {/* Hero Section */}
       <section className="pt-24 pb-16 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
         <div className="container mx-auto px-4 max-w-7xl">
@@ -327,26 +333,23 @@ export default function SelfieUpload() {
               )}
             </div>
 
-            {/* Video Format */}
+            {/* Video Format Selection with Preview */}
             <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Video Format</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                {videoFormats.map((format) => (
-                  <button
-                    key={format.id}
-                    onClick={() => handleFormatSelect(format.id)}
-                    className={`p-4 rounded-xl border-2 text-center transition-all ${
-                      selectedFormat === format.id
-                        ? 'border-purple-500 bg-purple-50'
-                        : 'border-gray-200 hover:border-purple-300'
-                    }`}
-                  >
-                    <div className="text-3xl mb-2">{format.icon}</div>
-                    <p className="font-medium">{format.name}</p>
-                  </button>
-                ))}
-              </div>
+              <VideoFormatSelector
+                selectedFormat={selectedFormat}
+                onFormatChange={handleFormatSelect}
+              />
             </div>
+
+            {/* Video Preview */}
+            {selectedFormat && (
+              <div>
+                <VideoPreview
+                  formatId={selectedFormat}
+                  previewImage={previewUrl}
+                />
+              </div>
+            )}
 
             {/* Description */}
             <div>
